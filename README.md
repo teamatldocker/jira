@@ -296,7 +296,7 @@ This project supports docker-compose. The configuration is inside the docker-com
 Example:
 
 ~~~~
-$ docker-compose -d up
+$ docker-compose up -d
 ~~~~
 
 > Starts a detached docker container.
