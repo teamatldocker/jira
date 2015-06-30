@@ -1,4 +1,7 @@
-# BlackLabelOps/Jira
+[![Docker Hub Info](http://dockeri.co/image/blacklabelops/jira)](https://registry.hub.docker.com/u/blacklabelops/jira)
+
+[![Docker Build Status](http://hubstatus.container42.com/blacklabelops/jira)](https://registry.hub.docker.com/u/blacklabelops/jira)
+[![Circle CI](https://circleci.com/gh/blacklabelops/jira/tree/master.svg?style=svg)](https://circleci.com/gh/blacklabelops/jira/tree/master)
 
 Docker container with Atlassian Jira on CentOS.
 
