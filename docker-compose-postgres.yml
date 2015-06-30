@@ -1,0 +1,20 @@
+jira:
+  build: .
+  ports:
+    - '8100:8080'
+  volumes:
+    - /opt/atlassian-home
+  environment:
+    - 'DATABASE_URL=postgresql://jiradb@postgresql/jiradb'
+    - 'DB_PASSWORD=jellyfish'
+  links:
+    - postgresql
+postgresql:
+  image: sameersbn/postgresql:9.4-1
+  ports:
+    - '5432:5432'
+  environment:
+    - 'PSQL_TRUST_LOCALNET=true'
+    - 'DB_USER=jiradb'
+    - 'DB_PASS=jellyfish'
+    - 'DB_NAME=jiradb'

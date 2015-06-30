@@ -1,0 +1,6 @@
+jira:
+  build: .
+  ports:
+    - '8100:8080'
+  volumes:
+    - /opt/atlassian-home
