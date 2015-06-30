@@ -11,5 +11,5 @@ dependencies:
 test:
   override:
     - docker run -d -p 8100:8090 --name="jira_jira_1" blacklabelops/jira
-    - sleep 20
-    - curl --retry 10 --retry-delay 5 -v http://localhost:8100
+    - sleep 60
+    - curl --retry 10 --retry-delay 5 -v http://localhost:8100/secure/SetupMode!default.jspa
