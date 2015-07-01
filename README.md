@@ -153,11 +153,7 @@ $ cd /vagrant
 
 > Now your inside the VM already having installed docker and docker-compose. Also your inside the project directory.
 
-First build the image.
-
-~~~~
-$ docker-compose -f docker-compose-postgres.yml build
-~~~~
+#### PostgreSQL
 
 Now your ready sping up jira with postgres with docker-compose.
 
@@ -171,9 +167,25 @@ And if you want to start the example detached add '-d'
 $ docker-compose -f docker-compose-postgres.yml up -d
 ~~~~
 
+#### MySQL
+
+Now your ready sping up jira with postgres with docker-compose.
+
+~~~~
+$ docker-compose -f docker-compose-mysql.yml up
+~~~~
+
+And if you want to start the example detached add '-d'
+
+~~~~
+$ docker-compose -f docker-compose-mysql.yml up -d
+~~~~
+
 ### Example using Docker
 
 This example is "by foot" using the docker cli. In this example we setup an empty PostgreSQL container. Then we connect and configure the Jira accordingly. Afterwards the Jira container can always resume on the database.
+
+#### PostgreSQL
 
 Let's take an PostgreSQL container and set it up:
 
@@ -187,7 +199,7 @@ $ docker run --name postgresql -d \
   sameersbn/postgresql:9.4-1
 ~~~~
 
-> This is the sameersbn/postgresql docker container I tested. This container now can be used with the following jdbc URL: postgresql://jiradb@192.168.59.103/jiradb (Note tha I use boot2docker with ip 192.168.59.103)
+> This is the sameersbn/postgresql docker container I tested. This container now can be used with the following jdbc URL: postgresql://jiradb@postgresql/jiradb (I link the container with hostname postgresql)
 
 Now start the Jira container and let it use the container. On first startup you have to configure your Jira yourself and fill it with a test license. Afterwards every time you connect to a database the Jira configuration will be skipped.
 
@@ -197,6 +209,34 @@ $ docker run -d --name jira \
 	-e "DB_PASSWORD=jellyfish"  \
 	--link postgresql:postgresql \
 	-p 8100:8080 blacklabelops/jira
+~~~~
+
+>  Start the Jira and link it to the postgresql instance.
+
+#### MySQL
+
+Let's take an MySQL container and set it up:
+
+~~~~
+$ docker run -d --name mysql \
+  -e 'ON_CREATE_DB=jiradb' \
+  -e 'MYSQL_USER=jiradb' \
+  -e 'MYSQL_PASS=jellyfish' \
+  -p 3306:3306 \
+  tutum/mysql:5.6
+~~~~
+
+> This is the tutum/mysql docker container I tested. This container now can be used with the following jdbc URL: mysql://jiradb@mysql/jiradb (I use link with hostname mysql)
+
+Now start the Jira container and let it use the container. On first startup you have to configure your Jira yourself and fill it with a test license. Afterwards every time you connect to a database the Jira configuration will be skipped.
+
+~~~~
+$ docker run -d --name jira \
+	-e "DATABASE_URL=mysql://jiradb@mysql/jiradb" \
+	-e "DB_PASSWORD=jellyfish"  \
+	--link mysql:mysql \
+	-p 8100:8080 \
+	blacklabelops/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.

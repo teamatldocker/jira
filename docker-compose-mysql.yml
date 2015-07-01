@@ -1,0 +1,19 @@
+jira:
+  image: blacklabelops/jira
+  ports:
+    - '8100:8080'
+  volumes:
+    - /opt/atlassian-home
+  environment:
+    - 'DATABASE_URL=mysql://jiradb@mysql/jiradb'
+    - 'DB_PASSWORD=jellyfish'
+  links:
+    - mysql
+mysql:
+  image: tutum/mysql
+  ports:
+    - '3306:3306'
+  environment:
+    - 'ON_CREATE_DB=jiradb'
+    - 'MYSQL_USER=jiradb'
+    - 'MYSQL_PASS=jellyfish'
