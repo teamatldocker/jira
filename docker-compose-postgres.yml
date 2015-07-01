@@ -1,5 +1,5 @@
 jira:
-  build: .
+  image: blacklabelops/jira
   ports:
     - '8100:8080'
   volumes:
