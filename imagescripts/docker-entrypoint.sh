@@ -1,8 +1,6 @@
 #!/bin/bash -x
 set -o errexit
 
-chown -R jira:jira /opt/atlassian-home
-
 if [ "$1" = 'jira' ]; then
   cat /usr/local/share/atlassian/launch.sh
 
