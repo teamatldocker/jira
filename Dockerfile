@@ -13,7 +13,7 @@ RUN yum install -y epel-release && \
     yum clean all && rm -rf /var/cache/yum/*
 
 # install jira
-ENV JIRA_VERSION 6.4.10
+ENV JIRA_VERSION 6.4.11
 ENV CONTEXT_PATH ROOT
 ENV JIRA_HOME /opt/atlassian-home
 RUN wget --no-check-certificate --directory-prefix=/usr/local/share/atlassian/ \
