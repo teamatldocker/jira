@@ -1,0 +1,20 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker version
+    - docker info
+    - docker build -t="blacklabelops/jira" ./jira6/Dockerfile
+    - docker build -t="blacklabelops/jirasoftware" ./jirasoftware/Dockerfile
+
+
+test:
+  override:
+    - docker run -d -p 8100:8080 --name="jira_jira_1" blacklabelops/jira
+    - sleep 30
+    - curl --retry 10 --retry-delay 5 -v http://localhost:8100/
+    - docker run -d -p 8110:8080 --name="jirasoftware" blacklabelops/jirasoftware
+    - sleep 30
+    - curl --retry 10 --retry-delay 5 -v http://localhost:8110/
