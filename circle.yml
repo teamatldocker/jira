@@ -6,8 +6,8 @@ dependencies:
   override:
     - docker version
     - docker info
-    - docker build -t="blacklabelops/jira" ./jira6/Dockerfile
-    - docker build -t="blacklabelops/jirasoftware" ./jirasoftware/Dockerfile
+    - docker build -t="blacklabelops/jira" -f ./jira6/Dockerfile jira6/
+    - docker build -t="blacklabelops/jirasoftware" -f ./jirasoftware/Dockerfile jirasoftware/
 
 
 test:
