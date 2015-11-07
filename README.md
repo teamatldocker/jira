@@ -1,5 +1,7 @@
 Docker container with Atlassian Jira Software on CentOS.
 
+[Discuss this Docker Image on Hipchat: <img src="https://www.hipchat.com/img/image_src.png" width="45">](https://www.hipchat.com/geogBFvEM)
+
 This project is very grateful for code and examples from the repository:
 
 [atlassianlabs/atlassian-docker](https://bitbucket.org/atlassianlabs/atlassian-docker)
