@@ -1,5 +1,6 @@
 [![Circle CI](https://circleci.com/gh/blacklabelops/jira/tree/master.svg?style=svg)](https://circleci.com/gh/blacklabelops/jira/tree/master)
 [![Image Layers](https://badge.imagelayers.io/blacklabelops/jira:latest.svg)](https://imagelayers.io/?images=blacklabelops/jira:latest 'Get your own badge on imagelayers.io')
+[![Docker Repository on Quay](https://quay.io/repository/blacklabelops/jirasoftware/status "Docker Repository on Quay")](https://quay.io/repository/blacklabelops/jirasoftware)
 
 Docker container with Atlassian Jira Software on CentOS.
 
