@@ -1,4 +1,4 @@
-FROM blacklabelops/java-jre-7
+FROM blacklabelops/java-jre-7:7.80.15
 MAINTAINER Steffen Bleul <blacklabelops@itbleul.de>
 
 # install dev tools
@@ -13,7 +13,7 @@ RUN yum install -y epel-release && \
     yum clean all && rm -rf /var/cache/yum/*
 
 # install jira
-ENV JIRA_VERSION 7.0.0
+ENV JIRA_VERSION 7.0.5
 ENV CONTEXT_PATH ROOT
 ENV JIRA_HOME /opt/jiradata
 ADD imagescripts/response.varfile /tmp/response.varfile
