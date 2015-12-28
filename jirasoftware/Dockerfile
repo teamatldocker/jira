@@ -1,4 +1,4 @@
-FROM blacklabelops/java-jre-7:7.80.15
+FROM blacklabelops/java-jre-7
 MAINTAINER Steffen Bleul <blacklabelops@itbleul.de>
 
 # install dev tools
