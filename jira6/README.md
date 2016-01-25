@@ -1,21 +1,18 @@
-[![Circle CI](https://circleci.com/gh/blacklabelops/jira/tree/master.svg?style=svg)](https://circleci.com/gh/blacklabelops/jira/tree/master)
-[![Image Layers](https://badge.imagelayers.io/blacklabelops/jira:latest.svg)](https://imagelayers.io/?images=blacklabelops/jira:latest 'Get your own badge on imagelayers.io')
+# Dockerized Atlassian Jira 6
 
-Docker container with Atlassian Jira on CentOS.
+[![Circle CI](https://circleci.com/gh/blacklabelops/jira/tree/master.svg?style=shield)](https://circleci.com/gh/blacklabelops/centos/tree/master) [![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/)
+
+## Release: blacklabelops/jira:latest
 
 Looking for Jira Software or Jira7? Can be found here: [blacklabelops/jirasoftware](https://github.com/blacklabelops/jira/tree/master/jirasoftware/README.md)
 
-This project is very grateful for code and examples from the repository:
-
-[atlassianlabs/atlassian-docker](https://bitbucket.org/atlassianlabs/atlassian-docker)
-
-### Instant Usage
+## Make It Short
 
 ~~~~
-docker run -d -p 8100:8080 --name="jira_jira_1" blacklabelops/jira
+docker run -d -p 80:8080 --name="jira_jira_1" blacklabelops/jira
 ~~~~
 
-> This will pull the container and start Atlassian Jira on port 8100.
+> This will pull the container and start Atlassian Jira on http://yourhost.
 
 ## Features
 
@@ -31,16 +28,21 @@ Container has the following features:
 
 ## What's Included
 
-* Atlassian Jira 6.4.7
-* CentOS 7.1.1503
+* Atlassian Jira 6
+* CentOS 7
 * Java 7
 
 ## Works with
 
-* Docker 1.6.0, 1.6.2
-* Docker-Compose 1.2.0, 1.3.0
+* Docker latest
+* Docker-Compose latest
 
 ## Vagrant
+
+First install:
+
+* [Vagrant](https://www.vagrantup.com/)
+* [Virtualbox](https://www.virtualbox.org/)
 
 Vagrant is fabulous tool for pulling and spinning up virtual machines like docker with containers. I can configure my development and test environment and simply pull it online. And so can you! Install Vagrant and Virtualbox and spin it up. Change into the project folder and build the project on the spot!
 
@@ -51,14 +53,7 @@ $ vagrant ssh
 [vagrant@localhost ~]$ docker-compose up
 ~~~~
 
-> Jira will be available on localhost:8100 on the host machine.
-
-Vagrant does not leave any docker artifacts on your beloved desktop and the vagrant image can simply be destroyed and repulled if anything goes wrong. Test my project to your heart's content!
-
-First install:
-
-* [Vagrant](https://www.vagrantup.com/)
-* [Virtualbox](https://www.virtualbox.org/)
+> Jira will be available on http://localhost:8100
 
 ## Usage
 
@@ -136,22 +131,6 @@ DATABASE_TYPE://DATABASE_USER@DATABASE_HOST/DATABASE_NAME
 > * DATABASE_USER = Any preconfigured Jira database user.
 > * DATABASE_HOST = Network adress of the host's database.
 > * DATABASE_NAME = Any preconfigured Jira database.
-
-### Example using Docker-Compose
-
-The easiest way to get started with my example is to take a look inside the file is docker-compose docker-compose-postgres.yml and getting started inside my prepared vagrant container.
-
-Spin up the prepared vagrant machine and log into it. If you got docker-compose on your local machine just skip it.
-
-~~~~
-$ vagrant up
-....
-$ vagrant ssh
-...
-$ cd /vagrant
-~~~~
-
-> Now your inside the VM already having installed docker and docker-compose. Also your inside the project directory.
 
 #### PostgreSQL
 
@@ -343,11 +322,17 @@ $ docker-compose up -d
 
 Consult the [docker-compose](https://docs.docker.com/compose/) manual for specifics.
 
+## Credits
+
+This project is very grateful for code and examples from the repository:
+
+[atlassianlabs/atlassian-docker](https://bitbucket.org/atlassianlabs/atlassian-docker)
+
 ## References
 
 * [Atlassian Jira](https://www.atlassian.com/software/jira)
 * [Docker Homepage](https://www.docker.com/)
 * [Docker Compose](https://docs.docker.com/compose/)
 * [Docker Userguide](https://docs.docker.com/userguide/)
-* [Official CentOS Container](https://registry.hub.docker.com/_/centos/)
 * [Oracle Java8](https://java.com/de/download/)
+* [Imagelayers.io](https://imagelayers.io/?images=blacklabelops/jira:latest)
