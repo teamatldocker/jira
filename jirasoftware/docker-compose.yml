@@ -2,6 +2,4 @@ jira:
   image: blacklabelops/jirasoftware
   container_name: jirasoftware
   ports:
-    - '8100:8080'
-  volumes:
-    - /opt/atlassian-home
+    - '80:8080'

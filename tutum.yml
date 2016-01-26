@@ -1,0 +1,16 @@
+jira:
+  image: blacklabelops/jirasoftware
+  container_name: jirasoftware
+  ports:
+    - '80:8080'
+  environment:
+    - 'DATABASE_URL=postgresql://jiradb@postgresql/jiradb'
+    - 'DB_PASSWORD=jellyfish'
+  links:
+    - 'postgresql:postgresql'
+postgresql:
+  image: postgres:9.5
+  environment:
+    - 'POSTGRES_USER=jiradb'
+    - 'POSTGRES_PASSWORD=jellyfish'
+    - 'POSTGRES_DB=jiradb'

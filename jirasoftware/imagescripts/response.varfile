@@ -2,8 +2,8 @@
 #Sun Oct 25 18:22:06 UTC 2015
 rmiPort$Long=8005
 app.install.service$Boolean=false
-existingInstallationDir=/opt/jiradata
-app.jiraHome=/opt/jiradata
+existingInstallationDir=/var/atlassian/jira
+app.jiraHome=/var/atlassian/jira
 sys.confirmedUpdateInstallationString=false
 sys.languageId=en
 sys.installationDir=/opt/jira

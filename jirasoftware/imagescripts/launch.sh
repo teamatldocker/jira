@@ -1,27 +1,27 @@
 #!/bin/bash
 set -o errexit
 
-. /usr/local/share/atlassian/common.bash
+. ${JIRA_SCRIPTS}/common.bash
 
 rm -f /opt/atlassian-home/.jira-home.lock
 
-if [ "$CONTEXT_PATH" == "ROOT" -o -z "$CONTEXT_PATH" ]; then
+if [ "$JIRA_CONTEXT_PATH" == "ROOT" -o -z "$JIRA_CONTEXT_PATH" ]; then
   CONTEXT_PATH=
 else
-  CONTEXT_PATH="/$CONTEXT_PATH"
+  CONTEXT_PATH="/$JIRA_CONTEXT_PATH"
 fi
 
-xmlstarlet ed -u '//Context/@path' -v "$CONTEXT_PATH" conf/server-backup.xml > conf/server.xml
+xmlstarlet ed -P -S -L -u '//Context/@path' -v "$CONTEXT_PATH" ${JIRA_INSTALL}/conf/server.xml
 
 if [ -n "$DATABASE_URL" ]; then
-  extract_database_url "$DATABASE_URL" DB /opt/jira/lib
+  extract_database_url "$DATABASE_URL" DB ${JIRA_INSTALL}/lib
   DB_JDBC_URL="$(xmlstarlet esc "$DB_JDBC_URL")"
   SCHEMA=''
   if [ "$DB_TYPE" != "mysql" ]; then
     SCHEMA='<schema-name>public</schema-name>'
   fi
 
-  cat <<END > /opt/jiradata/dbconfig.xml
+  cat <<END > ${JIRA_HOME}/dbconfig.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <jira-database-config>
   <name>defaultDS</name>

@@ -2,6 +2,10 @@
 
 [![Circle CI](https://circleci.com/gh/blacklabelops/jira/tree/master.svg?style=shield)](https://circleci.com/gh/blacklabelops/centos/tree/master) [![Docker Repository on Quay.io](https://quay.io/repository/blacklabelops/jirasoftware/status "Docker Repository on Quay")](https://quay.io/repository/blacklabelops/centos)
 
+## Instant Usage
+
+[![Deploy to Tutum](https://s.tutum.co/deploy-to-tutum.svg)](https://dashboard.tutum.co/stack/deploy/)
+
 This repository hosts separate images for Jira 6 and Jira 7!
 
 Documentation Jira 7: [blacklabelops/jirasoftware](https://github.com/blacklabelops/jira/tree/master/jirasoftware/README.md)

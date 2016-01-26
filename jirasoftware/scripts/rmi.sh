@@ -33,7 +33,7 @@ success() {
 lookForImage() {
   local IMAGE_LIST=$(docker images | awk '{print $1}')
   local IMAGE_FOUND="false"
-  
+
   for image in $IMAGE_LIST
   do
     if [ $image = $IMAGE_NAME ]; then
@@ -57,7 +57,7 @@ fi
 printf '%b\n' ""
 printf '%b\n' ":: Removing image..."
 
-docker rmi ${IMAGE_NAME}
+docker rmi -f ${IMAGE_NAME}
 
 found=$(lookForImage)
 
@@ -66,4 +66,3 @@ if [ $found = "true" ]; then
 fi
 
 success "Image removed successfully."
-
