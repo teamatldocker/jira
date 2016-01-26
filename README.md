@@ -8,11 +8,11 @@
 
 This repository hosts separate images for Jira 6 and Jira 7!
 
-Documentation Jira 7: [blacklabelops/jirasoftware](https://github.com/blacklabelops/jira/tree/master/jirasoftware/README.md)
+Documentation Jira 7: [blacklabelops/jirasoftware](https://github.com/blacklabelops/jira/tree/master/jirasoftware)
 
 [![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jirasoftware.svg)](https://hub.docker.com/r/blacklabelops/jirasoftware/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jirasoftware.svg)](https://hub.docker.com/r/blacklabelops/jirasoftware/)
 
-Documentation Jira 6: [blacklabelops/jira](https://github.com/blacklabelops/jira/tree/master/jira6/README.md)
+Documentation Jira 6: [blacklabelops/jira](https://github.com/blacklabelops/jira/tree/master/jira6)
 
 [![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/)
 
