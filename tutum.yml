@@ -6,6 +6,12 @@ jira:
   environment:
     - 'JIRA_DATABASE_URL=postgresql://jira@postgresql/jiradb'
     - 'JIRA_DB_PASSWORD=jellyfish'
+    - 'CATALINA_OPTS= -Xms256m -Xmx1g'
+    - 'JIRA_PROXY_NAME='
+    - 'JIRA_PROXY_PORT='
+    - 'JIRA_PROXY_SCHEME='
+    - 'JIRA_LOGFILE_LOCATION=/var/atlassian/jira'
+    - 'JIRA_DELAYED_START=10'
   links:
     - 'postgresql:postgresql'
 postgresql:

@@ -10,6 +10,7 @@ ENV JIRA_VERSION=7.0.9 \
     JIRA_SCRIPTS=/usr/local/share/atlassian
 
 COPY imagescripts ${JIRA_SCRIPTS}
+COPY certificates /etc/pki/ca-trust/source/anchors/
 
 RUN yum install -y epel-release && \
     yum install -y \
@@ -19,7 +20,7 @@ RUN yum install -y epel-release && \
     # Install Jira
     mkdir -p ${JIRA_HOME} && \
     mkdir -p ${JIRA_INSTALL} && \
-    wget --no-check-certificate -O /tmp/jira.bin https://downloads.atlassian.com/software/jira/downloads/atlassian-jira-software-${JIRA_VERSION}-jira-${JIRA_VERSION}-x64.bin && \
+    wget -O /tmp/jira.bin https://downloads.atlassian.com/software/jira/downloads/atlassian-jira-software-${JIRA_VERSION}-jira-${JIRA_VERSION}-x64.bin && \
     chmod +x /tmp/jira.bin && \
     /tmp/jira.bin -q -varfile ${JIRA_SCRIPTS}/response.varfile && \
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_HOME} && \
@@ -28,8 +29,8 @@ RUN yum install -y epel-release && \
     rm -rf /tmp/*
 
 USER jira
-WORKDIR /opt/jiradata
-VOLUME ["/opt/jiradata"]
+WORKDIR ${JIRA_HOME}
+VOLUME ["/var/atlassian/jira"]
 EXPOSE 8080
 ENTRYPOINT ["/usr/local/share/atlassian/docker-entrypoint.sh"]
 CMD ["jira"]

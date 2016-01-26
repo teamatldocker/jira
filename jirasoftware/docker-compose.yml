@@ -3,3 +3,20 @@ jira:
   container_name: jirasoftware
   ports:
     - '80:8080'
+  environment:
+    - 'JIRA_DATABASE_URL=postgresql://jira@postgresql/jiradb'
+    - 'JIRA_DB_PASSWORD=jellyfish'
+    - 'CATALINA_OPTS= -Xms256m -Xmx1g'
+    - 'JIRA_PROXY_NAME='
+    - 'JIRA_PROXY_PORT='
+    - 'JIRA_PROXY_SCHEME='
+    - 'JIRA_DELAYED_START=10'
+  links:
+    - 'postgresql:postgresql'
+postgresql:
+  image: postgres:9.5
+  environment:
+    - 'POSTGRES_USER=jira'
+    # CHANGE THE PASSWORD!
+    - 'POSTGRES_PASSWORD=jellyfish'
+    - 'POSTGRES_DB=jiradb'

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 # A helper script for ENTRYPOINT.
 #
@@ -29,6 +29,9 @@ if [ -n "${JIRA_PROXY_SCHEME}" ]; then
 fi
 
 if [ -n "${JIRA_LOGFILE_LOCATION}" ]; then
+  if [ ! -d "${JIRA_LOGFILE_LOCATION}" ]; then
+    mkdir -p ${JIRA_LOGFILE_LOCATION}
+  fi
   TARGET_PROPERTY=1catalina.org.apache.juli.AsyncFileHandler.directory
   sed -i "/${TARGET_PROPERTY}/d" ${JIRA_INSTALL}/conf/logging.properties
   echo "${TARGET_PROPERTY} = ${JIRA_LOGFILE_LOCATION}" >> ${JIRA_INSTALL}/conf/logging.properties

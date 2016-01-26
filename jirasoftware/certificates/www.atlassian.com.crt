@@ -1,0 +1,103 @@
+Processed 170 CA certificate(s).
+Resolving 'www.atlassian.com'...
+Connecting to '54.85.142.90:443'...
+- Certificate type: X.509
+- Got a certificate list of 2 certificates.
+- Certificate[0] info:
+ - subject `C=AU,ST=New South Wales,L=Sydney,O=Atlassian Pty Ltd,CN=*.atlassian.com', issuer `C=US,O=DigiCert Inc,OU=www.digicert.com,CN=DigiCert SHA2 High Assurance Server CA', RSA key 2048 bits, signed using RSA-SHA256, activated `2014-09-17 00:00:00 UTC', expires `2017-09-20 12:00:00 UTC', SHA-1 fingerprint `8cd62860d6e0de880e6b8a480508424ead021bcf'
+	Public Key ID:
+		11a23de435c3b07790263e2674fe516d1c343c42
+	Public key's random art:
+		+--[ RSA 2048]----+
+		|      +o*oE=+.   |
+		|    .=o++=o *.   |
+		|   ..+=oo..o .   |
+		|    . =o.o       |
+		|     o oS.       |
+		|        .        |
+		|                 |
+		|                 |
+		|                 |
+		+-----------------+
+
+
+-----BEGIN CERTIFICATE-----
+MIIFVzCCBD+gAwIBAgIQBNyEri+XfvQSdP559Kcb6zANBgkqhkiG9w0BAQsFADBw
+MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3
+d3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz
+dXJhbmNlIFNlcnZlciBDQTAeFw0xNDA5MTcwMDAwMDBaFw0xNzA5MjAxMjAwMDBa
+MG4xCzAJBgNVBAYTAkFVMRgwFgYDVQQIEw9OZXcgU291dGggV2FsZXMxDzANBgNV
+BAcTBlN5ZG5leTEaMBgGA1UEChMRQXRsYXNzaWFuIFB0eSBMdGQxGDAWBgNVBAMM
+DyouYXRsYXNzaWFuLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+ANpNZJySQEdQc5ZgCKpnmJimLvMWWHvKoJUgThc+H0XZrgvR5ES1ARJT/EWTUi9x
+DvkViFnN9a4oIOz6VDw2idblVSZnSTGw5OvXM1FBRFmYkx/YppCf544k8M2JSvS3
+4bauyIUbA8o3U8b0i7QlPLZMdqHc2ZKqZE+IGejCIhJ8bzwpbqw9v/0g4AaN88Tg
+F0MDdkLHzAi/6+3oW88qxGyqV5BN2D6sb0f0RVFIsbcIg4qJ4o/N7vPLu0+xWB4r
+KznDkJElLWrZuRNXvIlx2FJVq77rBUauTVGMz3U02bRCJU8+rIWVVRrEYOV3/LmI
+CrroykZ3n0IrQtT8JWzyrJ0CAwEAAaOCAe0wggHpMB8GA1UdIwQYMBaAFFFo/5Cv
+Agd1PMzZZWRiohK4WXI7MB0GA1UdDgQWBBTelP6GkYSdQjMwbYr2ZeivFA4evTAp
+BgNVHREEIjAggg8qLmF0bGFzc2lhbi5jb22CDWF0bGFzc2lhbi5jb20wDgYDVR0P
+AQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjB1BgNVHR8E
+bjBsMDSgMqAwhi5odHRwOi8vY3JsMy5kaWdpY2VydC5jb20vc2hhMi1oYS1zZXJ2
+ZXItZzMuY3JsMDSgMqAwhi5odHRwOi8vY3JsNC5kaWdpY2VydC5jb20vc2hhMi1o
+YS1zZXJ2ZXItZzMuY3JsMEIGA1UdIAQ7MDkwNwYJYIZIAYb9bAEBMCowKAYIKwYB
+BQUHAgEWHGh0dHBzOi8vd3d3LmRpZ2ljZXJ0LmNvbS9DUFMwgYMGCCsGAQUFBwEB
+BHcwdTAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tME0GCCsG
+AQUFBzAChkFodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRTSEEy
+SGlnaEFzc3VyYW5jZVNlcnZlckNBLmNydDAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3
+DQEBCwUAA4IBAQCkHh9HBaIQ0G7m1pe5JZZzcP7kVnP2zqMIg1Dh9hpBsmKmGA3a
+4l6wLDwyWA3Fz94z+LNUSFlCpvOvw4edVksHfs0sR2Dm4i+qtG4Z7HQ4u/jG5cqv
+BuUnG8MBwp0WxPWbXepT0cp6j1hJpTnJYTiparNRlurCGyA0ddaUEr7h5nY5UQ1a
++BOYyV5wxt6qC/HKYnxVbFwNTrhygDHecKNsSVq6aYpQPiUWotAnyQdbM/QIE4OK
+staMsUiZjsQNO/8MCIZE2IGvqdw3SpxUAf/HbHh5rDPgdfjZMRy+oBTU7nczuwyZ
+K6MobEuNx8M8NQN+TTW+PgJkXKhP5ynBDCTp
+-----END CERTIFICATE-----
+
+- Certificate[1] info:
+ - subject `C=US,O=DigiCert Inc,OU=www.digicert.com,CN=DigiCert SHA2 High Assurance Server CA', issuer `C=US,O=DigiCert Inc,OU=www.digicert.com,CN=DigiCert High Assurance EV Root CA', RSA key 2048 bits, signed using RSA-SHA256, activated `2013-10-22 12:00:00 UTC', expires `2028-10-22 12:00:00 UTC', SHA-1 fingerprint `a031c46782e6e6c662c2c87c76da9aa62ccabd8e'
+
+-----BEGIN CERTIFICATE-----
+MIIEsTCCA5mgAwIBAgIQBOHnpNxc8vNtwCtCuF0VnzANBgkqhkiG9w0BAQsFADBs
+MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3
+d3cuZGlnaWNlcnQuY29tMSswKQYDVQQDEyJEaWdpQ2VydCBIaWdoIEFzc3VyYW5j
+ZSBFViBSb290IENBMB4XDTEzMTAyMjEyMDAwMFoXDTI4MTAyMjEyMDAwMFowcDEL
+MAkGA1UEBhMCVVMxFTATBgNVBAoTDERpZ2lDZXJ0IEluYzEZMBcGA1UECxMQd3d3
+LmRpZ2ljZXJ0LmNvbTEvMC0GA1UEAxMmRGlnaUNlcnQgU0hBMiBIaWdoIEFzc3Vy
+YW5jZSBTZXJ2ZXIgQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC2
+4C/CJAbIbQRf1+8KZAayfSImZRauQkCbztyfn3YHPsMwVYcZuU+UDlqUH1VWtMIC
+Kq/QmO4LQNfE0DtyyBSe75CxEamu0si4QzrZCwvV1ZX1QK/IHe1NnF9Xt4ZQaJn1
+itrSxwUfqJfJ3KSxgoQtxq2lnMcZgqaFD15EWCo3j/018QsIJzJa9buLnqS9UdAn
+4t07QjOjBSjEuyjMmqwrIw14xnvmXnG3Sj4I+4G3FhahnSMSTeXXkgisdaScus0X
+sh5ENWV/UyU50RwKmmMbGZJ0aAo3wsJSSMs5WqK24V3B3aAguCGikyZvFEohQcft
+bZvySC/zA/WiaJJTL17jAgMBAAGjggFJMIIBRTASBgNVHRMBAf8ECDAGAQH/AgEA
+MA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIw
+NAYIKwYBBQUHAQEEKDAmMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2Vy
+dC5jb20wSwYDVR0fBEQwQjBAoD6gPIY6aHR0cDovL2NybDQuZGlnaWNlcnQuY29t
+L0RpZ2lDZXJ0SGlnaEFzc3VyYW5jZUVWUm9vdENBLmNybDA9BgNVHSAENjA0MDIG
+BFUdIAAwKjAoBggrBgEFBQcCARYcaHR0cHM6Ly93d3cuZGlnaWNlcnQuY29tL0NQ
+UzAdBgNVHQ4EFgQUUWj/kK8CB3U8zNllZGKiErhZcjswHwYDVR0jBBgwFoAUsT7D
+aQP4v0cB1JgmGggC72NkK8MwDQYJKoZIhvcNAQELBQADggEBABiKlYkD5m3fXPwd
+aOpKj4PWUS+Na0QWnqxj9dJubISZi6qBcYRb7TROsLd5kinMLYBq8I4g4Xmk/gNH
+E+r1hspZcX30BJZr01lYPf7TMSVcGDiEo+afgv2MW5gxTs14nhr9hctJqvIni5ly
+/D6q1UEL2tU2ob8cbkdJf17ZSHwD2f2LSaCYJkJA69aSEaRkCldUxPUd1gJea6zu
+xICaEnL6VpPX/78whQYwvwt/Tv9XBZ0k7YXDK/umdaisLRbvfXknsuvCnQsH6qqF
+0wGjIChBWUMo0oHjqvbsezt3tkBigAVBRQHvFwY+3sAzm2fTYS5yh+Rp/BIAV0Ae
+cPUeybQ=
+-----END CERTIFICATE-----
+
+- Status: The certificate is trusted. 
+- Description: (TLS1.2)-(ECDHE-RSA-SECP256R1)-(AES-128-GCM)
+- Session ID: CC:8A:1A:F8:64:E4:0E:51:FD:ED:7B:34:20:5D:93:7F:70:96:95:3B:BB:73:B1:A6:6B:A9:D4:AC:2A:1E:0B:E9
+- Ephemeral EC Diffie-Hellman parameters
+ - Using curve: SECP256R1
+ - Curve size: 256 bits
+- Version: TLS1.2
+- Key Exchange: ECDHE-RSA
+- Server Signature: RSA-SHA256
+- Cipher: AES-128-GCM
+- MAC: AEAD
+- Compression: NULL
+- Handshake was completed
+
+- Simple Client Mode:
+
