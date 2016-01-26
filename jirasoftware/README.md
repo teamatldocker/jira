@@ -285,6 +285,10 @@ $ vagrant ssh
 
 > Jira will be available on localhost:8100 on the host machine.
 
+## Support
+
+Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](https://www.hipchat.com/geogBFvEM)
+
 ## Credits
 
 This project is very grateful for code and examples from the repository:
