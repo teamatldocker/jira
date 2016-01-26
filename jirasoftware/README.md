@@ -82,8 +82,8 @@ Now start the Jira container and let it use the container. On first startup you 
 
 ~~~~
 $ docker run -d --name jira \
-	  -e "DATABASE_URL=postgresql://jiradb@postgres/jiradb" \
-	  -e "DB_PASSWORD=jellyfish"  \
+	  -e "JIRA_DATABASE_URL=postgresql://jiradb@postgres/jiradb" \
+	  -e "JIRA_DB_PASSWORD=jellyfish"  \
 	  --link postgres:postgres \
 	  -p 80:8080 blacklabelops/jirasoftware
 ~~~~
@@ -123,8 +123,8 @@ Now start the Jira container and let it use the container. On first startup you 
 
 ~~~~
 $ docker run -d --name jira \
-    -e "DATABASE_URL=mysql://jiradb@mysql/jiradb" \
-    -e "DB_PASSWORD=jellyfish"  \
+    -e "JIRA_DATABASE_URL=mysql://jiradb@mysql/jiradb" \
+    -e "JIRA_DB_PASSWORD=jellyfish"  \
     --link mysql:mysql \
     -p 80:8080 \
     blacklabelops/jirasoftware

@@ -13,8 +13,8 @@ fi
 
 xmlstarlet ed -P -S -L -u '//Context/@path' -v "$CONTEXT_PATH" ${JIRA_INSTALL}/conf/server.xml
 
-if [ -n "$DATABASE_URL" ]; then
-  extract_database_url "$DATABASE_URL" DB ${JIRA_INSTALL}/lib
+if [ -n "$JIRA_DATABASE_URL" ]; then
+  extract_database_url "$JIRA_DATABASE_URL" DB ${JIRA_INSTALL}/lib
   DB_JDBC_URL="$(xmlstarlet esc "$DB_JDBC_URL")"
   SCHEMA=''
   if [ "$DB_TYPE" != "mysql" ]; then
@@ -32,7 +32,7 @@ if [ -n "$DATABASE_URL" ]; then
     <url>$DB_JDBC_URL</url>
     <driver-class>$DB_JDBC_DRIVER</driver-class>
     <username>$DB_USER</username>
-    <password>$DB_PASSWORD</password>
+    <password>$JIRA_DB_PASSWORD</password>
     <pool-min-size>20</pool-min-size>
     <pool-max-size>20</pool-max-size>
     <pool-max-wait>30000</pool-max-wait>
