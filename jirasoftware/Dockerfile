@@ -1,4 +1,4 @@
-FROM blacklabelops/java-jre-8
+FROM blacklabelops/java-jre-8:8.66.17
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
 ENV JIRA_VERSION=7.0.9 \
