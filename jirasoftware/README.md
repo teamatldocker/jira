@@ -132,6 +132,105 @@ $ docker run -d --name jira \
 
 >  Start the Jira and link it to the postgresql instance.
 
+## Proxy Configuration
+
+You can specify your proxy host and proxy port with the environment variables JIRA_PROXY_NAME and JIRA_PROXY_PORT. The value will be set inside the Atlassian server.xml at startup!
+
+When you use https then you also have to include the environment variable JIRA_PROXY_SCHEME.
+
+Example HTTPS:
+
+* Proxy Name: myhost.example.com
+* Proxy Port: 443
+* Poxy Protocol Scheme: https
+
+Just type:
+
+~~~~
+$ docker run -d --name jira \
+    -e "JIRA_PROXY_NAME=myhost.example.com" \
+    -e "JIRA_PROXY_PORT=443" \
+    -e "JIRA_PROXY_SCHEME=https" \
+    blacklabelops/jirasoftware
+~~~~
+
+> Will set the values inside the server.xml in /opt/jira/conf/server.xml
+
+## NGINX HTTP Proxy
+
+This is an example on running Atlassian Jira behind NGINX with 2 Docker commands!
+
+First start Jira:
+
+~~~~
+$ docker run -d --name jira \
+    -e "JIRA_PROXY_NAME=www.example.com" \
+    -e "JIRA_PROXY_PORT=80" \
+    -e "JIRA_PROXY_SCHEME=http" \
+    blacklabelops/jirasoftware
+~~~~
+
+Then start NGINX:
+
+~~~~
+$ docker run -d \
+    -p 80:8080 \
+    --name jira \
+    --link jira:jira
+    -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
+    -e "SERVER1REVERSE_PROXY_PASS1=http://jira:8080" \
+    blacklabelops/nginx
+~~~~
+
+> Jira will be available at http://yourdockerhost.
+
+## NGINX HTTPS Proxy
+
+This is an example on running Atlassian Jira behind NGINX-HTTPS with2 Docker commands!
+
+Note: This is a self-signed certificate! Trusted certificates by letsencrypt are supported. Documentation can be found here: [blacklabelops/nginx](https://github.com/blacklabelops/nginx)
+
+First start Jira:
+
+~~~~
+$ docker run -d --name jira \
+    -e "JIRA_PROXY_NAME=crusty.springfield.com" \
+    -e "JIRA_PROXY_PORT=443" \
+    -e "JIRA_PROXY_SCHEME=https" \
+    blacklabelops/jirasoftware
+~~~~
+
+Then start NGINX:
+
+~~~~
+$ docker run -d \
+    -p 443:44300 \
+    --name nginx \
+    --link confluence:confluence
+    -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
+    -e "SERVER1REVERSE_PROXY_PASS1=http://jira:8080" \
+    -e "SERVER1CERTIFICATE_DNAME=/CN=CrustyClown/OU=SpringfieldEntertainment/O=crusty.springfield.com/L=Springfield/C=US" \
+    -e "SERVER1HTTPS_ENABLED=true" \
+    -e "SERVER1HTTP_ENABLED=false" \
+    blacklabelops/nginx
+~~~~
+
+> Confluence will be available at https://yourdockerhost.
+
+## Log File Configuration
+
+You can reconfigure the logfile location with the environment variable JIRA_LOGFILE_LOCATION!
+
+Example:
+
+~~~~
+$ docker run -d --name jira \
+    -e "JIRA_LOGFILE_LOCATION=/var/atlassian/jira/logs" \
+    blacklabelops/jirasoftware
+~~~~
+
+> Will write logs to /var/atlassian/jira/logs. Note: Must be accessible by jira:jira user!
+
 ## Credits
 
 This project is very grateful for code and examples from the repository:
