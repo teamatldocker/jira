@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 #
 # A helper script for ENTRYPOINT.
 #
@@ -44,12 +44,9 @@ if [ -n "${JIRA_LOGFILE_LOCATION}" ]; then
   mkdir -p ${JIRA_LOGFILE_LOCATION}
 fi
 
-cat ${JIRA_INSTALL}/conf/server.xml
-cat ${JIRA_INSTALL}/conf/logging.properties
-
 if [ "$1" = 'jira' ]; then
-  /bin/bash -x ${JIRA_SCRIPTS}/launch.sh
-  /bin/bash -x ${JIRA_INSTALL}/bin/start-jira.sh -fg "$@"
+  /bin/bash ${JIRA_SCRIPTS}/launch.sh
+  /bin/bash ${JIRA_INSTALL}/bin/start-jira.sh -fg "$@"
 fi
 
 exec "$@"

@@ -27,40 +27,72 @@ $ docker run -d -p 80:8080 --name jira blacklabelops/jirasoftware
 
 > Jira will be available at http://yourdockerhost
 
-## Vagrant
+## Database Setup
 
-First install:
+1. Start a database server.
+1. Create a database with the correct collate.
+1. Start Jira.
 
-* [Vagrant](https://www.vagrantup.com/)
-* [Virtualbox](https://www.virtualbox.org/)
+Example with PostgreSQL:
 
-Vagrant is fabulous tool for pulling and spinning up virtual machines like docker with containers. I can configure my development and test environment and simply pull it online. And so can you! Install Vagrant and Virtualbox and spin it up. Change into the project folder and build the project on the spot!
+First start the database server:
+
+> Note: Change Password!
 
 ~~~~
-$ vagrant up
-$ vagrant ssh
-[vagrant@localhost ~]$ cd /vagrant
-[vagrant@localhost ~]$ docker-compose up
+$ docker run --name postgres -d \
+    -e 'POSTGRES_USER=jira' \
+    -e 'POSTGRES_PASSWORD=jellyfish' \
+    postgres:9.5
 ~~~~
 
-> Jira will be available on localhost:8100 on the host machine.
+> This is the official postgres image.
 
-## Setup Example Using Docker
+Then create the database with the correct collate:
 
-This example is "by foot" using the docker cli. In this example we setup an empty PostgreSQL container. Then we connect and configure the Jira accordingly. Afterwards the Jira container can always resume on the database.
+~~~~
+$ docker run -it --rm \
+    --link postgres:postgres \
+    postgres:9.5 \
+    sh -c 'exec createdb -E UNICODE -l C -T template0 jiradb -h postgres -p 5432 -U jira'
+~~~~
+
+> Creates the database `jiradb` under user `jira` with the correct encoding and collation.
+
+Then start Jira:
+
+~~~~
+$ docker run -d --name jira \
+	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
+	  -e "JIRA_DB_PASSWORD=jellyfish"  \
+	  --link postgres:postgres \
+	  -p 80:8080 blacklabelops/jirasoftware
+~~~~
+
+>  Start the Jira and link it to the postgresql instance.
+
+## Demo Database Setup
+
+> Note: It's not recommended to use a default initialized database for Jira in production! The default databases are all using a not recommended collation! Please use this for demo purposes only!
+
+This is a demo "by foot" using the docker cli. In this example we setup an empty PostgreSQL container. Then we connect and configure the Jira accordingly. Afterwards the Jira container can always resume on the database.
+
+Steps:
+
+* Start Database container
+* Start Jira
 
 ### PostgreSQL
 
 Let's take an PostgreSQL Docker Image and set it up:
 
-
 Postgres Official Docker Image:
 
 ~~~~
 $ docker run --name postgres -d \
+    -e 'POSTGRES_DB=jiradb' \
     -e 'POSTGRES_USER=jiradb' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
-    -e 'POSTGRES_DB=jiradb' \
     postgres:9.5
 ~~~~
 
@@ -230,6 +262,24 @@ $ docker run -d --name jira \
 ~~~~
 
 > Will write logs to /var/atlassian/jira/logs. Note: Must be accessible by jira:jira user!
+
+## Vagrant
+
+First install:
+
+* [Vagrant](https://www.vagrantup.com/)
+* [Virtualbox](https://www.virtualbox.org/)
+
+Vagrant is fabulous tool for pulling and spinning up virtual machines like docker with containers. I can configure my development and test environment and simply pull it online. And so can you! Install Vagrant and Virtualbox and spin it up. Change into the project folder and build the project on the spot!
+
+~~~~
+$ vagrant up
+$ vagrant ssh
+[vagrant@localhost ~]$ cd /vagrant
+[vagrant@localhost ~]$ docker-compose up
+~~~~
+
+> Jira will be available on localhost:8100 on the host machine.
 
 ## Credits
 

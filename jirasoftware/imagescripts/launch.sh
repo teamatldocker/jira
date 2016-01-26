@@ -1,7 +1,8 @@
 #!/bin/bash
+
 set -o errexit
 
-. ${JIRA_SCRIPTS}/common.bash
+. ${JIRA_SCRIPTS}/common.sh
 
 rm -f /opt/atlassian-home/.jira-home.lock
 
@@ -14,10 +15,10 @@ fi
 xmlstarlet ed -P -S -L -u '//Context/@path' -v "$CONTEXT_PATH" ${JIRA_INSTALL}/conf/server.xml
 
 if [ -n "$JIRA_DATABASE_URL" ]; then
-  extract_database_url "$JIRA_DATABASE_URL" DB ${JIRA_INSTALL}/lib
-  DB_JDBC_URL="$(xmlstarlet esc "$DB_JDBC_URL")"
+  extract_database_url "$JIRA_DATABASE_URL" JIRA_DB ${JIRA_INSTALL}/lib
+  JIRA_DB_JDBC_URL="$(xmlstarlet esc "$JIRA_DB_JDBC_URL")"
   SCHEMA=''
-  if [ "$DB_TYPE" != "mysql" ]; then
+  if [ "$JIRA_DB_TYPE" != "mysql" ]; then
     SCHEMA='<schema-name>public</schema-name>'
   fi
 
@@ -26,12 +27,12 @@ if [ -n "$JIRA_DATABASE_URL" ]; then
 <jira-database-config>
   <name>defaultDS</name>
   <delegator-name>default</delegator-name>
-  <database-type>$DB_TYPE</database-type>
+  <database-type>$JIRA_DB_TYPE</database-type>
   $SCHEMA
   <jdbc-datasource>
-    <url>$DB_JDBC_URL</url>
-    <driver-class>$DB_JDBC_DRIVER</driver-class>
-    <username>$DB_USER</username>
+    <url>$JIRA_DB_JDBC_URL</url>
+    <driver-class>$JIRA_DB_JDBC_DRIVER</driver-class>
+    <username>$JIRA_DB_USER</username>
     <password>$JIRA_DB_PASSWORD</password>
     <pool-min-size>20</pool-min-size>
     <pool-max-size>20</pool-max-size>
