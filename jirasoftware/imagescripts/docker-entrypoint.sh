@@ -25,7 +25,7 @@ if [ -n "${JIRA_PROXY_PORT}" ]; then
 fi
 
 if [ -n "${JIRA_PROXY_SCHEME}" ]; then
-  xmlstarlet ed -P -S -L --insert "//Connector[not(@scheme)]" --type attr -n proxyPort --value "${JIRA_PROXY_SCHEME}" ${JIRA_INSTALL}/conf/server.xml
+  xmlstarlet ed -P -S -L --insert "//Connector[not(@scheme)]" --type attr -n scheme --value "${JIRA_PROXY_SCHEME}" ${JIRA_INSTALL}/conf/server.xml
 fi
 
 if [ -n "${JIRA_LOGFILE_LOCATION}" ]; then

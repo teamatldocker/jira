@@ -196,25 +196,27 @@ First start Jira:
 
 ~~~~
 $ docker run -d --name jira \
-    -e "JIRA_PROXY_NAME=www.example.com" \
+    -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=80" \
     -e "JIRA_PROXY_SCHEME=http" \
     blacklabelops/jirasoftware
 ~~~~
+
+> Example with dockertools
 
 Then start NGINX:
 
 ~~~~
 $ docker run -d \
     -p 80:8080 \
-    --name jira \
-    --link jira:jira
+    --name nginx \
+    --link jira:jira \
     -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
     -e "SERVER1REVERSE_PROXY_PASS1=http://jira:8080" \
     blacklabelops/nginx
 ~~~~
 
-> Jira will be available at http://yourdockerhost.
+> Jira will be available at http://192.168.99.100.
 
 ## NGINX HTTPS Proxy
 
@@ -226,11 +228,13 @@ First start Jira:
 
 ~~~~
 $ docker run -d --name jira \
-    -e "JIRA_PROXY_NAME=crusty.springfield.com" \
+    -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
     blacklabelops/jirasoftware
 ~~~~
+
+> Example with dockertools
 
 Then start NGINX:
 
@@ -238,7 +242,7 @@ Then start NGINX:
 $ docker run -d \
     -p 443:44300 \
     --name nginx \
-    --link confluence:confluence
+    --link jira:jira \
     -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
     -e "SERVER1REVERSE_PROXY_PASS1=http://jira:8080" \
     -e "SERVER1CERTIFICATE_DNAME=/CN=CrustyClown/OU=SpringfieldEntertainment/O=crusty.springfield.com/L=Springfield/C=US" \
@@ -247,7 +251,7 @@ $ docker run -d \
     blacklabelops/nginx
 ~~~~
 
-> Confluence will be available at https://yourdockerhost.
+> Confluence will be available at https://192.168.99.100.
 
 ## Log File Configuration
 
