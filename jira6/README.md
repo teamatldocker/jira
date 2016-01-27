@@ -4,7 +4,7 @@
 
 ## Release: blacklabelops/jira:latest
 
-Deprecated! Looking for Jira Software or Jira7? Can be found here: [blacklabelops/jirasoftware](https://github.com/blacklabelops/jira/tree/master/jirasoftware/README.md)
+Deprecated! Looking for Jira Software or Jira7? Can be found here: [blacklabelops/jirasoftware](https://github.com/blacklabelops/jira/tree/master/jirasoftware)
 
 ## Make It Short
 
