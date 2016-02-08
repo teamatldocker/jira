@@ -2,7 +2,9 @@
 
 > Release: blacklabelops/jirasoftware:latest
 
-[![Circle CI](https://circleci.com/gh/blacklabelops/jira/tree/master.svg?style=shield)](https://circleci.com/gh/blacklabelops/centos/tree/master) [![Docker Repository on Quay.io](https://quay.io/repository/blacklabelops/jirasoftware/status "Docker Repository on Quay")](https://quay.io/repository/blacklabelops/centos) [![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jirasoftware.svg)](https://hub.docker.com/r/blacklabelops/jirasoftware/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jirasoftware.svg)](https://hub.docker.com/r/blacklabelops/jirasoftware/)
+[![Circle CI](https://circleci.com/gh/blacklabelops/jira/tree/master.svg?style=shield)](https://circleci.com/gh/blacklabelops/centos/tree/master) [![Docker Repository on Quay.io](https://quay.io/repository/blacklabelops/jirasoftware/status "Docker Repository on Quay")](https://quay.io/repository/blacklabelops/centos) [![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jirasoftware.svg)](https://hub.docker.com/r/blacklabelops/jirasoftware/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jirasoftware.svg)](https://hub.docker.com/r/blacklabelops/jirasoftware/) [![](https://badge.imagelayers.io/blacklabelops/jirasoftware:latest.svg)](https://imagelayers.io/?images=blacklabelops/jirasoftware:latest 'Get your own badge on imagelayers.io')
+
+New: Minimized Alpine Version!
 
 ## Instant Usage
 
