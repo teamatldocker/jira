@@ -1,5 +1,5 @@
 jira:
-  image: blacklabelops/jirasoftware
+  image: blacklabelops/jira
   container_name: jirasoftware
   ports:
     - '80:8080'

@@ -25,7 +25,7 @@ $ docker-compose up -d
 Docker-CLI:
 
 ~~~~
-$ docker run -d -p 80:8080 --name jira blacklabelops/jirasoftware
+$ docker run -d -p 80:8080 --name jira blacklabelops/jira
 ~~~~
 
 > Jira will be available at http://yourdockerhost
@@ -69,7 +69,7 @@ $ docker run -d --name jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
 	  --link postgres:postgres \
-	  -p 80:8080 blacklabelops/jirasoftware
+	  -p 80:8080 blacklabelops/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
@@ -120,7 +120,7 @@ $ docker run -d --name jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jiradb@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
 	  --link postgres:postgres \
-	  -p 80:8080 blacklabelops/jirasoftware
+	  -p 80:8080 blacklabelops/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
@@ -162,7 +162,7 @@ $ docker run -d --name jira \
     -e "JIRA_DB_PASSWORD=jellyfish"  \
     --link mysql:mysql \
     -p 80:8080 \
-    blacklabelops/jirasoftware
+    blacklabelops/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
@@ -186,7 +186,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=myhost.example.com" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
-    blacklabelops/jirasoftware
+    blacklabelops/jira
 ~~~~
 
 > Will set the values inside the server.xml in /opt/jira/conf/server.xml
@@ -202,7 +202,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=80" \
     -e "JIRA_PROXY_SCHEME=http" \
-    blacklabelops/jirasoftware
+    blacklabelops/jira
 ~~~~
 
 > Example with dockertools
@@ -234,7 +234,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
-    blacklabelops/jirasoftware
+    blacklabelops/jira
 ~~~~
 
 > Example with dockertools
@@ -265,7 +265,7 @@ Example:
 ~~~~
 $ docker run -d --name jira \
     -e "JIRA_LOGFILE_LOCATION=/var/atlassian/jira/logs" \
-    blacklabelops/jirasoftware
+    blacklabelops/jira
 ~~~~
 
 > Will write logs to /var/atlassian/jira/logs. Note: Must be accessible by jira:jira user!
