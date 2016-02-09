@@ -7,7 +7,7 @@
 ## Supported tags and respective Dockerfile links
 
 * `7.0.10`, `latest` [(7.0.10/Dockerfile)](https://github.com/blacklabelops/jira/blob/master/jirasoftware/Dockerfile)
-* `6.4.12` [(6.4.12/Dockerfile)](https://github.com/blacklabelops/jira/blob/jira6/jira6/Dockerfile) [(6.4.12/Readme)](https://github.com/blacklabelops/jira/tree/jira6/jira6)
+* `6.4.12` [(6.4.12/Dockerfile)](https://github.com/blacklabelops/jira/blob/jira6/Dockerfile) [(6.4.12/Readme)](https://github.com/blacklabelops/jira/tree/jira6)
 
 ## Instant Usage
 
