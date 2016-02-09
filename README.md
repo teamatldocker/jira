@@ -11,7 +11,7 @@
 
 ## Instant Usage
 
-[![Deploy to Tutum](https://s.tutum.co/deploy-to-tutum.svg)](https://dashboard.tutum.co/stack/deploy/)
+[![Deploy to Tutum](https://s.tutum.co/deploy-to-tutum.svg)](https://stackfiles.io/registry/56b9c12635a28a01009e5811)
 
 ## Make It Short
 
