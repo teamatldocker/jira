@@ -1,13 +1,11 @@
 # Dockerized Atlassian Jira
 
-> Release: blacklabelops/jira:latest
-
 [![Circle CI](https://circleci.com/gh/blacklabelops/jira/tree/master.svg?style=shield)](https://circleci.com/gh/blacklabelops/jira/tree/master) [![Docker Repository on Quay.io](https://quay.io/repository/blacklabelops/jirasoftware/status "Docker Repository on Quay")](https://quay.io/repository/blacklabelops/jirasoftware) [![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![](https://badge.imagelayers.io/blacklabelops/jira:latest.svg)](https://imagelayers.io/?images=blacklabelops/jira:latest 'Get your own badge on imagelayers.io')
 
 ## Supported tags and respective Dockerfile links
 
-* `7.0.10`, `latest` [(7.0.10/Dockerfile)](https://github.com/blacklabelops/jira/blob/master/Dockerfile)
-* `6.4.12` [(6.4.12/Dockerfile)](https://github.com/blacklabelops/jira/blob/jira6/Dockerfile) [(6.4.12/Readme)](https://github.com/blacklabelops/jira/tree/jira6)
+* `7.0.10`, `latest` [(Dockerfile)](https://github.com/blacklabelops/jira/blob/master/Dockerfile)
+* `6.4.12` [(Dockerfile)](https://github.com/blacklabelops/jira/blob/jira6/Dockerfile) [(Readme)](https://github.com/blacklabelops/jira/tree/jira6)
 
 ## Instant Usage
 
