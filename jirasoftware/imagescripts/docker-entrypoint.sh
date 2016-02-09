@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 #
 # A helper script for ENTRYPOINT.
 #
@@ -28,26 +28,33 @@ if [ -n "${JIRA_PROXY_SCHEME}" ]; then
   xmlstarlet ed -P -S -L --insert "//Connector[not(@scheme)]" --type attr -n scheme --value "${JIRA_PROXY_SCHEME}" ${JIRA_INSTALL}/conf/server.xml
 fi
 
+jira_logfile="/var/atlassian/jira/log"
+
 if [ -n "${JIRA_LOGFILE_LOCATION}" ]; then
-  if [ ! -d "${JIRA_LOGFILE_LOCATION}" ]; then
-    mkdir -p ${JIRA_LOGFILE_LOCATION}
-  fi
-  TARGET_PROPERTY=1catalina.org.apache.juli.AsyncFileHandler.directory
-  sed -i "/${TARGET_PROPERTY}/d" ${JIRA_INSTALL}/conf/logging.properties
-  echo "${TARGET_PROPERTY} = ${JIRA_LOGFILE_LOCATION}" >> ${JIRA_INSTALL}/conf/logging.properties
-  TARGET_PROPERTY=2localhost.org.apache.juli.AsyncFileHandler.directory
-  sed -i "/${TARGET_PROPERTY}/d" ${JIRA_INSTALL}/conf/logging.properties
-  echo "${TARGET_PROPERTY} = ${JIRA_LOGFILE_LOCATION}" >> ${JIRA_INSTALL}/conf/logging.properties
-  TARGET_PROPERTY=3manager.org.apache.juli.AsyncFileHandler.directory
-  sed -i "/${TARGET_PROPERTY}/d" ${JIRA_INSTALL}/conf/logging.properties
-  echo "${TARGET_PROPERTY} = ${JIRA_LOGFILE_LOCATION}" >> ${JIRA_INSTALL}/conf/logging.properties
-  TARGET_PROPERTY=4host-manager.org.apache.juli.AsyncFileHandler.directory
-  sed -i "/${TARGET_PROPERTY}/d" ${JIRA_INSTALL}/conf/logging.properties
-  echo "${TARGET_PROPERTY} = ${JIRA_LOGFILE_LOCATION}" >> ${JIRA_INSTALL}/conf/logging.properties
-  mkdir -p ${JIRA_LOGFILE_LOCATION}
+  jira_logfile=${JIRA_LOGFILE_LOCATION}
 fi
 
-if [ "$1" = 'jira' ]; then
+if [ ! -d "${jira_logfile}" ]; then
+  mkdir -p ${jira_logfile}
+fi
+
+TARGET_PROPERTY=1catalina.org.apache.juli.AsyncFileHandler.directory
+sed -i "/${TARGET_PROPERTY}/d" ${JIRA_INSTALL}/conf/logging.properties
+echo "${TARGET_PROPERTY} = ${jira_logfile}" >> ${JIRA_INSTALL}/conf/logging.properties
+
+TARGET_PROPERTY=2localhost.org.apache.juli.AsyncFileHandler.directory
+sed -i "/${TARGET_PROPERTY}/d" ${JIRA_INSTALL}/conf/logging.properties
+echo "${TARGET_PROPERTY} = ${jira_logfile}" >> ${JIRA_INSTALL}/conf/logging.properties
+
+TARGET_PROPERTY=3manager.org.apache.juli.AsyncFileHandler.directory
+sed -i "/${TARGET_PROPERTY}/d" ${JIRA_INSTALL}/conf/logging.properties
+echo "${TARGET_PROPERTY} = ${jira_logfile}" >> ${JIRA_INSTALL}/conf/logging.properties
+
+TARGET_PROPERTY=4host-manager.org.apache.juli.AsyncFileHandler.directory
+sed -i "/${TARGET_PROPERTY}/d" ${JIRA_INSTALL}/conf/logging.properties
+echo "${TARGET_PROPERTY} = ${jira_logfile}" >> ${JIRA_INSTALL}/conf/logging.properties
+
+if [ "$1" = 'jira' ] || [ "${1:0:1}" = '-' ]; then
   /bin/bash ${JIRA_SCRIPTS}/launch.sh
   /bin/bash ${JIRA_INSTALL}/bin/start-jira.sh -fg "$@"
 fi
