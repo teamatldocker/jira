@@ -1,22 +1,51 @@
-jira:
-  image: blacklabelops/jira
-  container_name: jirasoftware
-  ports:
-    - '80:8080'
-  environment:
-    - 'JIRA_DATABASE_URL=postgresql://jira@postgresql/jiradb'
-    - 'JIRA_DB_PASSWORD=jellyfish'
-    - 'CATALINA_OPTS= -Xms256m -Xmx1g'
-    - 'JIRA_PROXY_NAME='
-    - 'JIRA_PROXY_PORT='
-    - 'JIRA_PROXY_SCHEME='
-    - 'JIRA_DELAYED_START=10'
-  links:
-    - 'postgresql:postgresql'
-postgresql:
-  image: postgres:9.5
-  environment:
-    - 'POSTGRES_USER=jira'
-    # CHANGE THE PASSWORD!
-    - 'POSTGRES_PASSWORD=jellyfish'
-    - 'POSTGRES_DB=jiradb'
+version: '2'
+
+services:
+  jira:
+    image: blacklabelops/jira
+    container_name: jirasoftware
+    networks:
+      - jiranet
+    volumes:
+      - jiradata:/var/atlassian/jira
+    ports:
+      - '80:8080'
+    environment:
+      - 'JIRA_DATABASE_URL=postgresql://jira@postgresql/jiradb'
+      - 'JIRA_DB_PASSWORD=jellyfish'
+      - 'CATALINA_OPTS= -Xms256m -Xmx1g'
+      - 'JIRA_PROXY_NAME='
+      - 'JIRA_PROXY_PORT='
+      - 'JIRA_PROXY_SCHEME='
+      - 'JIRA_DELAYED_START=10'
+    links:
+      - 'postgresql:postgresql'
+    labels:
+      com.blacklabelops.description: "Atlassian Jira"
+      com.blacklabelops.service: "jira"
+
+  postgresql:
+    image: postgres:9.5
+    hostname: postgresql
+    networks:
+      - jiranet
+    volumes:
+      - postgresqldata:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=jira'
+      # CHANGE THE PASSWORD!
+      - 'POSTGRES_PASSWORD=jellyfish'
+      - 'POSTGRES_DB=jiradb'
+    labels:
+      com.blacklabelops.description: "PostgreSQL Database Server"
+      com.blacklabelops.service: "postgresql"
+
+volumes:
+  jiradata:
+    external: false
+  postgresqldata:
+    external: false
+
+networks:
+  jiranet:
+    driver: bridge
