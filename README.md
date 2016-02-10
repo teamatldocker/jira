@@ -51,7 +51,7 @@ First start the database server:
 $ docker run --name postgres -d \
     -e 'POSTGRES_USER=jira' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
-    postgres:9.5
+    postgres:9.4
 ~~~~
 
 > This is the official postgres image.
@@ -65,7 +65,7 @@ $ docker run -it --rm \
     sh -c 'exec createdb -E UNICODE -l C -T template0 jiradb -h postgres -p 5432 -U jira'
 ~~~~
 
-> Creates the database `jiradb` under user `jira` with the correct encoding and collation.
+> Password is `jellyfish`. Creates the database `jiradb` under user `jira` with the correct encoding and collation.
 
 Then start Jira:
 
