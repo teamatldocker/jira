@@ -61,7 +61,7 @@ Then create the database with the correct collate:
 ~~~~
 $ docker run -it --rm \
     --link postgres:postgres \
-    postgres:9.5 \
+    postgres:9.4 \
     sh -c 'exec createdb -E UNICODE -l C -T template0 jiradb -h postgres -p 5432 -U jira'
 ~~~~
 
