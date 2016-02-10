@@ -28,7 +28,7 @@ if [ -n "${JIRA_PROXY_SCHEME}" ]; then
   xmlstarlet ed -P -S -L --insert "//Connector[not(@scheme)]" --type attr -n scheme --value "${JIRA_PROXY_SCHEME}" ${JIRA_INSTALL}/conf/server.xml
 fi
 
-jira_logfile="/var/atlassian/jira/log"
+local jira_logfile="/var/atlassian/jira/log"
 
 if [ -n "${JIRA_LOGFILE_LOCATION}" ]; then
   jira_logfile=${JIRA_LOGFILE_LOCATION}
