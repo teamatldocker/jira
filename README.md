@@ -101,7 +101,7 @@ $ docker run --name postgres -d \
     -e 'POSTGRES_DB=jiradb' \
     -e 'POSTGRES_USER=jiradb' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
-    postgres:9.5
+    postgres:9.4
 ~~~~
 
 > This is the official postgres image.

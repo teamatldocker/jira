@@ -45,15 +45,6 @@ parse_url() {
   [ -n "$query" ] && eval "export ${prefix}_QUERY=\"$query\"" || rc=$?
 }
 
-download_mysql_driver() {
-  local driver="mysql-connector-java-5.1.38"
-  if [ ! -f "$1/$driver-bin.jar" ]; then
-    echo "Downloading MySQL JDBC Driver..."
-    curl -L http://dev.mysql.com/get/Downloads/Connector-J/$driver.tar.gz | tar zxv -C /tmp
-    cp /tmp/$driver/$driver-bin.jar $1/$driver-bin.jar
-  fi
-}
-
 read_var() {
   eval "echo \$$1_$2"
 }
@@ -77,7 +68,6 @@ extract_database_url() {
       local database_type="postgres72"
       ;;
     mysql|mysql2)
-      download_mysql_driver "$mysql_install"
       if [ -z "$(read_var $prefix PORT)" ]; then
         eval "${prefix}_PORT=3306"
       fi

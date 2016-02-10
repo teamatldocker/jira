@@ -1,4 +1,4 @@
-FROM blacklabelops/java-jre-8:alpine
+FROM blacklabelops/java:jre8
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
 ENV JIRA_VERSION=7.0.10                       \
@@ -7,7 +7,9 @@ ENV JIRA_VERSION=7.0.10                       \
     JIRA_CONTEXT_PATH=ROOT                    \
     JIRA_HOME=/var/atlassian/jira             \
     JIRA_INSTALL=/opt/jira                    \
-    JIRA_SCRIPTS=/usr/local/share/atlassian
+    JIRA_SCRIPTS=/usr/local/share/atlassian   \
+    MYSQL_DRIVER_VERSION=5.1.38               \
+    POSTGRESQL_DRIVER_VERSION=9.4.1207
 
 COPY imagescripts ${JIRA_SCRIPTS}
 
@@ -27,6 +29,19 @@ RUN apk add --update                                    \
     chmod +x /tmp/jira.bin                          &&  \
     /tmp/jira.bin -q -varfile                           \
       ${JIRA_SCRIPTS}/response.varfile              &&  \
+    # Install database drivers
+    rm -f                                               \
+      ${JIRA_INSTALL}/lib/mysql-connector-java*.jar &&  \
+    wget -O /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz                                              \
+      http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz      &&  \
+    tar xzf /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz                                              \
+      mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar           \
+      -C /tmp                                                                                                 &&  \
+    cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar     \
+      ${JIRA_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar                                &&  \
+    rm -f ${JIRA_INSTALL}/lib/postgresql-*.jar                                                                &&  \
+    wget -O ${JIRA_INSTALL}/lib/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar                                       \
+      https://jdbc.postgresql.org/download/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar                        &&  \
     # Add user
     export CONTAINER_USER=jira                      &&  \
     export CONTAINER_UID=1000                       &&  \

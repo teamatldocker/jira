@@ -25,7 +25,7 @@ services:
       com.blacklabelops.service: "jira"
 
   postgresql:
-    image: postgres:9.5
+    image: postgres:9.4
     hostname: postgresql
     networks:
       - jiranet
