@@ -35,7 +35,40 @@ $ docker run -d -p 80:8080 --name jira blacklabelops/jira
 
 > Jira will be available at http://yourdockerhost
 
-## Database Setup
+## Setup
+
+1. Start database server.
+1. Start Jira.
+
+First start the database server:
+
+> Note: Change Password!
+
+~~~~
+$ docker run --name postgres -d \
+    -e 'POSTGRES_USER=jira' \
+    -e 'POSTGRES_PASSWORD=jellyfish' \
+    -e 'POSTGRES_ENCODING=UNICODE' \
+    -e 'POSTGRES_COLLATE=C' \
+    -e 'POSTGRES_COLLATE_TYPE=C' \
+    blacklabelops/postgres
+~~~~
+
+> This is the blacklabelops postgres image.
+
+Then start Jira:
+
+~~~~
+$ docker run -d --name jira \
+	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
+	  -e "JIRA_DB_PASSWORD=jellyfish"  \
+	  --link postgres:postgres \
+	  -p 80:8080 blacklabelops/jira
+~~~~
+
+>  Start the Jira and link it to the postgresql instance.
+
+## Database Setup for Official Database Images
 
 1. Start a database server.
 1. Create a database with the correct collate.

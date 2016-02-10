@@ -15,9 +15,12 @@ jira:
   links:
     - 'postgresql:postgresql'
 postgresql:
-  image: postgres:9.5
+  image: blacklabelops/postgres
   environment:
     - 'POSTGRES_USER=jira'
     # CHANGE THE PASSWORD!
     - 'POSTGRES_PASSWORD=jellyfish'
     - 'POSTGRES_DB=jiradb'
+    - 'POSTGRES_ENCODING=UNICODE'
+    - 'POSTGRES_COLLATE=C'
+    - 'POSTGRES_COLLATE_TYPE=C'
