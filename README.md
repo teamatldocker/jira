@@ -4,8 +4,13 @@
 
 ## Supported tags and respective Dockerfile links
 
-* `7.0.10`, `latest` [(Dockerfile)](https://github.com/blacklabelops/jira/blob/master/Dockerfile)
-* `6.4.12` [(Dockerfile)](https://github.com/blacklabelops/jira/blob/jira6/Dockerfile) [(Readme)](https://github.com/blacklabelops/jira/tree/jira6)
+| Version | Tag  | Dockerfile | Size |
+|---------|------|------------|------|
+| Jira Software 7.0.10 | latest | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) | [![blacklabelops/jira:latest](https://badge.imagelayers.io/blacklabelops/jira:latest.svg)](https://imagelayers.io/?images=blacklabelops/jira:latest 'blacklabelops/jira:latest') |
+| Jira Software 7.0.9 | 7.0.9 | [Dockerfile](https://github.com/blacklabelops/jira/blob/7.0.9/jirasoftware/Dockerfile) | [![blacklabelops/jirasoftware:7.0.9](https://badge.imagelayers.io/blacklabelops/jirasoftware:7.0.9.svg)](https://imagelayers.io/?images=blacklabelops/jirasoftware:7.0.9 'blacklabelops/jirasoftware:7.0.9') |
+| Jira 6.4.12  | 6.4.12 | [Dockerfile](https://github.com/blacklabelops/jira/blob/jira6/Dockerfile) | [![blacklabelops/jira:6.4.12](https://badge.imagelayers.io/blacklabelops/jira:6.4.12.svg)](https://imagelayers.io/?images=blacklabelops/jira:6.4.12 'blacklabelops/jira:6.4.12') |
+
+> Older tags remain but are not supported/rebuild.
 
 ## Instant Usage
 
@@ -288,7 +293,7 @@ $ vagrant ssh
 
 > Jira will be available on localhost:8100 on the host machine.
 
-## Support
+## Support & Feature Requests
 
 Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](https://www.hipchat.com/geogBFvEM)
 
