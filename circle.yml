@@ -8,6 +8,7 @@ dependencies:
     - docker info
     - docker build -t blacklabelops/jira .
     - docker build -t blacklabelops/jira:servicedesk -f servicedesk/Dockerfile .
+    - docker build -t blacklabelops/jira:core -f core/Dockerfile .
 
 test:
   override:
@@ -17,3 +18,6 @@ test:
     - docker run -d -p 8200:8080 --name="jira_servicedesk" blacklabelops/jira:servicedesk
     - sleep 30
     - curl --retry 10 --retry-delay 5 -v http://localhost:8200/
+    - docker run -d -p 8300:8080 --name="jira_core" blacklabelops/jira:core
+    - sleep 30
+    - curl --retry 10 --retry-delay 5 -v http://localhost:8300/

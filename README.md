@@ -8,7 +8,7 @@
 |---------|--------|-------|------------|------|
 | Jira Software | 7.1.0 | 7.1.0, latest | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) | [![blacklabelops/jira:latest](https://badge.imagelayers.io/blacklabelops/jira:latest.svg)](https://imagelayers.io/?images=blacklabelops/jira:latest 'blacklabelops/jira:latest') |
 | Jira Service Desk | 3.1.0 | servicedesk, servicedesk.3.1.0 | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/servicedesk/Dockerfile) | [![blacklabelops/jira:latest](https://badge.imagelayers.io/blacklabelops/jira:servicedesk.svg)](https://imagelayers.io/?images=blacklabelops/jira:servicedesk 'blacklabelops/jira:servicedesk') |
-| Jira  | 6.4.12 | | [Dockerfile](https://github.com/blacklabelops/jira/blob/jira6/Dockerfile) | [![blacklabelops/jira:6.4.12](https://badge.imagelayers.io/blacklabelops/jira:6.4.12.svg)](https://imagelayers.io/?images=blacklabelops/jira:6.4.12 'blacklabelops/jira:6.4.12') |
+| Jira  | 6.4.12 | 6.4.12 | [Dockerfile](https://github.com/blacklabelops/jira/blob/jira6/Dockerfile) | [![blacklabelops/jira:6.4.12](https://badge.imagelayers.io/blacklabelops/jira:6.4.12.svg)](https://imagelayers.io/?images=blacklabelops/jira:6.4.12 'blacklabelops/jira:6.4.12') |
 
 > Older tags remain but are not supported/rebuild.
 
