@@ -22,7 +22,7 @@ RUN apk add --update                                    \
       http://dl-3.alpinelinux.org/alpine/edge/testing/  \
       --allow-untrusted                             &&  \
     # Install Jira
-    export JIRA_BIN=atlassian-jira-core-${JIRA_VERSION}-x64.bin && \
+    export JIRA_BIN=atlassian-jira-core-${JIRA_CORE_VERSION}-x64.bin && \
     mkdir -p ${JIRA_HOME}                           &&  \
     mkdir -p ${JIRA_INSTALL}                        &&  \
     wget -O /tmp/jira.bin https://downloads.atlassian.com/software/jira/downloads/${JIRA_BIN} && \
