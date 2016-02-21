@@ -324,7 +324,7 @@ $ vagrant ssh
 [vagrant@localhost ~]$ docker-compose up
 ~~~~
 
-> Jira will be available on localhost:8100 on the host machine.
+> Jira will be available on localhost:8080 on the host machine.
 
 ## Support & Feature Requests
 
