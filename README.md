@@ -178,7 +178,7 @@ $ docker run -d --name mysql \
     mysql:5.6
 ~~~~
 
-> This is the tutum/mysql docker container I tested.
+> This is the mysql docker container I tested.
 
 MySQL Community Docker Image:
 
@@ -203,7 +203,7 @@ $ docker run -d --name jira \
     blacklabelops/jira
 ~~~~
 
->  Start the Jira and link it to the postgresql instance.
+>  Start the Jira and link it to the mysql instance.
 
 ## Proxy Configuration
 
