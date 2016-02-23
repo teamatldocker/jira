@@ -12,6 +12,12 @@
 
 > Older tags remain but are not supported/rebuild.
 
+## Related Images
+
+You may also like:
+
+* [blacklabelops/confluence](https://github.com/blacklabelops/confluence): Atlassian Wiki Tool
+
 ## Instant Usage
 
 [![Deploy to Tutum](https://s.tutum.co/deploy-to-tutum.svg)](https://stackfiles.io/registry/56b9c12635a28a01009e5811)
