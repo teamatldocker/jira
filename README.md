@@ -294,20 +294,6 @@ $ docker run -d \
 
 > Confluence will be available at https://192.168.99.100.
 
-## Log File Configuration
-
-You can reconfigure the logfile location with the environment variable JIRA_LOGFILE_LOCATION!
-
-Example:
-
-~~~~
-$ docker run -d --name jira \
-    -e "JIRA_LOGFILE_LOCATION=/var/atlassian/jira/logs" \
-    blacklabelops/jira
-~~~~
-
-> Will write logs to /var/atlassian/jira/logs. Note: Must be accessible by jira:jira user!
-
 ## Vagrant
 
 First install:
