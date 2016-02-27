@@ -298,7 +298,7 @@ $ docker run -d \
     blacklabelops/nginx
 ~~~~
 
-> Confluence will be available at https://192.168.99.100.
+> Jira will be available at https://192.168.99.100.
 
 ## Vagrant
 
