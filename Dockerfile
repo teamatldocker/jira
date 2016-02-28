@@ -42,8 +42,6 @@ RUN apk add --update                                    \
     rm -f ${JIRA_INSTALL}/lib/postgresql-*.jar                                                                &&  \
     wget -O ${JIRA_INSTALL}/lib/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar                                       \
       https://jdbc.postgresql.org/download/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar                        &&  \
-    # Install atlassian ssl tool
-    wget -O /home/${JIRA_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/SSLPoke.class && \
     # Add user
     export CONTAINER_USER=jira                      &&  \
     export CONTAINER_UID=1000                       &&  \
@@ -55,6 +53,8 @@ RUN apk add --update                                    \
             -h /home/$CONTAINER_USER                    \
             -s /bin/bash                                \
             -S $CONTAINER_USER                      &&  \
+    # Install atlassian ssl tool
+    wget -O /home/${JIRA_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/SSLPoke.class && \
     # Set permissions
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_HOME}    &&  \
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_INSTALL} &&  \
