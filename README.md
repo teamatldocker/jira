@@ -2,6 +2,8 @@
 
 [![Circle CI](https://circleci.com/gh/blacklabelops/jira/tree/master.svg?style=shield)](https://circleci.com/gh/blacklabelops/jira/tree/master) [![Docker Repository on Quay.io](https://quay.io/repository/blacklabelops/jira/status "Docker Repository on Quay")](https://quay.io/repository/blacklabelops/jira) [![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![](https://badge.imagelayers.io/blacklabelops/jira:latest.svg)](https://imagelayers.io/?images=blacklabelops/jira:latest 'Get your own badge on imagelayers.io')
 
+"The best software teams ship early and often - Not many tools, one tool. JIRA Software is built for every member of your software team to plan, track, and release great software." - [[Source](https://www.atlassian.com/software/jira)]
+
 ## Supported tags and respective Dockerfile links
 
 | Product |Version | Tags  | Dockerfile | Size |
@@ -16,13 +18,16 @@
 
 You may also like:
 
-* [blacklabelops/confluence](https://github.com/blacklabelops/confluence): Atlassian Wiki Tool
+* [blacklabelops/jira](https://github.com/blacklabelops/jira): The #1 software development tool used by agile teams
+* [blacklabelops/confluence](https://github.com/blacklabelops/confluence): Create, organize, and discuss work with your team
+* [blacklabelops/bitbucket](https://github.com/blacklabelops/bitbucket): Code, Manage, Collaborate
+* [blacklabelops/crowd](https://github.com/blacklabelops/crowd): Identity management for web apps
 
-## Instant Usage
+# Instant Usage
 
 [![Deploy to Tutum](https://s.tutum.co/deploy-to-tutum.svg)](https://stackfiles.io/registry/56b9c12635a28a01009e5811)
 
-## Make It Short
+# Make It Short
 
 Docker-Compose:
 
@@ -41,7 +46,7 @@ $ docker run -d -p 80:8080 --name jira blacklabelops/jira
 
 > Jira will be available at http://yourdockerhost
 
-## Setup
+# Setup
 
 1. Start database server.
 1. Start Jira.
@@ -74,7 +79,7 @@ $ docker run -d --name jira \
 
 >  Start the Jira and link it to the postgresql instance.
 
-## Database Setup for Official Database Images
+# Database Setup for Official Database Images
 
 1. Start a database server.
 1. Create a database with the correct collate.
@@ -118,7 +123,7 @@ $ docker run -d --name jira \
 
 >  Start the Jira and link it to the postgresql instance.
 
-## Demo Database Setup
+# Demo Database Setup
 
 > Note: It's not recommended to use a default initialized database for Jira in production! The default databases are all using a not recommended collation! Please use this for demo purposes only!
 
@@ -129,7 +134,7 @@ Steps:
 * Start Database container
 * Start Jira
 
-### PostgreSQL
+## PostgreSQL
 
 Let's take an PostgreSQL Docker Image and set it up:
 
@@ -169,7 +174,7 @@ $ docker run -d --name jira \
 
 >  Start the Jira and link it to the postgresql instance.
 
-### MySQL
+## MySQL
 
 Let's take an MySQL container and set it up:
 
@@ -211,7 +216,7 @@ $ docker run -d --name jira \
 
 >  Start the Jira and link it to the mysql instance.
 
-## Proxy Configuration
+# Proxy Configuration
 
 You can specify your proxy host and proxy port with the environment variables JIRA_PROXY_NAME and JIRA_PROXY_PORT. The value will be set inside the Atlassian server.xml at startup!
 
@@ -235,7 +240,7 @@ $ docker run -d --name jira \
 
 > Will set the values inside the server.xml in /opt/jira/conf/server.xml
 
-## NGINX HTTP Proxy
+# NGINX HTTP Proxy
 
 This is an example on running Atlassian Jira behind NGINX with 2 Docker commands!
 
@@ -265,7 +270,7 @@ $ docker run -d \
 
 > Jira will be available at http://192.168.99.100.
 
-## NGINX HTTPS Proxy
+# NGINX HTTPS Proxy
 
 This is an example on running Atlassian Jira behind NGINX-HTTPS with2 Docker commands!
 
@@ -300,7 +305,7 @@ $ docker run -d \
 
 > Jira will be available at https://192.168.99.100.
 
-## Vagrant
+# Vagrant
 
 First install:
 
@@ -318,17 +323,18 @@ $ vagrant ssh
 
 > Jira will be available on localhost:8080 on the host machine.
 
-## Support & Feature Requests
+# Support & Feature Requests
 
 Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](https://www.hipchat.com/geogBFvEM)
 
-## Credits
+# Credits
 
 This project is very grateful for code and examples from the repository:
 
 [atlassianlabs/atlassian-docker](https://bitbucket.org/atlassianlabs/atlassian-docker)
 
-## References
+# References
+
 * [Atlassian Jira](https://www.atlassian.com/software/jira)
 * [Docker Homepage](https://www.docker.com/)
 * [Docker Compose](https://docs.docker.com/compose/)
