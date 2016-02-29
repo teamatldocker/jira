@@ -1,4 +1,4 @@
-FROM blacklabelops/java:jre8
+FROM blacklabelops/alpine:3.3
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
 ENV JIRA_VERSION=7.1.0                        \
@@ -10,6 +10,8 @@ ENV JIRA_VERSION=7.1.0                        \
     JIRA_SCRIPTS=/usr/local/share/atlassian   \
     MYSQL_DRIVER_VERSION=5.1.38               \
     POSTGRESQL_DRIVER_VERSION=9.4.1207
+ENV JAVA_HOME=$JIRA_INSTALL/jre
+ENV PATH=$PATH:$JAVA_HOME/bin
 
 COPY imagescripts ${JIRA_SCRIPTS}
 
@@ -21,6 +23,15 @@ RUN apk add --update                                    \
       --repository                                      \
       http://dl-3.alpinelinux.org/alpine/edge/testing/  \
       --allow-untrusted                             &&  \
+    # Install latest glibc
+    export GLIBC_VERSION=2.22-r8 && \
+    wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk && \
+    apk add --allow-untrusted /tmp/glibc-${GLIBC_VERSION}.apk && \
+    wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk && \
+    apk add --allow-untrusted /tmp/glibc-bin-${GLIBC_VERSION}.apk && \
+    wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-i18n-${GLIBC_VERSION}.apk && \
+    apk --allow-untrusted add /tmp/glibc-i18n-${GLIBC_VERSION}.apk && \
+    /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8 && \
     # Install Jira
     export JIRA_BIN=atlassian-jira-software-${JIRA_VERSION}-jira-${JIRA_VERSION}-x64.bin && \
     mkdir -p ${JIRA_HOME}                           &&  \
