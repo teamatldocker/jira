@@ -54,9 +54,9 @@ RUN apk add --update                                    \
             -s /bin/bash                                \
             -S $CONTAINER_USER                      &&  \
     # Adding letsencrypt-ca to truststore
-    wget -O /home/${JIRA_USER}/letsencryptauthorityx1.der https://letsencrypt.org/certs/letsencryptauthorityx1.der && \
-    keytool -trustcacerts -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt -importcert -file /home/${JIRA_USER}/letsencryptauthorityx1.der && \
-    rm -f /home/${JIRA_USER}/letsencryptauthorityx1.der && \
+    wget -O /home/${JIRA_USER}/letsencrypt-int.crt https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem.txt && \
+    keytool -import -alias letsencrypt-int -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt -importcert -file /home/${JIRA_USER}/letsencrypt-int.crt && \
+    rm -f /home/${JIRA_USER}/letsencrypt-int.crt && \
     # Install atlassian ssl tool
     wget -O /home/${JIRA_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/SSLPoke.class && \
     # Set permissions
