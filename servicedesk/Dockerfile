@@ -70,7 +70,7 @@ RUN apk add --update                                    \
     keytool -import -alias letsencrypt-int -keystore /opt/jira/jre/lib/security/cacerts -storepass changeit -noprompt -importcert -file /home/${JIRA_USER}/letsencrypt-int.crt && \
     rm -f /home/${JIRA_USER}/letsencrypt-int.crt && \
     # Install atlassian ssl tool
-    wget -O /home/${JIRA_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/SSLPoke.class && \
+    wget -O /home/${JIRA_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/779355357/1/1441897666313/SSLPoke.class && \
     # Set permissions
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_HOME}    &&  \
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_INSTALL} &&  \
