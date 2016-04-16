@@ -18,6 +18,7 @@ COPY imagescripts ${JIRA_SCRIPTS}
 RUN apk add --update                                    \
       ca-certificates                                   \
       gzip                                              \
+      curl                                              \
       wget                                          &&  \
     apk add xmlstarlet --update-cache                   \
       --repository                                      \
@@ -83,6 +84,7 @@ RUN apk add --update                                    \
     apk del                                             \
       ca-certificates                                   \
       gzip                                              \
+      curl                                              \
       wget                                          &&  \
     # Clean caches and tmps
     rm -rf /var/cache/apk/*                         &&  \

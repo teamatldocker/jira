@@ -18,6 +18,7 @@ COPY imagescripts ${JIRA_SCRIPTS}
 RUN apk add --update                                    \
       ca-certificates                                   \
       gzip                                              \
+      curl                                              \
       wget                                          &&  \
     apk add xmlstarlet --update-cache                   \
       --repository                                      \
@@ -75,10 +76,15 @@ RUN apk add --update                                    \
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_INSTALL} &&  \
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_SCRIPTS} &&  \
     chown -R $JIRA_USER:$JIRA_GROUP /home/${JIRA_USER} &&  \
+    # Install Tini Zombie Reaper And Signal Forwarder
+    export TINI_VERSION=0.9.0 && \
+    curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static -o /bin/tini && \
+    chmod +x /bin/tini && \
     # Remove obsolete packages
     apk del                                             \
       ca-certificates                                   \
       gzip                                              \
+      curl                                              \
       wget                                          &&  \
     # Clean caches and tmps
     rm -rf /var/cache/apk/*                         &&  \
@@ -89,5 +95,5 @@ USER jira
 WORKDIR ${JIRA_HOME}
 VOLUME ["/var/atlassian/jira"]
 EXPOSE 8080
-ENTRYPOINT ["/usr/local/share/atlassian/docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/tini","--","/usr/local/share/atlassian/docker-entrypoint.sh"]
 CMD ["jira"]
