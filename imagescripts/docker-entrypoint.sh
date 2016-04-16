@@ -56,7 +56,7 @@ echo "${TARGET_PROPERTY} = ${jira_logfile}" >> ${JIRA_INSTALL}/conf/logging.prop
 
 if [ "$1" = 'jira' ] || [ "${1:0:1}" = '-' ]; then
   /bin/bash ${JIRA_SCRIPTS}/launch.sh
-  /bin/bash ${JIRA_INSTALL}/bin/start-jira.sh -fg "$@"
+  exec ${JIRA_INSTALL}/bin/start-jira.sh -fg "$@"
+else
+  exec "$@"
 fi
-
-exec "$@"
