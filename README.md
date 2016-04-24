@@ -32,7 +32,7 @@ You may also like:
 Docker-Compose:
 
 ~~~~
-$ curl -O https://raw.githubusercontent.com/blacklabelops/jira/master/jirasoftware/docker-compose.yml
+$ curl -O https://raw.githubusercontent.com/blacklabelops/jira/master/docker-compose.yml
 $ docker-compose up -d
 ~~~~
 
