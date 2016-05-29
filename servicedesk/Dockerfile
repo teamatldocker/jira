@@ -67,9 +67,19 @@ RUN apk add --update                                    \
             -s /bin/bash                                \
             -S $CONTAINER_USER                      &&  \
     # Adding letsencrypt-ca to truststore
-    wget -O /home/${JIRA_USER}/letsencrypt-int.crt https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem.txt && \
-    keytool -import -alias letsencrypt-int -keystore /opt/jira/jre/lib/security/cacerts -storepass changeit -noprompt -importcert -file /home/${JIRA_USER}/letsencrypt-int.crt && \
-    rm -f /home/${JIRA_USER}/letsencrypt-int.crt && \
+    export KEYSTORE=$JAVA_HOME/lib/security/cacerts && \
+    wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx1.der && \
+    wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx2.der && \
+    wget -P /tmp/ https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.der && \
+    wget -P /tmp/ https://letsencrypt.org/certs/lets-encrypt-x2-cross-signed.der && \
+    wget -P /tmp/ https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.der && \
+    wget -P /tmp/ https://letsencrypt.org/certs/lets-encrypt-x4-cross-signed.der && \
+    keytool -trustcacerts -keystore $KEYSTORE -storepass changeit -noprompt -importcert -alias isrgrootx1 -file /tmp/letsencryptauthorityx1.der && \
+    keytool -trustcacerts -keystore $KEYSTORE -storepass changeit -noprompt -importcert -alias isrgrootx2 -file /tmp/letsencryptauthorityx2.der && \
+    keytool -trustcacerts -keystore $KEYSTORE -storepass changeit -noprompt -importcert -alias letsencryptauthorityx1 -file /tmp/lets-encrypt-x1-cross-signed.der && \
+    keytool -trustcacerts -keystore $KEYSTORE -storepass changeit -noprompt -importcert -alias letsencryptauthorityx2 -file /tmp/lets-encrypt-x2-cross-signed.der && \
+    keytool -trustcacerts -keystore $KEYSTORE -storepass changeit -noprompt -importcert -alias letsencryptauthorityx3 -file /tmp/lets-encrypt-x3-cross-signed.der && \
+    keytool -trustcacerts -keystore $KEYSTORE -storepass changeit -noprompt -importcert -alias letsencryptauthorityx4 -file /tmp/lets-encrypt-x4-cross-signed.der && \
     # Install atlassian ssl tool
     wget -O /home/${JIRA_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/779355357/1/1441897666313/SSLPoke.class && \
     # Set permissions
