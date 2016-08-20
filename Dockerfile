@@ -34,7 +34,7 @@ RUN apk add --update                                    \
     apk --allow-untrusted add /tmp/glibc-i18n-${GLIBC_VERSION}.apk && \
     /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8 && \
     # Install Jira
-    export JIRA_BIN=atlassian-jira-software-${JIRA_VERSION}-jira-${JIRA_VERSION}-x64.bin && \
+    export JIRA_BIN=atlassian-jira-software-${JIRA_VERSION}-x64.bin && \
     mkdir -p ${JIRA_HOME}                           &&  \
     mkdir -p ${JIRA_INSTALL}                        &&  \
     wget -O /tmp/jira.bin https://downloads.atlassian.com/software/jira/downloads/${JIRA_BIN} && \
