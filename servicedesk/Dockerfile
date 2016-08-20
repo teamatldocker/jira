@@ -1,8 +1,8 @@
-FROM blacklabelops/alpine:3.3
+FROM blacklabelops/alpine:3.4
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
-ENV JIRA_VERSION=7.1.8                        \
-    JIRA_SERVICEDESK_VERSION=3.1.8            \
+ENV JIRA_VERSION=7.1.9                        \
+    JIRA_SERVICEDESK_VERSION=3.1.9            \
     JIRA_USER=jira                            \
     JIRA_GROUP=jira                           \
     JIRA_CONTEXT_PATH=ROOT                    \
@@ -35,7 +35,7 @@ RUN apk add --update                                    \
     apk --allow-untrusted add /tmp/glibc-i18n-${GLIBC_VERSION}.apk && \
     /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8 && \
     # Install Jira
-    export JIRA_BIN=atlassian-servicedesk-${JIRA_SERVICEDESK_VERSION}-jira-${JIRA_VERSION}-x64.bin && \
+    export JIRA_BIN=atlassian-servicedesk-${JIRA_SERVICEDESK_VERSION}-x64.bin && \
     mkdir -p ${JIRA_HOME}                           &&  \
     mkdir -p ${JIRA_INSTALL}                        &&  \
     wget -O /tmp/jira.bin https://downloads.atlassian.com/software/jira/downloads/${JIRA_BIN} && \
