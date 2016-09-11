@@ -20,10 +20,10 @@ RUN apk add --update                                    \
       gzip                                              \
       curl                                              \
       wget                                          &&  \
-    apk add xmlstarlet --update-cache                   \
-      --repository                                      \
-      http://dl-3.alpinelinux.org/alpine/edge/testing/  \
-      --allow-untrusted                             &&  \
+    # Install xmlstarlet
+    export XMLSTARLET_VERSION=1.6.1-r1              &&  \
+    wget --directory-prefix=/tmp https://github.com/menski/alpine-pkg-xmlstarlet/releases/download/${XMLSTARLET_VERSION}/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
+    apk add --allow-untrusted /tmp/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
     # Install latest glibc
     export GLIBC_VERSION=2.22-r8 && \
     wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk && \
