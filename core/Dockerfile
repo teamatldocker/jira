@@ -1,7 +1,7 @@
 FROM blacklabelops/alpine:3.4
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
-ENV JIRA_CORE_VERSION=7.1.9                   \
+ENV JIRA_CORE_VERSION=7.2.2                   \
     JIRA_USER=jira                            \
     JIRA_GROUP=jira                           \
     JIRA_CONTEXT_PATH=ROOT                    \
@@ -23,7 +23,7 @@ RUN apk add --update                                    \
     # Install xmlstarlet
     export XMLSTARLET_VERSION=1.6.1-r1              &&  \
     wget --directory-prefix=/tmp https://github.com/menski/alpine-pkg-xmlstarlet/releases/download/${XMLSTARLET_VERSION}/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
-    apk add --allow-untrusted /tmp/xmlstarlet-${XMLSTARLET_VERSION}.apk && \  
+    apk add --allow-untrusted /tmp/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
     # Install latest glibc
     export GLIBC_VERSION=2.22-r8 && \
     wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk && \
