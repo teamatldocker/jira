@@ -9,7 +9,7 @@ ENV JIRA_VERSION=7.2.3                        \
     JIRA_INSTALL=/opt/jira                    \
     JIRA_SCRIPTS=/usr/local/share/atlassian   \
     MYSQL_DRIVER_VERSION=5.1.38               \
-    POSTGRESQL_DRIVER_VERSION=9.4.1207
+    POSTGRESQL_DRIVER_VERSION=9.4.1212
 ENV JAVA_HOME=$JIRA_INSTALL/jre
 ENV PATH=$PATH:$JAVA_HOME/bin
 
