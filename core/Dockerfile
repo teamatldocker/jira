@@ -1,7 +1,7 @@
 FROM blacklabelops/alpine:3.4
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
-ENV JIRA_CORE_VERSION=7.2.7                   \
+ENV JIRA_CORE_VERSION=7.3.0                   \
     JIRA_USER=jira                            \
     JIRA_GROUP=jira                           \
     JIRA_CONTEXT_PATH=ROOT                    \
