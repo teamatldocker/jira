@@ -325,7 +325,7 @@ $ vagrant ssh
 
 # Support & Feature Requests
 
-Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](https://www.hipchat.com/geogBFvEM)
+Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](http://support.blacklabelops.com)
 
 # Credits
 
