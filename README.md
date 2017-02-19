@@ -56,7 +56,7 @@ First start the database server:
 ~~~~
 $ docker network create jiranet
 $ docker run --name postgres -d \
-    --network jiranet -h postgres \
+    --network jiranet \
     -e 'POSTGRES_USER=jira' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
     -e 'POSTGRES_DB=jiradb' \
@@ -95,7 +95,7 @@ First start the database server:
 ~~~~
 $ docker network create jiranet
 $ docker run --name postgres -d \
-    --network jiranet -h postgres \
+    --network jiranet \
     -e 'POSTGRES_USER=jira' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
     postgres:9.4
@@ -146,7 +146,7 @@ Postgres Official Docker Image:
 ~~~~
 $ docker network create jiranet
 $ docker run --name postgres -d \
-    --network jiranet -h postgres \
+    --network jiranet \
     -e 'POSTGRES_DB=jiradb' \
     -e 'POSTGRES_USER=jiradb' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
@@ -159,7 +159,7 @@ Postgres Community Docker Image:
 
 ~~~~
 $ docker run --name postgres -d \
-    --network jiranet -h postgres \
+    --network jiranet \
     -e 'DB_USER=jiradb' \
     -e 'DB_PASS=jellyfish' \
     -e 'DB_NAME=jiradb' \
@@ -187,9 +187,9 @@ Let's take an MySQL container and set it up:
 MySQL Official Docker Image:
 
 ~~~~
-$ docker network create
+$ docker network create jiranet
 $ docker run -d --name mysql \
-    --network jiranet -h mysql \
+    --network jiranet \
     -e 'MYSQL_ROOT_PASSWORD=verybigsecretrootpassword' \
     -e 'MYSQL_DATABASE=jiradb' \
     -e 'MYSQL_USER=jiradb' \
@@ -203,7 +203,7 @@ MySQL Community Docker Image:
 
 ~~~~
 $ docker run -d --name mysql \
-    --network jiranet -h mysql \
+    --network jiranet \
     -e 'ON_CREATE_DB=jiradb' \
     -e 'MYSQL_USER=jiradb' \
     -e 'MYSQL_PASS=jellyfish' \
@@ -258,7 +258,7 @@ First start Jira:
 ~~~~
 $ docker network create jiranet
 $ docker run -d --name jira \
-    --network jiranet -h jira \
+    --network jiranet \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=80" \
     -e "JIRA_PROXY_SCHEME=http" \
@@ -292,7 +292,7 @@ First start Jira:
 ~~~~
 $ docker network create jiranet
 $ docker run -d --name jira \
-    --network jiranet -h jira \
+    --network jiranet \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
