@@ -6,7 +6,7 @@ function testImage() {
   local tagname=$1
   local port=$2
   local iteration=0
-  docker run -d -p $port:8080 --name=$tagname blacklabelops/jira:$tagname
+  docker run -d -p $port:8080 --name=jira.$tagname blacklabelops/jira:$tagname
   while ! curl -v http://localhost:$port
   do
       { echo "Exit status of curl: $?"
