@@ -6,15 +6,15 @@
 
 ## Supported tags and respective Dockerfile links
 
-| Product |Version | Tags  | Dockerfile | Size |
-|---------|--------|-------|------------|------|
-| Jira Software | 7.3.1 | 7.3.1, latest, latest.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) | [![blacklabelops/jira:latest](https://badge.imagelayers.io/blacklabelops/jira:latest.svg)](https://imagelayers.io/?images=blacklabelops/jira:latest 'blacklabelops/jira:latest') |
-| Jira Service Desk | 3.3.1 | servicedesk, servicedesk.3.3.1, servicedesk.de, servicedesk.3.3.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/servicedesk/Dockerfile) | [![blacklabelops/jira:servicedesk](https://badge.imagelayers.io/blacklabelops/jira:servicedesk.svg)](https://imagelayers.io/?images=blacklabelops/jira:servicedesk 'blacklabelops/jira:servicedesk') |
-| Jira Core | 7.3.1 | core, core.7.3.1, core.de, core.7.3.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/core/Dockerfile) | [![blacklabelops/jira:core](https://badge.imagelayers.io/blacklabelops/jira:core.svg)](https://imagelayers.io/?images=blacklabelops/jira:core 'blacklabelops/jira:core') |
+| Product |Version | Tags  | Dockerfile |
+|---------|--------|-------|------------|
+| Jira Software | 7.3.1 | 7.3.1, latest, latest.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Service Desk | 3.3.1 | servicedesk, servicedesk.3.3.1, servicedesk.de, servicedesk.3.3.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/servicedesk/Dockerfile) |
+| Jira Core | 7.3.1 | core, core.7.3.1, core.de, core.7.3.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/core/Dockerfile) |
 
 > Older tags remain but are not supported/rebuild.
 
-> `.de` postfix means images are installed with language german.
+> `.de` postfix means images are installed with preset language german locale.
 
 ## Related Images
 
