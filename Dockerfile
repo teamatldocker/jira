@@ -107,6 +107,12 @@ RUN apk add --update                                    \
     rm -rf /tmp/*                                   &&  \
     rm -rf /var/log/*
 
+# Image Metadata
+LABEL com.blacklabelops.application.jira.version=$JIRA_PRODUCT-$JIRA_VERSION \
+      com.blacklabelops.application.jira.userid=$CONTAINER_UID \
+      com.blacklabelops.application.jira.groupid=$CONTAINER_GID \
+      com.blacklabelops.image.builddate.jenkins=${BUILD_DATE}
+
 USER jira
 WORKDIR ${JIRA_HOME}
 VOLUME ["/var/atlassian/jira"]
