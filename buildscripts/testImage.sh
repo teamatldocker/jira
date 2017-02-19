@@ -13,7 +13,7 @@ function testImage() {
         echo "Retrying ..."
       } 1>&2
       if [ "$iteration" = '30' ]; then
-        break
+        exit 1
       else
         ((iteration=iteration+1))
       fi
