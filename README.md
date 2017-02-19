@@ -1,6 +1,6 @@
 # Dockerized Atlassian Jira
 
-[![Circle CI](https://circleci.com/gh/blacklabelops/jira/tree/master.svg?style=shield)](https://circleci.com/gh/blacklabelops/jira/tree/master) [![Docker Repository on Quay.io](https://quay.io/repository/blacklabelops/jira/status "Docker Repository on Quay")](https://quay.io/repository/blacklabelops/jira) [![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![](https://badge.imagelayers.io/blacklabelops/jira:latest.svg)](https://imagelayers.io/?images=blacklabelops/jira:latest 'Get your own badge on imagelayers.io')
+[![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/)
 
 "The best software teams ship early and often - Not many tools, one tool. JIRA Software is built for every member of your software team to plan, track, and release great software." - [[Source](https://www.atlassian.com/software/jira)]
 
@@ -8,11 +8,13 @@
 
 | Product |Version | Tags  | Dockerfile | Size |
 |---------|--------|-------|------------|------|
-| Jira Software | 7.3.0 | 7.3.0, latest | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) | [![blacklabelops/jira:latest](https://badge.imagelayers.io/blacklabelops/jira:latest.svg)](https://imagelayers.io/?images=blacklabelops/jira:latest 'blacklabelops/jira:latest') |
-| Jira Service Desk | 3.3.0 | servicedesk, servicedesk.3.3.0 | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/servicedesk/Dockerfile) | [![blacklabelops/jira:servicedesk](https://badge.imagelayers.io/blacklabelops/jira:servicedesk.svg)](https://imagelayers.io/?images=blacklabelops/jira:servicedesk 'blacklabelops/jira:servicedesk') |
-| Jira Core | 7.3.0 | core, core.7.3.0 | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/core/Dockerfile) | [![blacklabelops/jira:core](https://badge.imagelayers.io/blacklabelops/jira:core.svg)](https://imagelayers.io/?images=blacklabelops/jira:core 'blacklabelops/jira:core') |
+| Jira Software | 7.3.1 | 7.3.1, latest, latest.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) | [![blacklabelops/jira:latest](https://badge.imagelayers.io/blacklabelops/jira:latest.svg)](https://imagelayers.io/?images=blacklabelops/jira:latest 'blacklabelops/jira:latest') |
+| Jira Service Desk | 3.3.1 | servicedesk, servicedesk.3.3.1, servicedesk.de, servicedesk.3.3.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/servicedesk/Dockerfile) | [![blacklabelops/jira:servicedesk](https://badge.imagelayers.io/blacklabelops/jira:servicedesk.svg)](https://imagelayers.io/?images=blacklabelops/jira:servicedesk 'blacklabelops/jira:servicedesk') |
+| Jira Core | 7.3.1 | core, core.7.3.1, core.de, core.7.3.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/core/Dockerfile) | [![blacklabelops/jira:core](https://badge.imagelayers.io/blacklabelops/jira:core.svg)](https://imagelayers.io/?images=blacklabelops/jira:core 'blacklabelops/jira:core') |
 
 > Older tags remain but are not supported/rebuild.
+
+> `.de` postfix means images are installed with language german.
 
 ## Related Images
 
@@ -22,10 +24,6 @@ You may also like:
 * [blacklabelops/confluence](https://github.com/blacklabelops/confluence): Create, organize, and discuss work with your team
 * [blacklabelops/bitbucket](https://github.com/blacklabelops/bitbucket): Code, Manage, Collaborate
 * [blacklabelops/crowd](https://github.com/blacklabelops/crowd): Identity management for web apps
-
-# Instant Usage
-
-[![Deploy to Tutum](https://s.tutum.co/deploy-to-tutum.svg)](https://stackfiles.io/registry/56b9c12635a28a01009e5811)
 
 # Make It Short
 
@@ -56,9 +54,12 @@ First start the database server:
 > Note: Change Password!
 
 ~~~~
+$ docker network create jiranet
 $ docker run --name postgres -d \
+    --network jiranet -h postgres \
     -e 'POSTGRES_USER=jira' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
+    -e 'POSTGRES_DB=jiradb' \
     -e 'POSTGRES_ENCODING=UNICODE' \
     -e 'POSTGRES_COLLATE=C' \
     -e 'POSTGRES_COLLATE_TYPE=C' \
@@ -71,9 +72,9 @@ Then start Jira:
 
 ~~~~
 $ docker run -d --name jira \
+    --network jiranet \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  --link postgres:postgres \
 	  -p 80:8080 blacklabelops/jira
 ~~~~
 
@@ -92,7 +93,9 @@ First start the database server:
 > Note: Change Password!
 
 ~~~~
+$ docker network create jiranet
 $ docker run --name postgres -d \
+    --network jiranet -h postgres \
     -e 'POSTGRES_USER=jira' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
     postgres:9.4
@@ -104,7 +107,7 @@ Then create the database with the correct collate:
 
 ~~~~
 $ docker run -it --rm \
-    --link postgres:postgres \
+    --network jiranet \
     postgres:9.4 \
     sh -c 'exec createdb -E UNICODE -l C -T template0 jiradb -h postgres -p 5432 -U jira'
 ~~~~
@@ -115,9 +118,9 @@ Then start Jira:
 
 ~~~~
 $ docker run -d --name jira \
+    --network jiranet \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
-	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  --link postgres:postgres \
+	  -e "JIRA_DB_PASSWORD=jellyfish" \
 	  -p 80:8080 blacklabelops/jira
 ~~~~
 
@@ -141,7 +144,9 @@ Let's take an PostgreSQL Docker Image and set it up:
 Postgres Official Docker Image:
 
 ~~~~
+$ docker network create jiranet
 $ docker run --name postgres -d \
+    --network jiranet -h postgres \
     -e 'POSTGRES_DB=jiradb' \
     -e 'POSTGRES_USER=jiradb' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
@@ -154,6 +159,7 @@ Postgres Community Docker Image:
 
 ~~~~
 $ docker run --name postgres -d \
+    --network jiranet -h postgres \
     -e 'DB_USER=jiradb' \
     -e 'DB_PASS=jellyfish' \
     -e 'DB_NAME=jiradb' \
@@ -166,9 +172,9 @@ Now start the Jira container and let it use the container. On first startup you 
 
 ~~~~
 $ docker run -d --name jira \
+    --network jiranet \
 	  -e "JIRA_DATABASE_URL=postgresql://jiradb@postgres/jiradb" \
-	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  --link postgres:postgres \
+	  -e "JIRA_DB_PASSWORD=jellyfish" \
 	  -p 80:8080 blacklabelops/jira
 ~~~~
 
@@ -181,7 +187,9 @@ Let's take an MySQL container and set it up:
 MySQL Official Docker Image:
 
 ~~~~
+$ docker network create
 $ docker run -d --name mysql \
+    --network jiranet -h mysql \
     -e 'MYSQL_ROOT_PASSWORD=verybigsecretrootpassword' \
     -e 'MYSQL_DATABASE=jiradb' \
     -e 'MYSQL_USER=jiradb' \
@@ -195,6 +203,7 @@ MySQL Community Docker Image:
 
 ~~~~
 $ docker run -d --name mysql \
+    --network jiranet -h mysql \
     -e 'ON_CREATE_DB=jiradb' \
     -e 'MYSQL_USER=jiradb' \
     -e 'MYSQL_PASS=jellyfish' \
@@ -207,9 +216,9 @@ Now start the Jira container and let it use the container. On first startup you 
 
 ~~~~
 $ docker run -d --name jira \
+    --network jiranet \
     -e "JIRA_DATABASE_URL=mysql://jiradb@mysql/jiradb" \
     -e "JIRA_DB_PASSWORD=jellyfish"  \
-    --link mysql:mysql \
     -p 80:8080 \
     blacklabelops/jira
 ~~~~
@@ -247,7 +256,9 @@ This is an example on running Atlassian Jira behind NGINX with 2 Docker commands
 First start Jira:
 
 ~~~~
+$ docker network create jiranet
 $ docker run -d --name jira \
+    --network jiranet -h jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=80" \
     -e "JIRA_PROXY_SCHEME=http" \
@@ -261,8 +272,8 @@ Then start NGINX:
 ~~~~
 $ docker run -d \
     -p 80:80 \
+    --network jiranet \
     --name nginx \
-    --link jira:jira \
     -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
     -e "SERVER1REVERSE_PROXY_PASS1=http://jira:8080" \
     blacklabelops/nginx
@@ -279,7 +290,9 @@ Note: This is a self-signed certificate! Trusted certificates by letsencrypt are
 First start Jira:
 
 ~~~~
+$ docker network create jiranet
 $ docker run -d --name jira \
+    --network jiranet -h jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
@@ -294,7 +307,7 @@ Then start NGINX:
 $ docker run -d \
     -p 443:443 \
     --name nginx \
-    --link jira:jira \
+    --network jiranet \
     -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
     -e "SERVER1REVERSE_PROXY_PASS1=http://jira:8080" \
     -e "SERVER1CERTIFICATE_DNAME=/CN=CrustyClown/OU=SpringfieldEntertainment/O=crusty.springfield.com/L=Springfield/C=US" \

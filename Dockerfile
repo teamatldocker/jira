@@ -1,8 +1,18 @@
-FROM blacklabelops/alpine:3.4
+FROM blacklabelops/alpine:3.5
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
-ENV JIRA_VERSION=7.3.0                        \
-    JIRA_USER=jira                            \
+ARG JIRA_VERSION=7.3.1
+ARG JIRA_PRODUCT=jira-software
+# Permissions, set the linux user id and group id
+ARG CONTAINER_UID=1000
+ARG CONTAINER_GID=1000
+# Image Build Date By Buildsystem
+ARG BUILD_DATE=undefined
+# Language Settings
+ARG LANG_LANGUAGE=en
+ARG LANG_COUNTRY=US
+
+ENV JIRA_USER=jira                            \
     JIRA_GROUP=jira                           \
     JIRA_CONTEXT_PATH=ROOT                    \
     JIRA_HOME=/var/atlassian/jira             \
@@ -11,7 +21,9 @@ ENV JIRA_VERSION=7.3.0                        \
     MYSQL_DRIVER_VERSION=5.1.38               \
     POSTGRESQL_DRIVER_VERSION=9.4.1212
 ENV JAVA_HOME=$JIRA_INSTALL/jre
-ENV PATH=$PATH:$JAVA_HOME/bin
+
+ENV PATH=$PATH:$JAVA_HOME/bin \
+    LANG=${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8
 
 COPY imagescripts ${JIRA_SCRIPTS}
 
@@ -19,22 +31,20 @@ RUN apk add --update                                    \
       ca-certificates                                   \
       gzip                                              \
       curl                                              \
-      wget                                          &&  \
-    # Install xmlstarlet
-    export XMLSTARLET_VERSION=1.6.1-r1              &&  \
-    wget --directory-prefix=/tmp https://github.com/menski/alpine-pkg-xmlstarlet/releases/download/${XMLSTARLET_VERSION}/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
-    apk add --allow-untrusted /tmp/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
+      tini                                              \
+      wget                                              \
+      xmlstarlet                                    &&  \
     # Install latest glibc
-    export GLIBC_VERSION=2.22-r8 && \
+    export GLIBC_VERSION=2.25-r0 && \
     wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk && \
     apk add --allow-untrusted /tmp/glibc-${GLIBC_VERSION}.apk && \
     wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk && \
     apk add --allow-untrusted /tmp/glibc-bin-${GLIBC_VERSION}.apk && \
     wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-i18n-${GLIBC_VERSION}.apk && \
     apk --allow-untrusted add /tmp/glibc-i18n-${GLIBC_VERSION}.apk && \
-    /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8 && \
+    /usr/glibc-compat/bin/localedef -i ${LANG_LANGUAGE}_${LANG_COUNTRY} -f UTF-8 ${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8 && \
     # Install Jira
-    export JIRA_BIN=atlassian-jira-software-${JIRA_VERSION}-x64.bin && \
+    export JIRA_BIN=atlassian-${JIRA_PRODUCT}-${JIRA_VERSION}-x64.bin && \
     mkdir -p ${JIRA_HOME}                           &&  \
     mkdir -p ${JIRA_INSTALL}                        &&  \
     wget -O /tmp/jira.bin https://downloads.atlassian.com/software/jira/downloads/${JIRA_BIN} && \
@@ -86,10 +96,6 @@ RUN apk add --update                                    \
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_INSTALL} &&  \
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_SCRIPTS} &&  \
     chown -R $JIRA_USER:$JIRA_GROUP /home/${JIRA_USER} &&  \
-    # Install Tini Zombie Reaper And Signal Forwarder
-    export TINI_VERSION=0.9.0 && \
-    curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static -o /bin/tini && \
-    chmod +x /bin/tini && \
     # Remove obsolete packages
     apk del                                             \
       ca-certificates                                   \
@@ -105,5 +111,5 @@ USER jira
 WORKDIR ${JIRA_HOME}
 VOLUME ["/var/atlassian/jira"]
 EXPOSE 8080
-ENTRYPOINT ["/bin/tini","--","/usr/local/share/atlassian/docker-entrypoint.sh"]
+ENTRYPOINT ["/sbin/tini","--","/usr/local/share/atlassian/docker-entrypoint.sh"]
 CMD ["jira"]
