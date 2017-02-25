@@ -111,7 +111,7 @@ RUN apk add --update                                    \
 LABEL com.blacklabelops.application.jira.version=$JIRA_PRODUCT-$JIRA_VERSION \
       com.blacklabelops.application.jira.userid=$CONTAINER_UID \
       com.blacklabelops.application.jira.groupid=$CONTAINER_GID \
-      com.blacklabelops.image.builddate.jenkins=${BUILD_DATE}
+      com.blacklabelops.image.builddate.jira=${BUILD_DATE}
 
 USER jira
 WORKDIR ${JIRA_HOME}
