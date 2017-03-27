@@ -1,7 +1,7 @@
 FROM blacklabelops/alpine:3.5
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
-ARG JIRA_VERSION=7.3.1
+ARG JIRA_VERSION=7.3.3
 ARG JIRA_PRODUCT=jira-software
 # Permissions, set the linux user id and group id
 ARG CONTAINER_UID=1000
