@@ -102,7 +102,6 @@ RUN apk add --update                                    \
     apk del                                             \
       ca-certificates                                   \
       gzip                                              \
-      curl                                              \
       wget                                          &&  \
     # Clean caches and tmps
     rm -rf /var/cache/apk/*                         &&  \
