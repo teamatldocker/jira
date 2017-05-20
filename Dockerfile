@@ -99,7 +99,7 @@ RUN apk add --update                                    \
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_SCRIPTS} &&  \
     chown -R $JIRA_USER:$JIRA_GROUP /home/${JIRA_USER} &&  \
     # add helpers
-    wget -O /usr/local/bin/wait-for-it --no-check-certificate http://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && \
+    wget -O /usr/local/bin/wait-for-it http://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && \
     chmod +x /usr/local/bin/wait-for-it && \
     # Remove obsolete packages
     apk del                                             \
