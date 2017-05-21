@@ -328,7 +328,7 @@ $ docker run -d \
 
 # Support & Feature Requests
 
-Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](http://support.blacklabelops.com)
+Leave a message and ask questions on Hipchat: [blacklabelops/support](https://www.hipchat.com/gEorzhvnI)
 
 # Credits
 
