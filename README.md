@@ -39,10 +39,10 @@ $ docker-compose up -d
 Docker-CLI:
 
 ~~~~
-$ docker run -d -p 80:8080 --name jira blacklabelops/jira
+$ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira blacklabelops/jira
 ~~~~
 
-> Jira will be available at http://yourdockerhost
+> Jira will be available at http://yourdockerhost. Data will be persisted inside docker volume `jiravolume`.
 
 # Setup
 
@@ -73,6 +73,7 @@ Then start Jira:
 ~~~~
 $ docker run -d --name jira \
     --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
 	  -p 80:8080 blacklabelops/jira
@@ -119,6 +120,7 @@ Then start Jira:
 ~~~~
 $ docker run -d --name jira \
     --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish" \
 	  -p 80:8080 blacklabelops/jira
@@ -173,6 +175,7 @@ Now start the Jira container and let it use the container. On first startup you 
 ~~~~
 $ docker run -d --name jira \
     --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jiradb@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish" \
 	  -p 80:8080 blacklabelops/jira
@@ -217,6 +220,7 @@ Now start the Jira container and let it use the container. On first startup you 
 ~~~~
 $ docker run -d --name jira \
     --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
     -e "JIRA_DATABASE_URL=mysql://jiradb@mysql/jiradb" \
     -e "JIRA_DB_PASSWORD=jellyfish"  \
     -p 80:8080 \
@@ -241,6 +245,7 @@ Just type:
 
 ~~~~
 $ docker run -d --name jira \
+    -v jiravolume:/var/atlassian/jira \
     -e "JIRA_PROXY_NAME=myhost.example.com" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
@@ -259,6 +264,7 @@ First start Jira:
 $ docker network create jiranet
 $ docker run -d --name jira \
     --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=80" \
     -e "JIRA_PROXY_SCHEME=http" \
@@ -293,6 +299,7 @@ First start Jira:
 $ docker network create jiranet
 $ docker run -d --name jira \
     --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
