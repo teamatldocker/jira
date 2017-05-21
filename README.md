@@ -373,6 +373,36 @@ $ docker run -d \
 
 > Jira will be available at https://192.168.99.100.
 
+# A Word About Memory Usage
+
+Jira like any Java application needs a huge amount of memory. If you limit the memory usage by using the Docker --mem option make sure that you give enough memory. Otherwise your Jira will begin to restart randomly.
+You should give at least 1-2GB more than the JVM maximum memory setting to your container.
+
+Example:
+
+~~~~
+$ docker run -d -p 80:8080 --name jira \
+    -v jiravolume:/var/atlassian/jira \
+    -e "CATALINA_OPTS= -Xms384m -Xmx1g" \
+    blacklabelops/jira
+~~~~
+
+> CATALINA_OPTS sets webserver startup properties.
+
+Alternative solution recommended by atlassian: Using the environment variables `JVM_MINIMUM_MEMORY` and `JVM_MAXIMUM_MEMORY`.
+
+Example:
+
+~~~~
+$ docker run -d -p 80:8080 --name jira \
+    -v jiravolume:/var/atlassian/jira \
+    -e "JVM_MINIMUM_MEMORY=384m" \
+    -e "JVM_MAXIMUM_MEMORY=1g" \
+    blacklabelops/jira
+~~~~
+
+> Note: Atlassian default is minimum 384m and maximum 768m. You should never go lower.
+
 # Support & Feature Requests
 
 Leave a message and ask questions on Hipchat: [blacklabelops/support](https://www.hipchat.com/gEorzhvnI)
