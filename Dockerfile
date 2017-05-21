@@ -21,6 +21,7 @@ ENV JIRA_USER=jira                            \
     JIRA_INSTALL=/opt/jira                    \
     JIRA_SCRIPTS=/usr/local/share/atlassian   \
     MYSQL_DRIVER_VERSION=5.1.38               \
+    DOCKERIZE_VERSION=v0.4.0                  \
     POSTGRESQL_DRIVER_VERSION=9.4.1212
 ENV JAVA_HOME=$JIRA_INSTALL/jre
 
@@ -98,6 +99,10 @@ RUN apk add --update                                    \
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_INSTALL} &&  \
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_SCRIPTS} &&  \
     chown -R $JIRA_USER:$JIRA_GROUP /home/${JIRA_USER} &&  \
+    # Install dockerize
+    wget -O /tmp/dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
+    tar -C /usr/local/bin -xzvf /tmp/dockerize.tar.gz && \
+    rm /tmp/dockerize.tar.gz && \
     # Remove obsolete packages
     apk del                                             \
       ca-certificates                                   \

@@ -230,6 +230,53 @@ $ docker run -d --name jira \
 
 >  Start the Jira and link it to the mysql instance.
 
+# Database Wait Feature
+
+A Jira container can wait for the database container to start up. You have to specify the
+host and port of your database container and Jira will wait up to one minute for the database.
+
+You can define a the waiting parameters with the enviromnemt variables:
+
+* `DOCKER_WAIT_HOST`: The host to poll Mandatory!
+* `DOCKER_WAIT_PORT`: The port to poll Mandatory!
+* `DOCKER_WAIT_TIMEOUT`: The timeout in seconds. Optional! Default: 60
+* `DOCKER_WAIT_INTERVAL`: The time in seconds we should wait before polling the database again. Optional! Default: 5
+
+Example waiting for a postgresql database:
+
+First start Jira:
+
+~~~~
+$ docker network create jiranet
+$ docker run --name jira \
+    --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
+    -e "DOCKER_WAIT_HOST=postgres" \
+    -e "DOCKER_WAIT_PORT=5432" \
+	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
+	  -e "JIRA_DB_PASSWORD=jellyfish"  \
+	  -p 80:8080 blacklabelops/jira
+~~~~
+
+> Waits at most 60 seconds for the database.
+
+Start the database within 60 seconds:
+
+~~~~
+$ docker run --name postgres -d \
+    --network jiranet \
+    -v postgresvolume:/var/lib/postgresql \
+    -e 'POSTGRES_USER=jira' \
+    -e 'POSTGRES_PASSWORD=jellyfish' \
+    -e 'POSTGRES_DB=jiradb' \
+    -e 'POSTGRES_ENCODING=UNICODE' \
+    -e 'POSTGRES_COLLATE=C' \
+    -e 'POSTGRES_COLLATE_TYPE=C' \
+    blacklabelops/postgres
+~~~~
+
+> Jira will start after postgres is available!
+
 # Proxy Configuration
 
 You can specify your proxy host and proxy port with the environment variables JIRA_PROXY_NAME and JIRA_PROXY_PORT. The value will be set inside the Atlassian server.xml at startup!
