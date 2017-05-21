@@ -57,6 +57,7 @@ First start the database server:
 $ docker network create jiranet
 $ docker run --name postgres -d \
     --network jiranet \
+    -v postgresvolume:/var/lib/postgresql \
     -e 'POSTGRES_USER=jira' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
     -e 'POSTGRES_DB=jiradb' \
@@ -66,7 +67,7 @@ $ docker run --name postgres -d \
     blacklabelops/postgres
 ~~~~
 
-> This is the blacklabelops postgres image.
+> This is the blacklabelops postgres image. Data will be persisted inside docker volume `postgresvolume`.
 
 Then start Jira:
 
