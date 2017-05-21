@@ -403,6 +403,26 @@ $ docker run -d -p 80:8080 --name jira \
 
 > Note: Atlassian default is minimum 384m and maximum 768m. You should never go lower.
 
+# Custom Configuration
+
+You can use your customized configuration, e.g. Tomcat's `server.xml`. This is necessary when you need to configure something inside Tomcat that cannot be achieved by this image's supported environment variables. I will give an example for `server.xml` any other configuration file works analogous.
+
+1. First create your own valid `server.xml`.
+1. Mount the file into the proper location inside the image. E.g. `/opt/jira/conf/server.xml`.
+1. Start Jira
+
+Example:
+
+~~~~
+$ docker run -d --name jira \
+    -p 80:8080 \
+    -v jiravolume:/var/atlassian/jira \
+    -v $(pwd)/server.xml:/opt/jira/conf/server.xml \
+    blacklabelops/jira
+~~~~
+
+> Note: `server.xml` is located in the directory where the command is executed.
+
 # Support & Feature Requests
 
 Leave a message and ask questions on Hipchat: [blacklabelops/support](https://www.hipchat.com/gEorzhvnI)
