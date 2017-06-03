@@ -43,6 +43,10 @@ if [ -n "${JIRA_PROXY_SCHEME}" ]; then
   xmlstarlet ed -P -S -L --insert "//Connector[not(@scheme)]" --type attr -n scheme --value "${JIRA_PROXY_SCHEME}" ${JIRA_INSTALL}/conf/server.xml
 fi
 
+if [ -n "${JIRA_CONTEXT_PATH}" ]; then
+  xmlstarlet ed -P -S -L --update "//Context/@path" --value "${JIRA_CONTEXT_PATH}" ${JIRA_INSTALL}/conf/server.xml
+fi
+
 jira_logfile="/var/atlassian/jira/log"
 
 if [ -n "${JIRA_LOGFILE_LOCATION}" ]; then
