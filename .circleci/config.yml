@@ -18,10 +18,10 @@ jobs:
           name: Load Docker image layer cache
           command: |
             set +o pipefail
-            $HOME/buildscripts/release.sh
-            $HOME/buildscripts/buildSupportedJiraImages.sh
+            bash buildscripts/release.sh
+            bash buildscripts/buildSupportedJiraImages.sh
       - run:
           name: Build application Docker image
           command: |
-            $HOME/buildscripts/release.sh
-            $HOME/buildscripts/testSupportedJiraImages.sh
+            bash buildscripts/release.sh
+            bash buildscripts/testSupportedJiraImages.sh
