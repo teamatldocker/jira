@@ -6,10 +6,10 @@ function testImage() {
   local tagname=$1
   local port=$2
   local iteration=0
-  docker run -d -p $port:8080 --name=jira.$tagname blacklabelops/jira:$tagname
-  while ! curl -v http://localhost:$port
+  docker run -d -p $port:8080 --network jira_dockertestnet --name=jira.$tagname blacklabelops/jira:$tagname
+  while ! docker run --rm --network jira_dockertestnet blacklabelops/jenkins-swarm curl http://jira.$tagname:$port
   do
-      { echo "Exit status of curl: $?"
+      { echo "Exit status of curl (${iteration}): $?"
         echo "Retrying ..."
       } 1>&2
       if [ "$iteration" = '30' ]; then
@@ -19,7 +19,7 @@ function testImage() {
       fi
       sleep 10
   done
-  docker stop $tagname
+  docker stop jira.$tagname
 }
 
 testImage $1 $2
