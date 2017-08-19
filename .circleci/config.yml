@@ -12,7 +12,8 @@ jobs:
           command: |
             apk add --no-cache \
               py-pip \
-              curl
+              curl \
+              curl-dev
             pip install \
               docker-compose
       - run:
