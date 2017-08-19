@@ -11,6 +11,8 @@ source $CUR_DIR/release.sh
 readonly TEST_VERSION=$JIRA_VERSION
 readonly TEST_SERVICE_DESK_VERSION=$JIRA_SERVICE_DESK_VERSION
 
+docker network create jira_dockertestnet
+
 source $CUR_DIR/testImage.sh latest 8220
 source $CUR_DIR/testImage.sh $TEST_VERSION 8230
 source $CUR_DIR/testImage.sh latest.de 8240
