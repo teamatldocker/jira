@@ -11,17 +11,18 @@ jobs:
           name: Install dependencies
           command: |
             apk add --no-cache \
-              py-pip=9.0.0-r1
+              py-pip \
+              curl
             pip install \
-              docker-compose==1.12.0
+              docker-compose=
       - run:
-          name: Load Docker image layer cache
+          name: Build Docker Images
           command: |
             set +o pipefail
             sh buildscripts/release.sh
             sh buildscripts/buildSupportedJiraImages.sh
       - run:
-          name: Build application Docker image
+          name: Test Docker Images
           command: |
             sh buildscripts/release.sh
             sh buildscripts/testSupportedJiraImages.sh
