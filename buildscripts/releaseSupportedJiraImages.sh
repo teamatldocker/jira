@@ -21,10 +21,8 @@ function retagImage() {
 function pushImage() {
   local tagname=$1
   local repository=$2
-  if [ "$repository" != 'docker.io' ]; then
-    retagImage $tagname $repository
-  fi
-  docker push $repository/blacklabelops/jira:$tagname
+
+  docker push blacklabelops/jira:$tagname
 }
 
 pushImage latest $PUSH_REPOSITORY
