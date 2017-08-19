@@ -21,6 +21,9 @@ if [ -n "$JIRA_DATABASE_URL" ]; then
   if [ "$JIRA_DB_TYPE" != "mysql" ]; then
     SCHEMA='<schema-name>public</schema-name>'
   fi
+  if [ "$JIRA_DB_TYPE" == "mssql" ]; then
+    SCHEMA='<schema-name>dbo</schema-name>'
+  fi
 
   cat <<END > ${JIRA_HOME}/dbconfig.xml
 <?xml version="1.0" encoding="UTF-8"?>
