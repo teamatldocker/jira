@@ -31,7 +31,7 @@ jobs:
           name: Release Docker Images
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              docker login $DOCKER_USER $DOCKER_PASS
+              docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
               sh buildscripts/release.sh
               sh buildscripts/releaseSupportedJiraImages.sh
             fi

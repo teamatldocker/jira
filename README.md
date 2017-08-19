@@ -1,7 +1,7 @@
 # Dockerized Atlassian Jira
 
 [![Circle CI](https://circleci.com/gh/blacklabelops/jira.svg?style=shield)](https://circleci.com/gh/blacklabelops/jira)
-[![Open Issues](https://img.shields.io/github/issues/blacklabelops/jira.svg)](https://github.com/blacklabelops/jira(issues) [![Stars on GitHub](https://img.shields.io/github/stars/blacklabelops/jira.svg)](https://github.com/cblacklabelops/jira/stargazers) 
+[![Open Issues](https://img.shields.io/github/issues/blacklabelops/jira.svg)](https://github.com/blacklabelops/jira/issues) [![Stars on GitHub](https://img.shields.io/github/stars/blacklabelops/jira.svg)](https://github.com/cblacklabelops/jira/stargazers) 
 [![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/)
 
 
