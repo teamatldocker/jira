@@ -8,6 +8,21 @@
 
 set -o errexit
 
+[[ ${DEBUG} == true ]] && set -x
+
+#
+# This function will wait for a specific host and port for as long as the timeout is specified.
+#
+function waitForDB() {
+  local waitHost=${DOCKER_WAIT_HOST:-}
+  local waitPort=${DOCKER_WAIT_PORT:-}
+  local waitTimeout=${DOCKER_WAIT_TIMEOUT:-60}
+  local waitIntervalTime=${DOCKER_WAIT_INTERVAL:-5}
+  if [ -n "${waitHost}" ] && [ -n "${waitPort}" ]; then
+    dockerize -timeout ${waitTimeout}s -wait-retry-interval ${waitIntervalTime}s -wait tcp://${waitHost}:${waitPort}
+  fi
+}
+
 if [ -n "${JIRA_DELAYED_START}" ]; then
   sleep ${JIRA_DELAYED_START}
 fi
@@ -55,7 +70,11 @@ sed -i "/${TARGET_PROPERTY}/d" ${JIRA_INSTALL}/conf/logging.properties
 echo "${TARGET_PROPERTY} = ${jira_logfile}" >> ${JIRA_INSTALL}/conf/logging.properties
 
 if [ "$1" = 'jira' ] || [ "${1:0:1}" = '-' ]; then
+  waitForDB
   /bin/bash ${JIRA_SCRIPTS}/launch.sh
+  if [ -n "${JIRA_PROXY_PATH}" ]; then
+    xmlstarlet ed -P -S -L --update "//Context/@path" --value "${JIRA_PROXY_PATH}" ${JIRA_INSTALL}/conf/server.xml
+  fi
   exec ${JIRA_INSTALL}/bin/start-jira.sh -fg "$@"
 else
   exec "$@"

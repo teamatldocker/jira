@@ -17,7 +17,8 @@ services:
       - 'JIRA_PROXY_NAME='
       - 'JIRA_PROXY_PORT='
       - 'JIRA_PROXY_SCHEME='
-      - 'JIRA_DELAYED_START=10'
+      - 'DOCKER_WAIT_HOST=postgresql'
+      - 'DOCKER_WAIT_PORT=5432'
     links:
       - 'postgresql:postgresql'
     labels:

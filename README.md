@@ -1,18 +1,23 @@
 # Dockerized Atlassian Jira
 
-[![Circle CI](https://circleci.com/gh/blacklabelops/jira/tree/master.svg?style=shield)](https://circleci.com/gh/blacklabelops/jira/tree/master) [![Docker Repository on Quay.io](https://quay.io/repository/blacklabelops/jira/status "Docker Repository on Quay")](https://quay.io/repository/blacklabelops/jira) [![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![](https://badge.imagelayers.io/blacklabelops/jira:latest.svg)](https://imagelayers.io/?images=blacklabelops/jira:latest 'Get your own badge on imagelayers.io')
+[![Circle CI](https://circleci.com/gh/blacklabelops/jira.svg?style=shield)](https://circleci.com/gh/blacklabelops/jira)
+[![Open Issues](https://img.shields.io/github/issues/blacklabelops/jira.svg)](https://github.com/blacklabelops/jira/issues) [![Stars on GitHub](https://img.shields.io/github/stars/blacklabelops/jira.svg)](https://github.com/cblacklabelops/jira/stargazers) 
+[![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/)
+
 
 "The best software teams ship early and often - Not many tools, one tool. JIRA Software is built for every member of your software team to plan, track, and release great software." - [[Source](https://www.atlassian.com/software/jira)]
 
 ## Supported tags and respective Dockerfile links
 
-| Product |Version | Tags  | Dockerfile | Size |
-|---------|--------|-------|------------|------|
-| Jira Software | 7.1.7 | 7.1.7, latest | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) | [![blacklabelops/jira:latest](https://badge.imagelayers.io/blacklabelops/jira:latest.svg)](https://imagelayers.io/?images=blacklabelops/jira:latest 'blacklabelops/jira:latest') |
-| Jira Service Desk | 3.1.7 | servicedesk, servicedesk.3.1.7 | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/servicedesk/Dockerfile) | [![blacklabelops/jira:servicedesk](https://badge.imagelayers.io/blacklabelops/jira:servicedesk.svg)](https://imagelayers.io/?images=blacklabelops/jira:servicedesk 'blacklabelops/jira:servicedesk') |
-| Jira Core | 7.1.7 | core, core.7.1.7 | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/core/Dockerfile) | [![blacklabelops/jira:core](https://badge.imagelayers.io/blacklabelops/jira:core.svg)](https://imagelayers.io/?images=blacklabelops/jira:core 'blacklabelops/jira:core') |
+| Product |Version | Tags  | Dockerfile |
+|---------|--------|-------|------------|
+| Jira Software | 7.4.2 | 7.4.2, latest, latest.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Service Desk | 3.6.2 | servicedesk, servicedesk.3.6.2, servicedesk.de, servicedesk.3.6.2.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Core | 7.4.2 | core, core.7.4.2, core.de, core.7.4.2.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
 
 > Older tags remain but are not supported/rebuild.
+
+> `.de` postfix means images are installed with preset language german locale.
 
 ## Related Images
 
@@ -22,10 +27,6 @@ You may also like:
 * [blacklabelops/confluence](https://github.com/blacklabelops/confluence): Create, organize, and discuss work with your team
 * [blacklabelops/bitbucket](https://github.com/blacklabelops/bitbucket): Code, Manage, Collaborate
 * [blacklabelops/crowd](https://github.com/blacklabelops/crowd): Identity management for web apps
-
-# Instant Usage
-
-[![Deploy to Tutum](https://s.tutum.co/deploy-to-tutum.svg)](https://stackfiles.io/registry/56b9c12635a28a01009e5811)
 
 # Make It Short
 
@@ -41,10 +42,10 @@ $ docker-compose up -d
 Docker-CLI:
 
 ~~~~
-$ docker run -d -p 80:8080 --name jira blacklabelops/jira
+$ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira blacklabelops/jira
 ~~~~
 
-> Jira will be available at http://yourdockerhost
+> Jira will be available at http://yourdockerhost. Data will be persisted inside docker volume `jiravolume`.
 
 # Setup
 
@@ -56,24 +57,29 @@ First start the database server:
 > Note: Change Password!
 
 ~~~~
+$ docker network create jiranet
 $ docker run --name postgres -d \
+    --network jiranet \
+    -v postgresvolume:/var/lib/postgresql \
     -e 'POSTGRES_USER=jira' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
+    -e 'POSTGRES_DB=jiradb' \
     -e 'POSTGRES_ENCODING=UNICODE' \
     -e 'POSTGRES_COLLATE=C' \
     -e 'POSTGRES_COLLATE_TYPE=C' \
     blacklabelops/postgres
 ~~~~
 
-> This is the blacklabelops postgres image.
+> This is the blacklabelops postgres image. Data will be persisted inside docker volume `postgresvolume`.
 
 Then start Jira:
 
 ~~~~
 $ docker run -d --name jira \
+    --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  --link postgres:postgres \
 	  -p 80:8080 blacklabelops/jira
 ~~~~
 
@@ -92,7 +98,9 @@ First start the database server:
 > Note: Change Password!
 
 ~~~~
+$ docker network create jiranet
 $ docker run --name postgres -d \
+    --network jiranet \
     -e 'POSTGRES_USER=jira' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
     postgres:9.4
@@ -104,7 +112,7 @@ Then create the database with the correct collate:
 
 ~~~~
 $ docker run -it --rm \
-    --link postgres:postgres \
+    --network jiranet \
     postgres:9.4 \
     sh -c 'exec createdb -E UNICODE -l C -T template0 jiradb -h postgres -p 5432 -U jira'
 ~~~~
@@ -115,9 +123,10 @@ Then start Jira:
 
 ~~~~
 $ docker run -d --name jira \
+    --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
-	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  --link postgres:postgres \
+	  -e "JIRA_DB_PASSWORD=jellyfish" \
 	  -p 80:8080 blacklabelops/jira
 ~~~~
 
@@ -141,7 +150,9 @@ Let's take an PostgreSQL Docker Image and set it up:
 Postgres Official Docker Image:
 
 ~~~~
+$ docker network create jiranet
 $ docker run --name postgres -d \
+    --network jiranet \
     -e 'POSTGRES_DB=jiradb' \
     -e 'POSTGRES_USER=jiradb' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
@@ -154,6 +165,7 @@ Postgres Community Docker Image:
 
 ~~~~
 $ docker run --name postgres -d \
+    --network jiranet \
     -e 'DB_USER=jiradb' \
     -e 'DB_PASS=jellyfish' \
     -e 'DB_NAME=jiradb' \
@@ -166,9 +178,10 @@ Now start the Jira container and let it use the container. On first startup you 
 
 ~~~~
 $ docker run -d --name jira \
+    --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jiradb@postgres/jiradb" \
-	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  --link postgres:postgres \
+	  -e "JIRA_DB_PASSWORD=jellyfish" \
 	  -p 80:8080 blacklabelops/jira
 ~~~~
 
@@ -181,7 +194,9 @@ Let's take an MySQL container and set it up:
 MySQL Official Docker Image:
 
 ~~~~
+$ docker network create jiranet
 $ docker run -d --name mysql \
+    --network jiranet \
     -e 'MYSQL_ROOT_PASSWORD=verybigsecretrootpassword' \
     -e 'MYSQL_DATABASE=jiradb' \
     -e 'MYSQL_USER=jiradb' \
@@ -195,6 +210,7 @@ MySQL Community Docker Image:
 
 ~~~~
 $ docker run -d --name mysql \
+    --network jiranet \
     -e 'ON_CREATE_DB=jiradb' \
     -e 'MYSQL_USER=jiradb' \
     -e 'MYSQL_PASS=jellyfish' \
@@ -207,14 +223,62 @@ Now start the Jira container and let it use the container. On first startup you 
 
 ~~~~
 $ docker run -d --name jira \
+    --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
     -e "JIRA_DATABASE_URL=mysql://jiradb@mysql/jiradb" \
     -e "JIRA_DB_PASSWORD=jellyfish"  \
-    --link mysql:mysql \
     -p 80:8080 \
     blacklabelops/jira
 ~~~~
 
 >  Start the Jira and link it to the mysql instance.
+
+# Database Wait Feature
+
+A Jira container can wait for the database container to start up. You have to specify the
+host and port of your database container and Jira will wait up to one minute for the database.
+
+You can define a the waiting parameters with the enviromnemt variables:
+
+* `DOCKER_WAIT_HOST`: The host to poll Mandatory!
+* `DOCKER_WAIT_PORT`: The port to poll Mandatory!
+* `DOCKER_WAIT_TIMEOUT`: The timeout in seconds. Optional! Default: 60
+* `DOCKER_WAIT_INTERVAL`: The time in seconds we should wait before polling the database again. Optional! Default: 5
+
+Example waiting for a postgresql database:
+
+First start Jira:
+
+~~~~
+$ docker network create jiranet
+$ docker run --name jira \
+    --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
+    -e "DOCKER_WAIT_HOST=postgres" \
+    -e "DOCKER_WAIT_PORT=5432" \
+	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
+	  -e "JIRA_DB_PASSWORD=jellyfish"  \
+	  -p 80:8080 blacklabelops/jira
+~~~~
+
+> Waits at most 60 seconds for the database.
+
+Start the database within 60 seconds:
+
+~~~~
+$ docker run --name postgres -d \
+    --network jiranet \
+    -v postgresvolume:/var/lib/postgresql \
+    -e 'POSTGRES_USER=jira' \
+    -e 'POSTGRES_PASSWORD=jellyfish' \
+    -e 'POSTGRES_DB=jiradb' \
+    -e 'POSTGRES_ENCODING=UNICODE' \
+    -e 'POSTGRES_COLLATE=C' \
+    -e 'POSTGRES_COLLATE_TYPE=C' \
+    blacklabelops/postgres
+~~~~
+
+> Jira will start after postgres is available!
 
 # Proxy Configuration
 
@@ -232,6 +296,7 @@ Just type:
 
 ~~~~
 $ docker run -d --name jira \
+    -v jiravolume:/var/atlassian/jira \
     -e "JIRA_PROXY_NAME=myhost.example.com" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
@@ -247,7 +312,10 @@ This is an example on running Atlassian Jira behind NGINX with 2 Docker commands
 First start Jira:
 
 ~~~~
+$ docker network create jiranet
 $ docker run -d --name jira \
+    --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=80" \
     -e "JIRA_PROXY_SCHEME=http" \
@@ -261,8 +329,8 @@ Then start NGINX:
 ~~~~
 $ docker run -d \
     -p 80:80 \
+    --network jiranet \
     --name nginx \
-    --link jira:jira \
     -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
     -e "SERVER1REVERSE_PROXY_PASS1=http://jira:8080" \
     blacklabelops/nginx
@@ -279,7 +347,10 @@ Note: This is a self-signed certificate! Trusted certificates by letsencrypt are
 First start Jira:
 
 ~~~~
+$ docker network create jiranet
 $ docker run -d --name jira \
+    --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
@@ -294,7 +365,7 @@ Then start NGINX:
 $ docker run -d \
     -p 443:443 \
     --name nginx \
-    --link jira:jira \
+    --network jiranet \
     -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
     -e "SERVER1REVERSE_PROXY_PASS1=http://jira:8080" \
     -e "SERVER1CERTIFICATE_DNAME=/CN=CrustyClown/OU=SpringfieldEntertainment/O=crusty.springfield.com/L=Springfield/C=US" \
@@ -305,27 +376,59 @@ $ docker run -d \
 
 > Jira will be available at https://192.168.99.100.
 
-# Vagrant
+# A Word About Memory Usage
 
-First install:
+Jira like any Java application needs a huge amount of memory. If you limit the memory usage by using the Docker --mem option make sure that you give enough memory. Otherwise your Jira will begin to restart randomly.
+You should give at least 1-2GB more than the JVM maximum memory setting to your container.
 
-* [Vagrant](https://www.vagrantup.com/)
-* [Virtualbox](https://www.virtualbox.org/)
-
-Vagrant is fabulous tool for pulling and spinning up virtual machines like docker with containers. I can configure my development and test environment and simply pull it online. And so can you! Install Vagrant and Virtualbox and spin it up. Change into the project folder and build the project on the spot!
+Example:
 
 ~~~~
-$ vagrant up
-$ vagrant ssh
-[vagrant@localhost ~]$ cd /vagrant
-[vagrant@localhost ~]$ docker-compose up
+$ docker run -d -p 80:8080 --name jira \
+    -v jiravolume:/var/atlassian/jira \
+    -e "CATALINA_OPTS= -Xms384m -Xmx1g" \
+    blacklabelops/jira
 ~~~~
 
-> Jira will be available on localhost:8080 on the host machine.
+> CATALINA_OPTS sets webserver startup properties.
+
+Alternative solution recommended by atlassian: Using the environment variables `JVM_MINIMUM_MEMORY` and `JVM_MAXIMUM_MEMORY`.
+
+Example:
+
+~~~~
+$ docker run -d -p 80:8080 --name jira \
+    -v jiravolume:/var/atlassian/jira \
+    -e "JVM_MINIMUM_MEMORY=384m" \
+    -e "JVM_MAXIMUM_MEMORY=1g" \
+    blacklabelops/jira
+~~~~
+
+> Note: Atlassian default is minimum 384m and maximum 768m. You should never go lower.
+
+# Custom Configuration
+
+You can use your customized configuration, e.g. Tomcat's `server.xml`. This is necessary when you need to configure something inside Tomcat that cannot be achieved by this image's supported environment variables. I will give an example for `server.xml` any other configuration file works analogous.
+
+1. First create your own valid `server.xml`.
+1. Mount the file into the proper location inside the image. E.g. `/opt/jira/conf/server.xml`.
+1. Start Jira
+
+Example:
+
+~~~~
+$ docker run -d --name jira \
+    -p 80:8080 \
+    -v jiravolume:/var/atlassian/jira \
+    -v $(pwd)/server.xml:/opt/jira/conf/server.xml \
+    blacklabelops/jira
+~~~~
+
+> Note: `server.xml` is located in the directory where the command is executed.
 
 # Support & Feature Requests
 
-Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](https://www.hipchat.com/geogBFvEM)
+Leave a message and ask questions on Hipchat: [blacklabelops/support](https://www.hipchat.com/gEorzhvnI)
 
 # Credits
 

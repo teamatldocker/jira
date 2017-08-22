@@ -21,6 +21,9 @@ if [ -n "$JIRA_DATABASE_URL" ]; then
   if [ "$JIRA_DB_TYPE" != "mysql" ]; then
     SCHEMA='<schema-name>public</schema-name>'
   fi
+  if [ "$JIRA_DB_TYPE" == "mssql" ]; then
+    SCHEMA='<schema-name>dbo</schema-name>'
+  fi
 
   cat <<END > ${JIRA_HOME}/dbconfig.xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -40,6 +43,12 @@ if [ -n "$JIRA_DATABASE_URL" ]; then
     <pool-max-idle>20</pool-max-idle>
     <pool-remove-abandoned>true</pool-remove-abandoned>
     <pool-remove-abandoned-timeout>300</pool-remove-abandoned-timeout>
+    <validation-query>select version();</validation-query>
+    <validation-query-timeout>3</validation-query-timeout>
+    <min-evictable-idle-time-millis>60000</min-evictable-idle-time-millis>
+    <time-between-eviction-runs-millis>300000</time-between-eviction-runs-millis>
+    <pool-test-on-borrow>false</pool-test-on-borrow>
+    <pool-test-while-idle>true</pool-test-while-idle>
   </jdbc-datasource>
 </jira-database-config>
 END

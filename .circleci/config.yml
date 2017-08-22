@@ -1,0 +1,37 @@
+version: 2
+jobs:
+  build:
+    working_directory: /app
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip \
+              curl \
+              curl-dev
+            pip install \
+              docker-compose
+      - run:
+          name: Build Docker Images
+          command: |
+            set +o pipefail
+            sh buildscripts/release.sh
+            sh buildscripts/buildSupportedJiraImages.sh
+      - run:
+          name: Test Docker Images
+          command: |
+            sh buildscripts/release.sh
+            sh buildscripts/testSupportedJiraImages.sh
+      - run:
+          name: Release Docker Images
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+              sh buildscripts/release.sh
+              sh buildscripts/releaseSupportedJiraImages.sh
+            fi

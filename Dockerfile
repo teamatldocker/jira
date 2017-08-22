@@ -1,17 +1,32 @@
-FROM blacklabelops/alpine:3.3
+FROM blacklabelops/alpine:3.5
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
-ENV JIRA_VERSION=7.1.7                        \
-    JIRA_USER=jira                            \
+# Note that you also need to update buildscripts/release.sh when the
+# Jira version changes
+ARG JIRA_VERSION=7.4.2
+ARG JIRA_PRODUCT=jira-software
+# Permissions, set the linux user id and group id
+ARG CONTAINER_UID=1000
+ARG CONTAINER_GID=1000
+# Image Build Date By Buildsystem
+ARG BUILD_DATE=undefined
+# Language Settings
+ARG LANG_LANGUAGE=en
+ARG LANG_COUNTRY=US
+
+ENV JIRA_USER=jira                            \
     JIRA_GROUP=jira                           \
     JIRA_CONTEXT_PATH=ROOT                    \
     JIRA_HOME=/var/atlassian/jira             \
     JIRA_INSTALL=/opt/jira                    \
     JIRA_SCRIPTS=/usr/local/share/atlassian   \
     MYSQL_DRIVER_VERSION=5.1.38               \
-    POSTGRESQL_DRIVER_VERSION=9.4.1207
+    DOCKERIZE_VERSION=v0.4.0                  \
+    POSTGRESQL_DRIVER_VERSION=9.4.1212
 ENV JAVA_HOME=$JIRA_INSTALL/jre
-ENV PATH=$PATH:$JAVA_HOME/bin
+
+ENV PATH=$PATH:$JAVA_HOME/bin \
+    LANG=${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8
 
 COPY imagescripts ${JIRA_SCRIPTS}
 
@@ -19,22 +34,20 @@ RUN apk add --update                                    \
       ca-certificates                                   \
       gzip                                              \
       curl                                              \
-      wget                                          &&  \
-    apk add xmlstarlet --update-cache                   \
-      --repository                                      \
-      http://dl-3.alpinelinux.org/alpine/edge/testing/  \
-      --allow-untrusted                             &&  \
+      tini                                              \
+      wget                                              \
+      xmlstarlet                                    &&  \
     # Install latest glibc
-    export GLIBC_VERSION=2.22-r8 && \
+    export GLIBC_VERSION=2.25-r0 && \
     wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk && \
     apk add --allow-untrusted /tmp/glibc-${GLIBC_VERSION}.apk && \
     wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk && \
     apk add --allow-untrusted /tmp/glibc-bin-${GLIBC_VERSION}.apk && \
     wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-i18n-${GLIBC_VERSION}.apk && \
     apk --allow-untrusted add /tmp/glibc-i18n-${GLIBC_VERSION}.apk && \
-    /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8 && \
+    /usr/glibc-compat/bin/localedef -i ${LANG_LANGUAGE}_${LANG_COUNTRY} -f UTF-8 ${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8 && \
     # Install Jira
-    export JIRA_BIN=atlassian-jira-software-${JIRA_VERSION}-jira-${JIRA_VERSION}-x64.bin && \
+    export JIRA_BIN=atlassian-${JIRA_PRODUCT}-${JIRA_VERSION}-x64.bin && \
     mkdir -p ${JIRA_HOME}                           &&  \
     mkdir -p ${JIRA_INSTALL}                        &&  \
     wget -O /tmp/jira.bin https://downloads.atlassian.com/software/jira/downloads/${JIRA_BIN} && \
@@ -47,8 +60,7 @@ RUN apk add --update                                    \
     wget -O /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz                                              \
       http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz      &&  \
     tar xzf /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz                                              \
-      mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar           \
-      -C /tmp                                                                                                 &&  \
+      --directory=/tmp                                                                                        &&  \
     cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar     \
       ${JIRA_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar                                &&  \
     rm -f ${JIRA_INSTALL}/lib/postgresql-*.jar                                                                &&  \
@@ -86,24 +98,29 @@ RUN apk add --update                                    \
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_INSTALL} &&  \
     chown -R $JIRA_USER:$JIRA_GROUP ${JIRA_SCRIPTS} &&  \
     chown -R $JIRA_USER:$JIRA_GROUP /home/${JIRA_USER} &&  \
-    # Install Tini Zombie Reaper And Signal Forwarder
-    export TINI_VERSION=0.9.0 && \
-    curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static -o /bin/tini && \
-    chmod +x /bin/tini && \
+    # Install dockerize
+    wget -O /tmp/dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
+    tar -C /usr/local/bin -xzvf /tmp/dockerize.tar.gz && \
+    rm /tmp/dockerize.tar.gz && \
     # Remove obsolete packages
     apk del                                             \
       ca-certificates                                   \
       gzip                                              \
-      curl                                              \
       wget                                          &&  \
     # Clean caches and tmps
     rm -rf /var/cache/apk/*                         &&  \
     rm -rf /tmp/*                                   &&  \
     rm -rf /var/log/*
 
+# Image Metadata
+LABEL com.blacklabelops.application.jira.version=$JIRA_PRODUCT-$JIRA_VERSION \
+      com.blacklabelops.application.jira.userid=$CONTAINER_UID \
+      com.blacklabelops.application.jira.groupid=$CONTAINER_GID \
+      com.blacklabelops.image.builddate.jira=${BUILD_DATE}
+
 USER jira
 WORKDIR ${JIRA_HOME}
 VOLUME ["/var/atlassian/jira"]
 EXPOSE 8080
-ENTRYPOINT ["/bin/tini","--","/usr/local/share/atlassian/docker-entrypoint.sh"]
+ENTRYPOINT ["/sbin/tini","--","/usr/local/share/atlassian/docker-entrypoint.sh"]
 CMD ["jira"]
