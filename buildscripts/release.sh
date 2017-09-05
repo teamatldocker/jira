@@ -3,5 +3,5 @@
 #------------------
 # CONTAINER VARIABLES
 #------------------
-export JIRA_VERSION=7.4.3
-export JIRA_SERVICE_DESK_VERSION=3.6.4
+export JIRA_VERSION=7.4.4
+export JIRA_SERVICE_DESK_VERSION=3.7.0

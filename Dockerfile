@@ -3,7 +3,7 @@ MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
 # Note that you also need to update buildscripts/release.sh when the
 # Jira version changes
-ARG JIRA_VERSION=7.4.3
+ARG JIRA_VERSION=7.4.4
 ARG JIRA_PRODUCT=jira-software
 # Permissions, set the linux user id and group id
 ARG CONTAINER_UID=1000
@@ -21,8 +21,7 @@ ENV JIRA_USER=jira                            \
     JIRA_INSTALL=/opt/jira                    \
     JIRA_SCRIPTS=/usr/local/share/atlassian   \
     MYSQL_DRIVER_VERSION=5.1.38               \
-    DOCKERIZE_VERSION=v0.4.0                  \
-    POSTGRESQL_DRIVER_VERSION=9.4.1212
+    DOCKERIZE_VERSION=v0.4.0
 ENV JAVA_HOME=$JIRA_INSTALL/jre
 
 ENV PATH=$PATH:$JAVA_HOME/bin \
@@ -63,9 +62,6 @@ RUN apk add --update                                    \
       --directory=/tmp                                                                                        &&  \
     cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar     \
       ${JIRA_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar                                &&  \
-    rm -f ${JIRA_INSTALL}/lib/postgresql-*.jar                                                                &&  \
-    wget -O ${JIRA_INSTALL}/lib/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar                                       \
-      https://jdbc.postgresql.org/download/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar                        &&  \
     # Add user
     export CONTAINER_USER=jira                      &&  \
     export CONTAINER_UID=1000                       &&  \
