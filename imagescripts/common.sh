@@ -73,7 +73,7 @@ extract_database_url() {
       fi
       local host_port_name="$(read_var $prefix HOST):$(read_var $prefix PORT)/$(read_var $prefix NAME)"
       local jdbc_driver="com.mysql.jdbc.Driver"
-      local jdbc_url="jdbc:mysql://$host_port_name?autoReconnect=true&characterEncoding=utf8&useUnicode=true&sessionVariables=storage_engine%3DInnoDB"
+      local jdbc_url="jdbc:mysql://$host_port_name?autoReconnect=true&characterEncoding=utf8&useUnicode=true&sessionVariables=default_storage_engine%3DInnoDB"
       local hibernate_dialect="org.hibernate.dialect.MySQLDialect"
       local database_type="mysql"
       ;;
