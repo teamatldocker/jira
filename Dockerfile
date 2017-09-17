@@ -3,7 +3,7 @@ MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
 # Note that you also need to update buildscripts/release.sh when the
 # Jira version changes
-ARG JIRA_VERSION=7.4.4
+ARG JIRA_VERSION=7.5.0
 ARG JIRA_PRODUCT=jira-software
 # Permissions, set the linux user id and group id
 ARG CONTAINER_UID=1000
@@ -20,7 +20,7 @@ ENV JIRA_USER=jira                            \
     JIRA_HOME=/var/atlassian/jira             \
     JIRA_INSTALL=/opt/jira                    \
     JIRA_SCRIPTS=/usr/local/share/atlassian   \
-    MYSQL_DRIVER_VERSION=5.1.38               \
+    MYSQL_DRIVER_VERSION=5.1.44               \
     DOCKERIZE_VERSION=v0.4.0
 ENV JAVA_HOME=$JIRA_INSTALL/jre
 
