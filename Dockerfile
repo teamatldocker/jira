@@ -3,7 +3,7 @@ MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
 # Note that you also need to update buildscripts/release.sh when the
 # Jira version changes
-ARG JIRA_VERSION=7.5.2
+ARG JIRA_VERSION=7.6.0
 ARG JIRA_PRODUCT=jira-software
 # Permissions, set the linux user id and group id
 ARG CONTAINER_UID=1000
@@ -37,7 +37,7 @@ RUN apk add --update                                    \
       wget                                              \
       xmlstarlet                                    &&  \
     # Install latest glibc
-    export GLIBC_VERSION=2.25-r0 && \
+    export GLIBC_VERSION=2.26-r0 && \
     wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk && \
     apk add --allow-untrusted /tmp/glibc-${GLIBC_VERSION}.apk && \
     wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk && \
