@@ -406,6 +406,30 @@ $ docker run -d -p 80:8080 --name jira \
 
 > Note: Atlassian default is minimum 384m and maximum 768m. You should never go lower.
 
+# Jira SSO With Crowd
+
+You enable Single Sign On with Atlassian Crowd. What is crowd?
+
+"Users can come from anywhere: Active Directory, LDAP, Crowd itself, or any mix thereof. Control permissions to all your applications in one place – Atlassian, Subversion, Google Apps, or your own apps." - [Atlassian Crowd](https://www.atlassian.com/software/crowd/overview)
+
+This is controlled by the environment variable `JIRA_CROWD_SSO`. Possible values:
+
+* `true`: Jira configuration will be set to Crowd SSO authentication class at every restart.
+* `false`: Jira configuration will be set to Jira Authentication class at every restart.
+* `ignore` (Default): Config will not be touched, current image setting will be taken.
+
+You have to follow the manual for further settings inside Jira and Crowd: [Documentation](https://confluence.atlassian.com/crowd/integrating-crowd-with-atlassian-jira-192625.html)
+
+Example:
+
+~~~~
+$ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira \
+    -e "JIRA_CROWD_SSO=true" \
+    --name jira blacklabelops/jira
+~~~~
+
+> SSO will be activated, you will need Crowd in order to authenticate.
+
 # Custom Configuration
 
 You can use your customized configuration, e.g. Tomcat's `server.xml`. This is necessary when you need to configure something inside Tomcat that cannot be achieved by this image's supported environment variables. I will give an example for `server.xml` any other configuration file works analogous.

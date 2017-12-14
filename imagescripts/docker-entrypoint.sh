@@ -23,6 +23,41 @@ function waitForDB() {
   fi
 }
 
+SERAPH_CONFIG_FILE="/opt/jira/atlassian-jira/WEB-INF/classes/seraph-config.xml"
+
+#
+# Enable crowd sso authenticator java class in image config file
+#
+function enableCrowdSSO() {
+  xmlstarlet ed -P -S -L --delete "//authenticator" $SERAPH_CONFIG_FILE
+  xmlstarlet ed -P -S -L -s "//security-config" --type elem -n authenticator -i "//authenticator[not(@class)]" -t attr -n class -v "com.atlassian.jira.security.login.SSOSeraphAuthenticator" $SERAPH_CONFIG_FILE
+}
+
+#
+# Enable jira authenticator java class in image config file
+#
+function enableJiraAuth() {
+  xmlstarlet ed -P -S -L --delete "//authenticator" $SERAPH_CONFIG_FILE
+  xmlstarlet ed -P -S -L -s "//security-config" --type elem -n authenticator -i "//authenticator[not(@class)]" -t attr -n class -v "com.atlassian.jira.security.login.JiraSeraphAuthenticator" $SERAPH_CONFIG_FILE
+}
+
+#
+# Will either enable, disable Crowd SSO support or ignore current setting at all
+#
+function controlCrowdSSO() {
+  local setting=$1
+  case "$setting" in
+    true)
+      enableCrowdSSO
+    ;;
+    false)
+      enableJiraAuth
+    ;;
+    *)
+      echo "Crowd SSO settings ingored because of setting ${setting}"
+    esac
+}
+
 if [ -n "${JIRA_DELAYED_START}" ]; then
   sleep ${JIRA_DELAYED_START}
 fi
@@ -47,6 +82,10 @@ jira_logfile="/var/atlassian/jira/log"
 
 if [ -n "${JIRA_LOGFILE_LOCATION}" ]; then
   jira_logfile=${JIRA_LOGFILE_LOCATION}
+fi
+
+if [ -n "${JIRA_CROWD_SSO}" ]; then
+  controlCrowdSSO ${JIRA_CROWD_SSO}
 fi
 
 if [ ! -d "${jira_logfile}" ]; then
