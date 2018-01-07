@@ -1,9 +1,10 @@
-version: '2'
+version: '3'
 
 services:
   jira:
+    depends_on:
+      - postgresql
     image: blacklabelops/jira
-    container_name: jirasoftware
     networks:
       - jiranet
     volumes:
@@ -17,17 +18,12 @@ services:
       - 'JIRA_PROXY_NAME='
       - 'JIRA_PROXY_PORT='
       - 'JIRA_PROXY_SCHEME='
-      - 'DOCKER_WAIT_HOST=postgresql'
-      - 'DOCKER_WAIT_PORT=5432'
-    links:
-      - 'postgresql:postgresql'
     labels:
       com.blacklabelops.description: "Atlassian Jira"
       com.blacklabelops.service: "jira"
 
   postgresql:
     image: blacklabelops/postgres
-    hostname: postgresql
     networks:
       - jiranet
     volumes:
