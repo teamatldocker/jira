@@ -11,9 +11,9 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Jira Software | 7.7.0 | 7.7.0, latest, latest.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
-| Jira Service Desk | 3.10.0 | servicedesk, servicedesk.3.10.0, servicedesk.de, servicedesk.3.10.0.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
-| Jira Core | 7.7.0 | core, core.7.7.0, core.de, core.7.7.0.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Software | 7.7.1 | 7.7.1, latest, latest.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Service Desk | 3.10.1 | servicedesk, servicedesk.3.10.1, servicedesk.de, servicedesk.3.10.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Core | 7.7.1 | core, core.7.7.1, core.de, core.7.7.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
 
 > Older tags remain but are not supported/rebuild.
 
@@ -493,7 +493,7 @@ Rollback:
 
 ## Example
 
-Let's assume your running Jira 7.6.2 with my example setup and you want to upgrade to Jira 7.7.0.
+Let's assume your running Jira 7.6.2 with my example setup and you want to upgrade to Jira 7.7.1.
 
 Postgres has been started with the following settings:
 
@@ -550,10 +550,10 @@ Now `Upgrade` Jira by switching the container to a new image:
 
 ~~~~
 $ docker rm jira
-$ docker pull blacklabelops/jira:7.7.0
+$ docker pull blacklabelops/jira:7.7.1
 ~~~~
 
-Start the database and Jira with the same parameters as before but with the new image `7.7.0`:
+Start the database and Jira with the same parameters as before but with the new image `7.7.1`:
 
 ~~~~
 $ docker start postgres
@@ -561,10 +561,10 @@ $ docker run -d --name jira \
     --network jiranet \
     -v jiravolume:/var/atlassian/jira \
 	  ...
-	  -p 80:8080 blacklabelops/jira:7.7.0
+	  -p 80:8080 blacklabelops/jira:7.7.1
 ~~~~
 
-> Always use a tagged image! Like `:7.7.0`.
+> Always use a tagged image! Like `:7.7.1`.
 
 Wait until Jira has ended the upgrade procedure and your instance is available again!
 
