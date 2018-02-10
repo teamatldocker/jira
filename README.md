@@ -11,9 +11,9 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Jira Software | 7.7.0 | 7.7.0, latest, latest.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
-| Jira Service Desk | 3.10.0 | servicedesk, servicedesk.3.10.0, servicedesk.de, servicedesk.3.10.0.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
-| Jira Core | 7.7.0 | core, core.7.7.0, core.de, core.7.7.0.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Software | 7.7.1 | 7.7.1, latest, latest.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Service Desk | 3.10.1 | servicedesk, servicedesk.3.10.1, servicedesk.de, servicedesk.3.10.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Core | 7.7.1 | core, core.7.7.1, core.de, core.7.7.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
 
 > Older tags remain but are not supported/rebuild.
 
@@ -449,6 +449,176 @@ $ docker run -d --name jira \
 ~~~~
 
 > Note: `server.xml` is located in the directory where the command is executed.
+
+# Upgrading Jira
+
+This description is without any guarantee as this procedure may get outdated or omit critical details which may lead to data loss. Use at own risk.
+
+Before you take any action make sure you can potentially upgrade:
+
+1. Check inside Jira administration panel if your installed plugins are all upwards compatible. Jira has a very good feedback system where you can see if you plugin provider is compatible to the latest Jira version.
+
+2. Check or ask inside this repository if anyone has tested the latest image. I have experienced issues when Jira has upgraded to a new major version: E.g. 6.x to 7.x. In this case sometimes the image has to be adapted. Minor versions and especially bugfix version can be usually be used without any problems.
+
+Now make a `Backup` in order to be able to Fallback:
+
+1. Stop your database and Jira instance.
+2. Make a backup of your volumes. (Both Jira and database). For example use blacklabelops/volumerize to backup your volume.
+
+Now `Upgrade` your Jira container:
+
+1. Remove your stopped Jira container: `docker rm your_jira_container_name`
+2. Upgrade your local image: `docker pull blacklabelops/jira:new_version`
+3. Use the same start command as the last container but with the new image `blacklabelops/jira:new_version`
+4. Jira will start its upgrading routine on both the local files and database. Run `docker logs -f your_jira_container_name` and lookout for error messages.
+
+Now `Test` your Jira instance:
+
+1. Login and check your functionality
+2. Check if all plugins are running
+3. Check Jira administration pannel for error messages
+
+Test okay?
+
+Your finished!
+
+Test not okay?
+
+Rollback:
+
+1. Stop Jira and database instance.
+2. Play back your backup. E.g. delete volumes, create volumes and copy back old files. Both Jira and database! You can simplify things with blacklabelops/volumerize.
+3.  Remove your stopped Jira container: `docker rm your_jira_container_name`
+4. Use the same start command as the last container but with the old image `blacklabelops/jira:old_version`
+
+## Example
+
+Let's assume your running Jira 7.6.2 with my example setup and you want to upgrade to Jira 7.7.1.
+
+Postgres has been started with the following settings:
+
+~~~~
+$ docker run --name postgres -d \
+    --network jiranet \
+    -v postgresvolume:/var/lib/postgresql \
+    ...
+    blacklabelops/postgres
+~~~~
+
+Jira has been started with the following settings:
+
+~~~~
+$ docker run -d --name jira \
+    --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
+	  ...
+	  -p 80:8080 blacklabelops/jira:7.6.2
+~~~~
+
+This means:
+
+* Jira instance has name `jira` and data is inside volume `jiravolume` and has version `7.6.2`.
+* Database instance has name `postgres` and data is inside volume `postgresvolume`.
+
+Stop both instance with the following commands:
+
+~~~~
+$ docker stop jira
+$ docker stop postgres
+~~~~
+
+> Correct order is first Jira then database.
+
+`Backup` both volumes in order to be able to `Rollback`. In this example we use [blacklabelops/volumerize](https://github.com/blacklabelops/volumerize) to backup to another volume.
+
+Run the following command to backup both database and Jira in one simple step:
+
+~~~~
+$ docker run \
+    --rm \
+    -v jiravolume:/source/application_data:ro \
+    -v postgresvolume:/source/application_database_data:ro \
+    -v jirabackup:/backup \
+    -e "VOLUMERIZE_SOURCE=/source" \
+    -e "VOLUMERIZE_TARGET=file:///backup" \
+    blacklabelops/volumerize backup
+~~~~
+
+> `jiravolume` and `postgresvolume` will have a backup inside jirabackup.
+
+Now `Upgrade` Jira by switching the container to a new image:
+
+~~~~
+$ docker rm jira
+$ docker pull blacklabelops/jira:7.7.1
+~~~~
+
+Start the database and Jira with the same parameters as before but with the new image `7.7.1`:
+
+~~~~
+$ docker start postgres
+$ docker run -d --name jira \
+    --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
+	  ...
+	  -p 80:8080 blacklabelops/jira:7.7.1
+~~~~
+
+> Always use a tagged image! Like `:7.7.1`.
+
+Wait until Jira has ended the upgrade procedure and your instance is available again!
+
+1. Login and check your functionality
+2. Check if all plugins are running
+3. Check Jira administration pannel for error messages
+
+Test okay?
+
+Your finished!
+
+Test not okay?
+
+`Rollback` to the last version.
+
+Stop both instance with the following commands:
+
+~~~~
+$ docker stop jira
+$ docker stop postgres
+~~~~
+
+`Restore` both volumes in order to be able to use the last version again. In this example we use [blacklabelops/volumerize](https://github.com/blacklabelops/volumerize) to restore from another volume.
+
+Run the following command to restore both database and Jira in one simple step:
+
+~~~~
+$ docker run \
+    --rm \
+    -v jiravolume:/source/application_data \
+    -v postgresvolume:/source/application_database_data \
+    -v jirabackup:/backup:ro \
+    -e "VOLUMERIZE_SOURCE=/source" \
+    -e "VOLUMERIZE_TARGET=file:///backup" \
+    blacklabelops/volumerize restore
+~~~~
+
+> Data will be written back to `jiravolume` and `postgresvolume`.
+
+Start the old version again:
+
+Start the database and Jira with the same parameters as before but with the old image `7.6.2`:
+
+~~~~
+$ docker start postgres
+$ docker rm jira
+$ docker run -d --name jira \
+    --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
+	  ...
+	  -p 80:8080 blacklabelops/jira:7.6.2
+~~~~
+
+> Always use a tagged image! Like `:7.6.2`.
 
 # Support & Feature Requests
 
