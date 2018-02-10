@@ -238,7 +238,7 @@ $ docker run -d --name jira \
 A Jira container can wait for the database container to start up. You have to specify the
 host and port of your database container and Jira will wait up to one minute for the database.
 
-You can define a the waiting parameters with the enviromnemt variables:
+You can define the waiting parameters with the environment variables:
 
 * `DOCKER_WAIT_HOST`: The host to poll Mandatory!
 * `DOCKER_WAIT_PORT`: The port to poll Mandatory!
