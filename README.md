@@ -19,6 +19,14 @@
 
 > `.de` postfix means images are installed with preset language german locale.
 
+## Support & Feature Requests
+
+Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](http://support.blacklabelops.com)
+
+Maybe no one has ever told you, but munich developers run on beer! If you like my work, share a beer!
+
+[![BeerMe](https://raw.githubusercontent.com/ikkez/Beer-Donation-Button/gh-pages/img/beer_donation_button_single.png)](https://www.paypal.me/donateblacklabelops)
+
 ## Related Images
 
 You may also like:
@@ -620,9 +628,22 @@ $ docker run -d --name jira \
 
 > Always use a tagged image! Like `:7.6.2`.
 
-# Support & Feature Requests
+# Extending This Image
 
-Leave a message and ask questions on Hipchat: [blacklabelops/support](https://www.hipchat.com/gEorzhvnI)
+You can easily extend this image with your own tooling!
+
+Example:
+
+~~~~
+FROM blacklabelops/jira
+
+USER root
+
+... Install your tooling ...
+
+USER jira
+CMD ["jira"]
+~~~~
 
 # Credits
 
