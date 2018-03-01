@@ -43,7 +43,7 @@ if [ -n "$JIRA_DATABASE_URL" ]; then
     <pool-max-idle>20</pool-max-idle>
     <pool-remove-abandoned>true</pool-remove-abandoned>
     <pool-remove-abandoned-timeout>300</pool-remove-abandoned-timeout>
-    <validation-query>select version();</validation-query>
+    <validation-query>$JIRA_DB_VALIDATION_QUERY</validation-query>
     <validation-query-timeout>3</validation-query-timeout>
     <min-evictable-idle-time-millis>60000</min-evictable-idle-time-millis>
     <time-between-eviction-runs-millis>300000</time-between-eviction-runs-millis>

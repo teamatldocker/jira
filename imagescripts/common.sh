@@ -66,6 +66,7 @@ extract_database_url() {
       local jdbc_url="jdbc:postgresql://$host_port_name"
       local hibernate_dialect="org.hibernate.dialect.PostgreSQLDialect"
       local database_type="postgres72"
+      local validation_query="select version();"
       ;;
     mysql|mysql2)
       if [ -z "$(read_var $prefix PORT)" ]; then
@@ -76,16 +77,14 @@ extract_database_url() {
       local jdbc_url="jdbc:mysql://$host_port_name?autoReconnect=true&characterEncoding=utf8&useUnicode=true&sessionVariables=default_storage_engine%3DInnoDB"
       local hibernate_dialect="org.hibernate.dialect.MySQLDialect"
       local database_type="mysql"
+      local validation_query="select 1"
       ;;
     sqlserver)
-      if [ -z "$(read_var $prefix PORT)" ]; then
-        eval "${prefix}_PORT=1433"
-      fi
-      local host_port_name="$(read_var $prefix HOST):$(read_var $prefix PORT)/$(read_var $prefix NAME)"
       local jdbc_driver="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-      local jdbc_url="jdbc:sqlserver://$host_port_name"
+      local jdbc_url="jdbc:$url"
       local hibernate_dialect="org.hibernate.dialect.SQLServerDialect"
       local database_type="mssql"
+      local validation_query="select 1"
       ;;
     *)
       echo "Unsupported database url scheme: $(read_var $prefix SCHEME)"
@@ -97,4 +96,6 @@ extract_database_url() {
   eval "${prefix}_JDBC_URL=\"$jdbc_url\""
   eval "${prefix}_DIALECT=\"$hibernate_dialect\""
   eval "${prefix}_TYPE=\"$database_type\""
+  eval "${prefix}_VALIDATION_QUERY=\"$validation_query\""
+
 }
