@@ -82,8 +82,8 @@ extract_database_url() {
         eval "${prefix}_PORT=1433"
       fi
       local host_port_name="$(read_var $prefix HOST):$(read_var $prefix PORT)/$(read_var $prefix NAME)"
-      local jdbc_driver="net.sourceforge.jtds.jdbc.Driver"
-      local jdbc_url="jdbc:jtds:sqlserver://$host_port_name"
+      local jdbc_driver="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+      local jdbc_url="jdbc:sqlserver://$host_port_name"
       local hibernate_dialect="org.hibernate.dialect.SQLServerDialect"
       local database_type="mssql"
       ;;
