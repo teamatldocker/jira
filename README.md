@@ -241,6 +241,26 @@ $ docker run -d --name jira \
 
 >  Start the Jira and link it to the mysql instance.
 
+## SQL Server
+
+Starting with version 7.8.0 of JIRA, Atlassian no longer provides/uses the jTDS JDBC driver and instead bundles the Microsoft JDBC driver.  This proves to be a bit of a headache because while the jTDS driver used the
+conventional JDBC URL scheme, Microsoft's driver uses a non-standard JDBC URL scheme that departs wildly from the usual (see [Issue #72](https://github.com/blacklabelops/jira/issues/72) for details).  As a result of 
+this deviation from the standard, users wishing to connect to a SQL Server database *MUST* encode their host/port/database information in the `JIRA_DATABASE_URL` and cannot leverage the individual 
+`JIRA_DB_*` variables.  Note that any additional driver properties needed can be appended in much the same was as `databaseName` is handled in the example below.
+
+~~~~
+docker run \
+    -d \
+    --name jira \
+    --network jiranet \
+    -v jiravolume:/var/atlassian/jira \
+    -e "JIRA_DATABASE_URL=sqlserver://MySQLServerHost:1433;databaseName=MyDatabase" \
+    -e "JIRA_DB_USER=jira-app" \
+    -e "JIRA_DB_PASSWORD=***" \
+    -p 8080:8080 \
+    blacklabelops/jira
+~~~~
+
 # Database Wait Feature
 
 A Jira container can wait for the database container to start up. You have to specify the
