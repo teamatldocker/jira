@@ -21,12 +21,20 @@ jobs:
           command: |
             set +o pipefail
             sh buildscripts/release.sh
-            sh buildscripts/buildSupportedJiraImages.sh
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              sh buildscripts/buildSupportedJiraImages.sh
+            else
+              sh buildscripts/buildDevelopmentImages.sh
+            fi
       - run:
           name: Test Docker Images
           command: |
             sh buildscripts/release.sh
-            sh buildscripts/testSupportedJiraImages.sh
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              sh buildscripts/testSupportedJiraImages.sh
+            else
+              sh buildscripts/testDevelopmentImages.sh
+            fi
       - run:
           name: Release Docker Images
           command: |
@@ -34,4 +42,8 @@ jobs:
               docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
               sh buildscripts/release.sh
               sh buildscripts/releaseSupportedJiraImages.sh
+            elif [ "${CIRCLE_BRANCH}" == "dev" ]; then
+              docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+              sh buildscripts/release.sh
+              sh buildscripts/releaseDevelopmentImages.sh
             fi
