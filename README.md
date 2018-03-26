@@ -11,9 +11,9 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Jira Software | 7.8.0 | 7.8.0, latest, latest.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
-| Jira Service Desk | 3.11.0 | servicedesk, servicedesk.3.11.0, servicedesk.de, servicedesk.3.11.0.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
-| Jira Core | 7.8.0 | core, core.7.8.0, core.de, core.7.8.0.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Software | 7.8.1 | 7.8.1, latest, latest.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Service Desk | 3.11.1 | servicedesk, servicedesk.3.11.1, servicedesk.de, servicedesk.3.11.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Core | 7.8.1 | core, core.7.8.1, core.de, core.7.8.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
 
 > Older tags remain but are not supported/rebuild.
 
