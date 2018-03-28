@@ -20,7 +20,7 @@ ENV JIRA_USER=jira                            \
     JIRA_HOME=/var/atlassian/jira             \
     JIRA_INSTALL=/opt/jira                    \
     JIRA_SCRIPTS=/usr/local/share/atlassian   \
-    MYSQL_DRIVER_VERSION=5.1.44               \
+    MYSQL_DRIVER_VERSION=5.1.46               \
     DOCKERIZE_VERSION=v0.6.1
 ENV JAVA_HOME=$JIRA_INSTALL/jre
 
