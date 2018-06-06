@@ -1,6 +1,6 @@
 urldecode() {
     local data=${1//+/ }
-    printf '%b' "${data//%/\x}"
+    printf '%b' "${data//%/\\x}"
 }
 
 parse_url() {
