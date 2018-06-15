@@ -18,6 +18,12 @@ services:
       - 'JIRA_PROXY_NAME='
       - 'JIRA_PROXY_PORT='
       - 'JIRA_PROXY_SCHEME='
+    logging:
+      # limit logs retained on host to 25MB
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
     labels:
       com.blacklabelops.description: "Atlassian Jira"
       com.blacklabelops.service: "jira"
@@ -36,6 +42,12 @@ services:
       - 'POSTGRES_ENCODING=UNICODE'
       - 'POSTGRES_COLLATE=C'
       - 'POSTGRES_COLLATE_TYPE=C'
+    logging:
+      # limit logs retained on host to 25MB
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
     labels:
       com.blacklabelops.description: "PostgreSQL Database Server"
       com.blacklabelops.service: "postgresql"
