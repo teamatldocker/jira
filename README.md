@@ -244,8 +244,8 @@ $ docker run -d --name jira \
 ## SQL Server
 
 Starting with version 7.8.0 of JIRA, Atlassian no longer provides/uses the jTDS JDBC driver and instead bundles the Microsoft JDBC driver.  This proves to be a bit of a headache because while the jTDS driver used the
-conventional JDBC URL scheme, Microsoft's driver uses a non-standard JDBC URL scheme that departs wildly from the usual (see [Issue #72](https://github.com/blacklabelops/jira/issues/72) for details).  As a result of 
-this deviation from the standard, users wishing to connect to a SQL Server database *MUST* encode their host/port/database information in the `JIRA_DATABASE_URL` and cannot leverage the individual 
+conventional JDBC URL scheme, Microsoft's driver uses a non-standard JDBC URL scheme that departs wildly from the usual (see [Issue #72](https://github.com/blacklabelops/jira/issues/72) for details).  As a result of
+this deviation from the standard, users wishing to connect to a SQL Server database *MUST* encode their host/port/database information in the `JIRA_DATABASE_URL` and cannot leverage the individual
 `JIRA_DB_*` variables.  Note that any additional driver properties needed can be appended in much the same was as `databaseName` is handled in the example below.
 
 ~~~~
@@ -409,26 +409,23 @@ $ docker run -d \
 Jira like any Java application needs a huge amount of memory. If you limit the memory usage by using the Docker --mem option make sure that you give enough memory. Otherwise your Jira will begin to restart randomly.
 You should give at least 1-2GB more than the JVM maximum memory setting to your container.
 
+Java JVM memory settings are applied by manipulating properties inside the `setenv.sh` file and this image can set those properties for you.
+
+Example:
+
+Applying minimum memory of 384 megabytes and maximum of one gigabyte.
+
+The correct properties from the Atlassian documentation are `JVM_MINIMUM_MEMORY` and `JVM_MAXIMUM_MEMORY`
+
+The image will set those properties, if you precede the property name with `SETENV_`.
+
 Example:
 
 ~~~~
 $ docker run -d -p 80:8080 --name jira \
     -v jiravolume:/var/atlassian/jira \
-    -e "CATALINA_OPTS= -Xms384m -Xmx1g" \
-    blacklabelops/jira
-~~~~
-
-> CATALINA_OPTS sets webserver startup properties.
-
-Alternative solution recommended by atlassian: Using the environment variables `JVM_MINIMUM_MEMORY` and `JVM_MAXIMUM_MEMORY`.
-
-Example:
-
-~~~~
-$ docker run -d -p 80:8080 --name jira \
-    -v jiravolume:/var/atlassian/jira \
-    -e "JVM_MINIMUM_MEMORY=384m" \
-    -e "JVM_MAXIMUM_MEMORY=1g" \
+    -e "SETENV_JVM_MINIMUM_MEMORY=384m" \
+    -e "SETENV_JVM_MAXIMUM_MEMORY=1g" \
     blacklabelops/jira
 ~~~~
 

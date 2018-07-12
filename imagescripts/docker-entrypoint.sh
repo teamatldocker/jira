@@ -11,6 +11,24 @@ set -o errexit
 [[ ${DEBUG} == true ]] && set -x
 
 #
+# This function will replace variables inside the script setenv.sh
+#
+function updateSetEnv() {
+  local propertyname=$1
+  local propertyvalue=$2
+  sed -i -e "/${propertyname}=/c${propertyname}=\"${propertyvalue}\"" /opt/jira/bin/setenv.sh
+}
+
+function setAllSetEnvs() {
+  local env_vars=$(env | awk -F= '/^SETENV/ {print $1}')
+  for env_variable in $env_vars
+  do
+    local propertyName=${env_variable#"SETENV_"}
+    updateSetEnv $propertyName ${!env_variable}
+  done
+}
+
+#
 # This function will wait for a specific host and port for as long as the timeout is specified.
 #
 function waitForDB() {
@@ -107,6 +125,8 @@ echo "${TARGET_PROPERTY} = ${jira_logfile}" >> ${JIRA_INSTALL}/conf/logging.prop
 TARGET_PROPERTY=4host-manager.org.apache.juli.AsyncFileHandler.directory
 sed -i "/${TARGET_PROPERTY}/d" ${JIRA_INSTALL}/conf/logging.properties
 echo "${TARGET_PROPERTY} = ${jira_logfile}" >> ${JIRA_INSTALL}/conf/logging.properties
+
+setAllSetEnvs
 
 if [ "$1" = 'jira' ] || [ "${1:0:1}" = '-' ]; then
   waitForDB
