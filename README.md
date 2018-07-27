@@ -21,7 +21,7 @@
 
 ## Support & Feature Requests
 
-Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](http://support.blacklabelops.com)
+Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](https://www.hipchat.com/gEorzhvnI)
 
 Maybe no one has ever told you, but munich developers run on beer! If you like my work, share a beer!
 
