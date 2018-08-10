@@ -1,4 +1,4 @@
-FROM blacklabelops/alpine:3.7
+FROM blacklabelops/alpine:3.8
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
 # Note that you also need to update buildscripts/release.sh when the
