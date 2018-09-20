@@ -11,6 +11,15 @@ set -o errexit
 [[ ${DEBUG} == true ]] && set -x
 
 #
+# This function purges osgi plugins when env is true
+#
+function purgeJiraPlugins() {
+  if [ "$JIRA_PURGE_PLUGINS_ONSTART" = 'true' ]; then
+    bash /usr/local/share/atlassian/purgeplugins.sh
+  fi
+}
+
+#
 # This function will replace variables inside the script setenv.sh
 #
 function updateSetEnv() {
@@ -130,6 +139,7 @@ setAllSetEnvs
 
 if [ "$1" = 'jira' ] || [ "${1:0:1}" = '-' ]; then
   waitForDB
+  purgeJiraPlugins
   /bin/bash ${JIRA_SCRIPTS}/launch.sh
   if [ -n "${JIRA_PROXY_PATH}" ]; then
     xmlstarlet ed -P -S -L --update "//Context/@path" --value "${JIRA_PROXY_PATH}" ${JIRA_INSTALL}/conf/server.xml

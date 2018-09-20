@@ -431,6 +431,28 @@ $ docker run -d -p 80:8080 --name jira \
 
 > Note: Atlassian default is minimum 384m and maximum 768m. You should never go lower.
 
+# Jira Startup Plugin Purge
+
+You can enable osgi plugin purge on startup and restarts. The image will merciless purge the direcories
+
+* /var/atlassian/jira/plugins/.bundled-plugins
+* /var/atlassian/jira/plugins/.osgi-plugins
+
+This will help solving [corrupted plugin caches](https://confluence.atlassian.com/jirakb/troubleshooting-jira-startup-failed-error-394464512.html#TroubleshootingJIRAStartupFailedError-Cache). Make sure to [increasing the plugin timeout](https://confluence.atlassian.com/jirakb/troubleshooting-jira-startup-failed-error-394464512.html#TroubleshootingJIRAStartupFailedError-Time) because Jira will have to rebuild the whole cache at each startup.
+
+This is controlled by the environment variable `JIRA_PURGE_PLUGINS_ONSTART`. Possible values:
+
+* `true`: Purge will be done each time container is started or restarted.
+* `false` (Default): No purge will be done.
+
+Example:
+
+~~~~
+$ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira \
+    -e "JIRA_PURGE_PLUGINS_ONSTART=true" \
+    --name jira blacklabelops/jira
+~~~~
+
 # Jira SSO With Crowd
 
 You enable Single Sign On with Atlassian Crowd. What is crowd?
