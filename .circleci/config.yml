@@ -90,23 +90,19 @@ jobs:
 
 workflows:
   version: 2
-  build_master:
+  build_pipeline:
     jobs:
-      - build_releases
-    filters:
-      branches:
-        only: master
-  build_dev:
-    jobs:
-      - build_development
-    filters:
-      branches:
-        only: dev
-  build_branch:
-    jobs:
-      - build_branch
-    filters:
-      branches:
-        ignore:
-          - dev
-          - master
+      - build_releases:
+          filters:
+            branches:
+              only: master
+      - build_development:
+          filters:
+            branches:
+              only: dev
+      - build_branch:
+          filters:
+            branches:
+              ignore:
+                - dev
+                - master
