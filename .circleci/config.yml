@@ -17,12 +17,12 @@ jobs:
             pip install \
               docker-compose
       - run:
-          name: Build Development Images
+          name: Build Branch Images
           command: |
             set +o pipefail
             sh buildscripts/buildDevelopmentImages.sh
       - run:
-          name: Test Development Images
+          name: Test Branch Images
           command: |
               sh buildscripts/testDevelopmentImages.sh
 
@@ -52,7 +52,7 @@ jobs:
           command: |
               sh buildscripts/testDevelopmentImages.sh
       - run:
-          name: Release Development Images
+          name: Push Dockerhub Development Images
           command: |
               docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
               sh buildscripts/releaseDevelopmentImages.sh
@@ -83,7 +83,7 @@ jobs:
           command: |
             sh buildscripts/testSupportedJiraImages.sh
       - run:
-          name: Release Docker Release Images
+          name: Push Dockerhub Release Images
           command: |
               docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
               sh buildscripts/releaseSupportedJiraImages.sh
