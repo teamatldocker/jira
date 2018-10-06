@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  build_branch:
     working_directory: /app
     docker:
       - image: docker:17.05.0-ce-git
@@ -17,33 +17,98 @@ jobs:
             pip install \
               docker-compose
       - run:
-          name: Build Docker Images
+          name: Build Development Images
           command: |
             set +o pipefail
-            sh buildscripts/release.sh
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              sh buildscripts/buildSupportedJiraImages.sh
-            else
-              sh buildscripts/buildDevelopmentImages.sh
-            fi
+            sh buildscripts/buildDevelopmentImages.sh
       - run:
-          name: Test Docker Images
+          name: Test Development Images
           command: |
-            sh buildscripts/release.sh
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              sh buildscripts/testSupportedJiraImages.sh
-            else
               sh buildscripts/testDevelopmentImages.sh
-            fi
+
+  build_development:
+    working_directory: /app
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
       - run:
-          name: Release Docker Images
+          name: Install dependencies
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            apk add --no-cache \
+              py-pip \
+              curl \
+              curl-dev
+            pip install \
+              docker-compose
+      - run:
+          name: Build Development Images
+          command: |
+            set +o pipefail
+            sh buildscripts/buildDevelopmentImages.sh
+      - run:
+          name: Test Development Images
+          command: |
+              sh buildscripts/testDevelopmentImages.sh
+      - run:
+          name: Release Development Images
+          command: |
               docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-              sh buildscripts/release.sh
-              sh buildscripts/releaseSupportedJiraImages.sh
-            elif [ "${CIRCLE_BRANCH}" == "dev" ]; then
-              docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-              sh buildscripts/release.sh
               sh buildscripts/releaseDevelopmentImages.sh
-            fi
+
+  build_releases:
+    working_directory: /app
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip \
+              curl \
+              curl-dev
+            pip install \
+              docker-compose
+      - run:
+          name: Build Docker Release Images
+          command: |
+            set +o pipefail
+            sh buildscripts/buildSupportedJiraImages.sh
+      - run:
+          name: Test Docker Release Images
+          command: |
+            sh buildscripts/testSupportedJiraImages.sh
+      - run:
+          name: Release Docker Release Images
+          command: |
+              docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+              sh buildscripts/releaseSupportedJiraImages.sh
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build_master:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+      - build_dev:
+          requires:
+            - build
+          filters:
+            branches:
+              only: dev
+      - build_branch:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore:
+                - dev
+                - master
