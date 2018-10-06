@@ -94,19 +94,19 @@ workflows:
     jobs:
       - build_master:
           requires:
-            - build
+            - build_releases
           filters:
             branches:
               only: master
       - build_dev:
           requires:
-            - build
+            - build_development
           filters:
             branches:
               only: dev
       - build_branch:
           requires:
-            - build
+            - build_branch
           filters:
             branches:
               ignore:
