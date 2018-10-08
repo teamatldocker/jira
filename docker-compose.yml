@@ -14,7 +14,7 @@ services:
     environment:
       - 'JIRA_DATABASE_URL=postgresql://jira@postgresql/jiradb'
       - 'JIRA_DB_PASSWORD=jellyfish'
-      - 'SETENV_JVM_MINIMUM_MEMORY=256m'
+      - 'SETENV_JVM_MINIMUM_MEMORY=384m'
       - 'SETENV_JVM_MAXIMUM_MEMORY=1g'
       - 'JIRA_PROXY_NAME='
       - 'JIRA_PROXY_PORT='
