@@ -1,10 +1,11 @@
-version: '3'
+version: '3.5'
 
 services:
   jira:
     depends_on:
       - postgresql
     image: blacklabelops/jira
+    container_name: jira
     networks:
       - jiranet
     volumes:
@@ -31,6 +32,7 @@ services:
 
   postgresql:
     image: blacklabelops/postgres
+    container_name: postgresql
     networks:
       - jiranet
     volumes:
@@ -61,4 +63,5 @@ volumes:
 
 networks:
   jiranet:
+    name: jiranet
     driver: bridge
