@@ -1,12 +1,5 @@
 # Dockerized Atlassian Jira
 
-[![Circle CI](https://circleci.com/gh/blacklabelops/jira.svg?style=shield)](https://circleci.com/gh/blacklabelops/jira)
-[![Open Issues](https://img.shields.io/github/issues/blacklabelops/jira.svg)](https://github.com/blacklabelops/jira/issues) [![Stars on GitHub](https://img.shields.io/github/stars/blacklabelops/jira.svg)](https://github.com/cblacklabelops/jira/stargazers)
-[![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/)
-
-[![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/blacklabelops/jira/master/dc-pwd.yml)
-
-
 "The best software teams ship early and often - Not many tools, one tool. JIRA Software is built for every member of your software team to plan, track, and release great software." - [[Source](https://www.atlassian.com/software/jira)]
 
 ## Supported tags and respective Dockerfile links
