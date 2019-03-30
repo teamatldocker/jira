@@ -6,9 +6,9 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Jira Software | 7.13.0 | 7.13.0, latest, latest.de | [Dockerfile](https://github.com/atldocker/jira/blob/master/Dockerfile) |
-| Jira Service Desk | 3.16.0 | servicedesk, servicedesk.3.16.0, servicedesk.de, servicedesk.3.16.0.de | [Dockerfile](https://github.com/atldocker/jira/blob/master/Dockerfile) |
-| Jira Core | 7.13.0 | core, core.7.13.0, core.de, core.7.13.0.de | [Dockerfile](https://github.com/atldocker/jira/blob/master/Dockerfile) |
+| Jira Software | 8.0.2 | 8.0.2, latest, latest.de | [Dockerfile](https://github.com/atldocker/jira/blob/master/Dockerfile) |
+| Jira Service Desk | 4.0.2 | servicedesk, servicedesk.4.0.2, servicedesk.de, servicedesk.4.0.2.de | [Dockerfile](https://github.com/atldocker/jira/blob/master/Dockerfile) |
+| Jira Core | 8.0.2 | core, core.8.0.2, core.de, core.8.0.2.de | [Dockerfile](https://github.com/atldocker/jira/blob/master/Dockerfile) |
 
 > Older tags remain but are not supported/rebuild.
 
