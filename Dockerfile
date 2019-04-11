@@ -42,9 +42,20 @@ RUN export GLIBC_VERSION=2.29-r0                        \
                  nano                                   \
                  tini                                   \
                  wget                                   \
+                 # editing conf files                   \
                  xmlstarlet                             \
+                 # gliblc language                      \
                  $GLIBC_BIN                             \
                  $GLIBC_I18N                            \
+                 # fonts                                \
+                 fontconfig                             \
+                 msttcorefonts-installer                \
+                 ttf-dejavu                             \
+                 ghostscript                            \
+                 graphviz                               \
+                 motif                                  \
+    && update-ms-fonts \
+    && fc-cache -f     \
     && /usr/glibc-compat/bin/localedef -i ${LANG_LANGUAGE}_${LANG_COUNTRY} -f UTF-8 $LANG \
     # JAVA_TOOL_OPTIONS, JAVA_HOME, and PATH already get set by AdoptOpenJDK image \
     # Since installer uses Oracle JDK 8, it does not recognize 'IgnoreUnrecognizedVMOptions' in JAVA_TOOL_OPTIONS \
@@ -118,6 +129,7 @@ RUN export GLIBC_VERSION=2.29-r0                        \
     && apk del                                                                                 \
       --no-cache                                                                               \
       gzip                                                                                     \
+      msttcorefonts-installer                                                                  \
       wget                                                                                     \
     # Clean caches and tmps                                                                    \
     && rm -rf /var/cache/apk/* /tmp/* /var/log/*
