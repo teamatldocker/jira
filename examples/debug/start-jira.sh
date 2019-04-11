@@ -33,7 +33,7 @@ if [ "$1" = "-fg" ] || [ "$1" = "run" ]  ; then
 	PRGRUNMODE=true
 else
 	echo ""
-	echo "To run JIRA in the foreground, start the server with start-jira.sh -fg"
+	echo "To run Jira in the foreground, start the server with start-jira.sh -fg"
 fi
 
 . `dirname $0`/user.sh #readin the username
@@ -49,7 +49,7 @@ if [ -z "$JIRA_USER" ] || [ $(id -un) == "$JIRA_USER" ]; then
 
 elif [ $UID -ne 0 ]; then
 
-    echo JIRA has been installed to run as $JIRA_USER so please sudo run this to enable switching to that user
+    echo Jira has been installed to run as $JIRA_USER so please sudo run this to enable switching to that user
     exit 1
 
 else
@@ -68,4 +68,3 @@ else
     fi
 
 fi
-

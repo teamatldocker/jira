@@ -25,31 +25,26 @@ Run Jira Core, Jira Software, or Jira Service Desk in a Docker container.
 ## Setup
 
 ### Docker-Compose:
+> Jira will be available at http://yourdockerhost
 
 ~~~~
 $ curl -O https://raw.githubusercontent.com/atldocker/jira/master/docker-compose.yml
 $ docker-compose up -d
 ~~~~
 
-> Jira will be available at http://yourdockerhost
-
 ### Docker-CLI:
+> Jira will be available at http://yourdockerhost
+> Data will be persisted inside docker volume `jiravolume`.
 
 ~~~~
 docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira atldocker/jira
 ~~~~
 
-> Jira will be available at http://yourdockerhost. Data will be persisted inside docker volume `jiravolume`.
-
 ### Docker run
 
-1. Start database server.
-1. Start Jira.
-
-First start the database server:
-
-> Note: Change Password!
-
+#### 1. Start Database
+> This uses the postgres image. Data will be persisted inside docker volume `postgresvolume`.
+> Note: You should change the password!
 ~~~~
 docker network create jiranet
 docker run --name postgres -d \
@@ -61,13 +56,10 @@ docker run --name postgres -d \
     -e 'POSTGRES_ENCODING=UNICODE' \
     -e 'POSTGRES_COLLATE=C' \
     -e 'POSTGRES_COLLATE_TYPE=C' \
-    postgres:9.6-alpine
+    postgres:9.5-alpine
 ~~~~
 
-> This is the postgres image. Data will be persisted inside docker volume `postgresvolume`.
-
-Then start Jira:
-
+#### 2. Start Jira
 ~~~~
 docker run -d --name jira \
     --network jiranet \
@@ -77,21 +69,18 @@ docker run -d --name jira \
 	  -p 80:8080 atldocker/jira
 ~~~~
 
->  Start the Jira and link it to the postgresql instance.
-
 ## Proxy Configuration
 
 You can specify your proxy host and proxy port with the environment variables JIRA_PROXY_NAME and JIRA_PROXY_PORT. The value will be set inside the Atlassian server.xml at startup!
 
-When you use https then you also have to include the environment variable JIRA_PROXY_SCHEME.
+When you use HTTPS then you also have to include the environment variable JIRA_PROXY_SCHEME.
 
-Example HTTPS:
+### Example
+> This will set the values inside the server.xml in `/opt/jira/conf/server.xml` and build the image with the current Jira release
 
 * Proxy Name: myhost.example.com
 * Proxy Port: 443
 * Poxy Protocol Scheme: https
-
-Just type:
 
 ~~~~
 docker run -d --name jira \
@@ -101,9 +90,6 @@ docker run -d --name jira \
     -e "JIRA_PROXY_SCHEME=https" \
     atldocker/jira
 ~~~~
-
-> Will set the values inside the server.xml in /opt/jira/conf/server.xml
-Build image with the current Jira release:
 
 ## Database Setup for Official Database Images
 
@@ -123,7 +109,7 @@ docker run --name postgres -d \
     --network jiranet \
     -e 'POSTGRES_USER=jira' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
-    postgres:9.6
+    postgres:9.5
 ~~~~
 
 > This is the official Postgres image.
@@ -133,13 +119,14 @@ Then create the database with the correct collate:
 ~~~~
 docker run -it --rm \
     --network jiranet \
-    postgres:9.6-alpine \
+    postgres:9.5-alpine \
     sh -c 'exec createdb -E UNICODE -l C -T template0 jiradb -h postgres -p 5432 -U jira'
 ~~~~
 
 > Password is `jellyfish`. Creates the database `jiradb` under user `jira` with the correct encoding and collation.
 
 Then start Jira:
+>  Start the Jira and link it to the postgres instance.
 
 ~~~~
 docker run -d --name jira \
@@ -149,8 +136,6 @@ docker run -d --name jira \
 	  -e "JIRA_DB_PASSWORD=jellyfish" \
 	  -p 80:8080 atldocker/jira
 ~~~~
-
->  Start the Jira and link it to the postgres instance.
 
 ## Demo Database Setup
 
@@ -176,7 +161,7 @@ $ docker run --name postgres -d \
     -e 'POSTGRES_DB=jiradb' \
     -e 'POSTGRES_USER=jiradb' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
-    postgres:9.6-alpine
+    postgres:9.5-alpine
 ~~~~
 
 #### PostgreSQL - community image
@@ -187,7 +172,7 @@ $ docker run --name postgres -d \
     -e 'DB_USER=jiradb' \
     -e 'DB_PASS=jellyfish' \
     -e 'DB_NAME=jiradb' \
-    sameersbn/postgresql:9.6-4
+    sameersbn/postgresql:9.5-4
 ~~~~
 
 Now start the Jira container and let it use the container. On first startup you have to configure your Jira yourself and fill it with a test license. Afterwards every time you connect to a database the Jira configuration will be skipped.
@@ -288,7 +273,7 @@ docker run --name postgres -d \
     -e 'POSTGRES_ENCODING=UNICODE' \
     -e 'POSTGRES_COLLATE=C' \
     -e 'POSTGRES_COLLATE_TYPE=C' \
-    postgres:9.6-alpine
+    postgres:9.5-alpine
 ~~~~
 
 # Build The Image
@@ -401,9 +386,11 @@ You should give at least 1-2GB more than the JVM maximum memory setting to your 
 
 Java JVM memory settings are applied by manipulating properties inside the `setenv.sh` file and this image can set those properties for you.
 
-The following example applies the [minimum memory for Jira 8.0+](https://confluence.atlassian.com/adminjira/preparing-for-jira-8-0-955171967.html#PreparingforJira8.0-mem) of 2048 megabytes and 8192 megabytes.
+The following example applies the [minimum memory for Jira 8.0+](https://confluence.atlassian.com/adminjira/preparing-for-jira-8-0-955171967.html#PreparingforJira8.0-mem) of 2048 megabytes and a maximum of 8192 megabytes.
 
-The correct properties from the Atlassian documentation are `JVM_MINIMUM_MEMORY` and `JVM_MAXIMUM_MEMORY`
+The correct properties from the Atlassian documentation are:
+- `JVM_MINIMUM_MEMORY`
+- `JVM_MAXIMUM_MEMORY`
 
 The image will set those properties, if you precede the property name with `SETENV_`.
 
@@ -510,10 +497,10 @@ Before you take any action make sure you can potentially upgrade:
 
 2. Check or ask inside this repository if anyone has tested the latest image. I have experienced issues when Jira has upgraded to a new major version: E.g. 6.x to 7.x. In this case sometimes the image has to be adapted. Minor versions and especially bugfix version can be usually be used without any problems.
 
-Now make a `Backup` in order to be able to Fallback:
+Now make a `Backup` in order to be able to fallback:
 
 1. Stop your database and Jira instance.
-2. Make a backup of your volumes. (Both Jira and database). For example use blacklabelops/volumerize to backup your volume.
+2. Make a backup of your volumes. (Both Jira and database). For example use (https://github.com/blacklabelops/volumerize)[blacklabelops/volumerize] to backup your volume.
 
 Now `Upgrade` your Jira container:
 
@@ -552,7 +539,7 @@ $ docker run --name postgres -d \
     --network jiranet \
     -v postgresvolume:/var/lib/postgresql \
     ...
-    postgres:9.6-alpine
+    postgres:9.5-alpine
 ~~~~
 
 Jira has been started with the following settings:
