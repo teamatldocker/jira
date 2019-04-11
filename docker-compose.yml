@@ -4,7 +4,7 @@ services:
   jira:
     depends_on:
       - postgresql
-    image: blacklabelops/jira
+    image: atldocker/jira
     networks:
       - jiranet
     volumes:
@@ -25,12 +25,9 @@ services:
       options:
         max-size: "500k"
         max-file: "50"
-    labels:
-      com.blacklabelops.description: "Atlassian Jira"
-      com.blacklabelops.service: "jira"
 
   postgresql:
-    image: blacklabelops/postgres
+    image: postgres:9.5-alpine
     networks:
       - jiranet
     volumes:
@@ -49,9 +46,6 @@ services:
       options:
         max-size: "500k"
         max-file: "50"
-    labels:
-      com.blacklabelops.description: "PostgreSQL Database Server"
-      com.blacklabelops.service: "postgresql"
 
 volumes:
   jiradata:

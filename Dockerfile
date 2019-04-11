@@ -109,10 +109,13 @@ RUN apk add --update                                    \
     rm -rf /var/log/*
 
 # Image Metadata
-LABEL com.blacklabelops.application.jira.version=$JIRA_PRODUCT-$JIRA_VERSION \
-      com.blacklabelops.application.jira.userid=$CONTAINER_UID \
-      com.blacklabelops.application.jira.groupid=$CONTAINER_GID \
-      com.blacklabelops.image.builddate.jira=${BUILD_DATE}
+LABEL maintainer="Jonathan Hult <atldocker@JonathanHult.com>"                                  \
+    org.opencontainers.image.authors="Jonathan Hult <atldocker@JonathanHult.com>"              \
+    org.opencontainers.image.title=$JIRA_PRODUCT                                               \
+    org.opencontainers.image.description="$JIRA_PRODUCT $JIRA_VERSION running on Alpine Linux" \
+    org.opencontainers.image.source="https://github.com/atldocker/jira/"                       \
+    org.opencontainers.image.created=$BUILD_DATE                                               \
+    org.opencontainers.image.version=$JIRA_VERSION
 
 USER jira
 WORKDIR ${JIRA_HOME}

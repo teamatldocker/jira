@@ -1,16 +1,12 @@
-# Contributing to blacklabelops/jira
+# Contributing to atldocker/jira
 
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
 
-The following is a set of guidelines for contributing to blacklabelops/jira These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
+The following is a set of guidelines for contributing to atldocker/jira These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 ## I don't want to read this whole thing I just have a question!!!
 
 Open an issue on the repository!
-
-Or
-
-Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](http://support.blacklabelops.com)
 
 ## How Can I Contribute?
 
@@ -37,5 +33,5 @@ Before Submitting A Bug Report:
 Build the image:
 
 ~~~~
-$ docker build -t blacklabelops/jira .
+$ docker build -t atldocker/jira .
 ~~~~

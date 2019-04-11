@@ -9,7 +9,7 @@ function buildImage() {
   local dockerfile=$4
   local language=$5
   local country=$6
-  docker build --no-cache -t blacklabelops/jira:$tagname --build-arg JIRA_PRODUCT=$release --build-arg JIRA_VERSION=$version --build-arg LANG_LANGUAGE=$language --build-arg LANG_COUNTRY=$country --build-arg BUILD_DATE=$(date +"%d/%m/%y-%T%z") -f $dockerfile .
+  docker build --no-cache -t atldocker/jira:$tagname --build-arg JIRA_PRODUCT=$release --build-arg JIRA_VERSION=$version --build-arg LANG_LANGUAGE=$language --build-arg LANG_COUNTRY=$country --build-arg BUILD_DATE=$(date +"%d/%m/%y-%T%z") -f $dockerfile .
 }
 
 buildImage $1 $2 $3 $4 $5 $6

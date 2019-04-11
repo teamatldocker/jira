@@ -1,14 +1,14 @@
 # Dockerized Atlassian Jira
 
-"The best software teams ship early and often - Not many tools, one tool. JIRA Software is built for every member of your software team to plan, track, and release great software." - [[Source](https://www.atlassian.com/software/jira)]
+"The best software teams ship early and often - Not many tools, one tool. Jira Software is built for every member of your software team to plan, track, and release great software." - [[Source](https://www.atlassian.com/software/jira)]
 
 ## Supported tags and respective Dockerfile links
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Jira Software | 7.13.0 | 7.13.0, latest, latest.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
-| Jira Service Desk | 3.16.0 | servicedesk, servicedesk.3.16.0, servicedesk.de, servicedesk.3.16.0.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
-| Jira Core | 7.13.0 | core, core.7.13.0, core.de, core.7.13.0.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Software | 7.13.0 | 7.13.0, latest, latest.de | [Dockerfile](https://github.com/atldocker/jira/blob/master/Dockerfile) |
+| Jira Service Desk | 3.16.0 | servicedesk, servicedesk.3.16.0, servicedesk.de, servicedesk.3.16.0.de | [Dockerfile](https://github.com/atldocker/jira/blob/master/Dockerfile) |
+| Jira Core | 7.13.0 | core, core.7.13.0, core.de, core.7.13.0.de | [Dockerfile](https://github.com/atldocker/jira/blob/master/Dockerfile) |
 
 > Older tags remain but are not supported/rebuild.
 
@@ -18,17 +18,16 @@
 
 You may also like:
 
-* [blacklabelops/jira](https://github.com/blacklabelops/jira): The #1 software development tool used by agile teams
-* [blacklabelops/confluence](https://github.com/blacklabelops/confluence): Create, organize, and discuss work with your team
-* [blacklabelops/bitbucket](https://github.com/blacklabelops/bitbucket): Code, Manage, Collaborate
-* [blacklabelops/crowd](https://github.com/blacklabelops/crowd): Identity management for web apps
+* [atldocker/confluence](https://github.com/atldocker/confluence): Create, organize, and discuss work with your team
+* [atldocker/bitbucket](https://github.com/atldocker/bitbucket): Code, Manage, Collaborate
+* [atldocker/crowd](https://github.com/atldocker/crowd): Identity management for web apps
 
 # Make It Short
 
 Docker-Compose:
 
 ~~~~
-$ curl -O https://raw.githubusercontent.com/blacklabelops/jira/master/docker-compose.yml
+$ curl -O https://raw.githubusercontent.com/atldocker/jira/master/docker-compose.yml
 $ docker-compose up -d
 ~~~~
 
@@ -37,7 +36,7 @@ $ docker-compose up -d
 Docker-CLI:
 
 ~~~~
-$ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira blacklabelops/jira
+$ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira atldocker/jira
 ~~~~
 
 > Jira will be available at http://yourdockerhost. Data will be persisted inside docker volume `jiravolume`.
@@ -62,10 +61,10 @@ $ docker run --name postgres -d \
     -e 'POSTGRES_ENCODING=UNICODE' \
     -e 'POSTGRES_COLLATE=C' \
     -e 'POSTGRES_COLLATE_TYPE=C' \
-    blacklabelops/postgres
+    atldocker/postgres
 ~~~~
 
-> This is the blacklabelops postgres image. Data will be persisted inside docker volume `postgresvolume`.
+> This is the postgres image. Data will be persisted inside docker volume `postgresvolume`.
 
 Then start Jira:
 
@@ -75,7 +74,7 @@ $ docker run -d --name jira \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  -p 80:8080 blacklabelops/jira
+	  -p 80:8080 atldocker/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
@@ -122,7 +121,7 @@ $ docker run -d --name jira \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish" \
-	  -p 80:8080 blacklabelops/jira
+	  -p 80:8080 atldocker/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
@@ -177,7 +176,7 @@ $ docker run -d --name jira \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jiradb@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish" \
-	  -p 80:8080 blacklabelops/jira
+	  -p 80:8080 atldocker/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
@@ -223,15 +222,15 @@ $ docker run -d --name jira \
     -e "JIRA_DATABASE_URL=mysql://jiradb@mysql/jiradb" \
     -e "JIRA_DB_PASSWORD=jellyfish"  \
     -p 80:8080 \
-    blacklabelops/jira
+    atldocker/jira
 ~~~~
 
 >  Start the Jira and link it to the mysql instance.
 
 ## SQL Server
 
-Starting with version 7.8.0 of JIRA, Atlassian no longer provides/uses the jTDS JDBC driver and instead bundles the Microsoft JDBC driver.  This proves to be a bit of a headache because while the jTDS driver used the
-conventional JDBC URL scheme, Microsoft's driver uses a non-standard JDBC URL scheme that departs wildly from the usual (see [Issue #72](https://github.com/blacklabelops/jira/issues/72) for details).  As a result of
+Starting with version 7.8.0 of Jira, Atlassian no longer provides/uses the jTDS JDBC driver and instead bundles the Microsoft JDBC driver.  This proves to be a bit of a headache because while the jTDS driver used the
+conventional JDBC URL scheme, Microsoft's driver uses a non-standard JDBC URL scheme that departs wildly from the usual (see [Issue #72](https://github.com/atldocker/jira/issues/72) for details).  As a result of
 this deviation from the standard, users wishing to connect to a SQL Server database *MUST* encode their host/port/database information in the `JIRA_DATABASE_URL` and cannot leverage the individual
 `JIRA_DB_*` variables.  Note that any additional driver properties needed can be appended in much the same was as `databaseName` is handled in the example below.
 
@@ -245,7 +244,7 @@ docker run \
     -e "JIRA_DB_USER=jira-app" \
     -e "JIRA_DB_PASSWORD=***" \
     -p 8080:8080 \
-    blacklabelops/jira
+    atldocker/jira
 ~~~~
 
 # Database Wait Feature
@@ -273,7 +272,7 @@ $ docker run --name jira \
     -e "DOCKER_WAIT_PORT=5432" \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  -p 80:8080 blacklabelops/jira
+	  -p 80:8080 atldocker/jira
 ~~~~
 
 > Waits at most 60 seconds for the database.
@@ -290,7 +289,7 @@ $ docker run --name postgres -d \
     -e 'POSTGRES_ENCODING=UNICODE' \
     -e 'POSTGRES_COLLATE=C' \
     -e 'POSTGRES_COLLATE_TYPE=C' \
-    blacklabelops/postgres
+    atldocker/postgres
 ~~~~
 
 > Jira will start after postgres is available!
@@ -315,7 +314,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=myhost.example.com" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
-    blacklabelops/jira
+    atldocker/jira
 ~~~~
 
 > Will set the values inside the server.xml in /opt/jira/conf/server.xml
@@ -334,7 +333,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=80" \
     -e "JIRA_PROXY_SCHEME=http" \
-    blacklabelops/jira
+    atldocker/jira
 ~~~~
 
 > Example with dockertools
@@ -348,7 +347,7 @@ $ docker run -d \
     --name nginx \
     -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
     -e "SERVER1REVERSE_PROXY_PASS1=http://jira:8080" \
-    blacklabelops/nginx
+    atldocker/nginx
 ~~~~
 
 > Jira will be available at http://192.168.99.100.
@@ -357,7 +356,7 @@ $ docker run -d \
 
 This is an example on running Atlassian Jira behind NGINX-HTTPS with2 Docker commands!
 
-Note: This is a self-signed certificate! Trusted certificates by letsencrypt are supported. Documentation can be found here: [blacklabelops/nginx](https://github.com/blacklabelops/nginx)
+Note: This is a self-signed certificate! Trusted certificates by letsencrypt are supported. Documentation can be found here: [atldocker/nginx](https://github.com/atldocker/nginx)
 
 First start Jira:
 
@@ -369,7 +368,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
-    blacklabelops/jira
+    atldocker/jira
 ~~~~
 
 > Example with dockertools
@@ -386,21 +385,21 @@ $ docker run -d \
     -e "SERVER1CERTIFICATE_DNAME=/CN=CrustyClown/OU=SpringfieldEntertainment/O=crusty.springfield.com/L=Springfield/C=US" \
     -e "SERVER1HTTPS_ENABLED=true" \
     -e "SERVER1HTTP_ENABLED=false" \
-    blacklabelops/nginx
+    atldocker/nginx
 ~~~~
 
 > Jira will be available at https://192.168.99.100.
 
 # A Word About Memory Usage
 
-Jira like any Java application needs a huge amount of memory. If you limit the memory usage by using the Docker --mem option make sure that you give enough memory. Otherwise your Jira will begin to restart randomly.
+Jira like any Java application needs a huge amount of memory. If you limit the memory usage by using the Docker --mem option make sure that you give enough memory. Otherwise, Jira will begin to restart randomly.
 You should give at least 1-2GB more than the JVM maximum memory setting to your container.
 
 Java JVM memory settings are applied by manipulating properties inside the `setenv.sh` file and this image can set those properties for you.
 
 Example:
 
-Applying minimum memory of 384 megabytes and maximum of one gigabyte.
+Applying the [minimum memory for Jira 8.0+](https://confluence.atlassian.com/adminjira/preparing-for-jira-8-0-955171967.html#PreparingforJira8.0-mem) of 2048 megabytes and 8192 megabytes.
 
 The correct properties from the Atlassian documentation are `JVM_MINIMUM_MEMORY` and `JVM_MAXIMUM_MEMORY`
 
@@ -411,9 +410,9 @@ Example:
 ~~~~
 $ docker run -d -p 80:8080 --name jira \
     -v jiravolume:/var/atlassian/jira \
-    -e "SETENV_JVM_MINIMUM_MEMORY=384m" \
-    -e "SETENV_JVM_MAXIMUM_MEMORY=1g" \
-    blacklabelops/jira
+    -e "SETENV_JVM_MINIMUM_MEMORY=2048m" \
+    -e "SETENV_JVM_MAXIMUM_MEMORY=8192m" \
+    atldocker/jira
 ~~~~
 
 > Note: Atlassian default is minimum 384m and maximum 768m. You should never go lower.
@@ -437,7 +436,7 @@ Example:
 ~~~~
 $ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira \
     -e "JIRA_PURGE_PLUGINS_ONSTART=true" \
-    --name jira blacklabelops/jira
+    --name jira atldocker/jira
 ~~~~
 
 # Jira SSO With Crowd
@@ -459,7 +458,7 @@ Example:
 ~~~~
 $ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira \
     -e "JIRA_CROWD_SSO=true" \
-    --name jira blacklabelops/jira
+    --name jira atldocker/jira
 ~~~~
 
 > SSO will be activated, you will need Crowd in order to authenticate.
@@ -479,7 +478,7 @@ $ docker run -d --name jira \
     -p 80:8080 \
     -v jiravolume:/var/atlassian/jira \
     -v $(pwd)/server.xml:/opt/jira/conf/server.xml \
-    blacklabelops/jira
+    atldocker/jira
 ~~~~
 
 > Note: `server.xml` is located in the directory where the command is executed.
@@ -502,8 +501,8 @@ Now make a `Backup` in order to be able to Fallback:
 Now `Upgrade` your Jira container:
 
 1. Remove your stopped Jira container: `docker rm your_jira_container_name`
-2. Upgrade your local image: `docker pull blacklabelops/jira:new_version`
-3. Use the same start command as the last container but with the new image `blacklabelops/jira:new_version`
+2. Upgrade your local image: `docker pull atldocker/jira:new_version`
+3. Use the same start command as the last container but with the new image `atldocker/jira:new_version`
 4. Jira will start its upgrading routine on both the local files and database. Run `docker logs -f your_jira_container_name` and lookout for error messages.
 
 Now `Test` your Jira instance:
@@ -523,7 +522,7 @@ Rollback:
 1. Stop Jira and database instance.
 2. Play back your backup. E.g. delete volumes, create volumes and copy back old files. Both Jira and database! You can simplify things with blacklabelops/volumerize.
 3.  Remove your stopped Jira container: `docker rm your_jira_container_name`
-4. Use the same start command as the last container but with the old image `blacklabelops/jira:old_version`
+4. Use the same start command as the last container but with the old image `atldocker/jira:old_version`
 
 ## Example
 
@@ -536,7 +535,7 @@ $ docker run --name postgres -d \
     --network jiranet \
     -v postgresvolume:/var/lib/postgresql \
     ...
-    blacklabelops/postgres
+    atldocker/postgres
 ~~~~
 
 Jira has been started with the following settings:
@@ -546,7 +545,7 @@ $ docker run -d --name jira \
     --network jiranet \
     -v jiravolume:/var/atlassian/jira \
 	  ...
-	  -p 80:8080 blacklabelops/jira:7.6.2
+	  -p 80:8080 atldocker/jira:7.6.2
 ~~~~
 
 This means:
@@ -584,7 +583,7 @@ Now `Upgrade` Jira by switching the container to a new image:
 
 ~~~~
 $ docker rm jira
-$ docker pull blacklabelops/jira:7.7.1
+$ docker pull atldocker/jira:7.7.1
 ~~~~
 
 Start the database and Jira with the same parameters as before but with the new image `7.7.1`:
@@ -595,7 +594,7 @@ $ docker run -d --name jira \
     --network jiranet \
     -v jiravolume:/var/atlassian/jira \
 	  ...
-	  -p 80:8080 blacklabelops/jira:7.7.1
+	  -p 80:8080 atldocker/jira:7.7.1
 ~~~~
 
 > Always use a tagged image! Like `:7.7.1`.
@@ -649,7 +648,7 @@ $ docker run -d --name jira \
     --network jiranet \
     -v jiravolume:/var/atlassian/jira \
 	  ...
-	  -p 80:8080 blacklabelops/jira:7.6.2
+	  -p 80:8080 atldocker/jira:7.6.2
 ~~~~
 
 > Always use a tagged image! Like `:7.6.2`.
@@ -661,7 +660,7 @@ You can easily extend this image with your own tooling!
 Example:
 
 ~~~~
-FROM blacklabelops/jira
+FROM atldocker/jira
 
 USER root
 
