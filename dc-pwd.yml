@@ -27,7 +27,7 @@ services:
         max-file: "50"
 
   postgresql:
-    image: blacklabelops/postgres
+    image: postgres:9.5-alpine
     networks:
       - jiranet
     volumes:
