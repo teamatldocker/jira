@@ -25,9 +25,6 @@ services:
       options:
         max-size: "500k"
         max-file: "50"
-    labels:
-      com.atldocker.description: "Atlassian Jira"
-      com.atldocker.service: "jira"
 
   postgresql:
     image: blacklabelops/postgres
@@ -49,9 +46,6 @@ services:
       options:
         max-size: "500k"
         max-file: "50"
-    labels:
-      com.atldocker.description: "PostgreSQL Database Server"
-      com.atldocker.service: "postgresql"
 
 volumes:
   jiradata:
