@@ -1,5 +1,5 @@
 jira:
-  image: blacklabelops/jira
+  image: atldocker/jira
   container_name: jira
   ports:
     - '80:8080'

@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  jira:
+    image: atldocker/jira
+    networks:
+      - jiranet
+    ports:
+      - '80:8080'
+      - '5005:5005'
+    environment:
+      - 'JIRA_DATABASE_URL=mysql://jiradb@mysql/jiradb'
+      - 'JIRA_DB_PASSWORD=jellyfish'
+      - 'JPDA_ADDRESS=5005'
+      - 'JPDA_TRANSPORT=dt_socket'
+    links:
+      - 'mysql:mysql'
+    volumes:
+      - './start-jira.sh:/opt/jira/bin/start-jira.sh'
+  mysql:
+    image: mysql:5.6
+    networks:
+      - jiranet
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=verybigsecretrootpassword'
+      - 'MYSQL_DATABASE=jiradb'
+      - 'MYSQL_USER=jiradb'
+      - 'MYSQL_PASSWORD=jellyfish'
+
+networks:
+  jiranet:
+    driver: bridge

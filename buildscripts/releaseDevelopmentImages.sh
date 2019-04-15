@@ -16,14 +16,14 @@ readonly PUSH_DEVELOPMENT_TAG=$JIRA_DEVELOPMENT_TAG
 function retagImage() {
   local tagname=$1
   local repository=$2
-  docker tag -f blacklabelops/jira:$tagname $repository/blacklabelops/jira:$tagname
+  docker tag -f atldocker/jira:$tagname $repository/atldocker/jira:$tagname
 }
 
 function pushImage() {
   local tagname=$1
   local repository=$2
 
-  docker push blacklabelops/jira:$tagname
+  docker push atldocker/jira:$tagname
 }
 
 pushImage $PUSH_DEVELOPMENT_TAG-software $PUSH_REPOSITORY

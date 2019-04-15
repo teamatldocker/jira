@@ -1,4 +1,4 @@
-#install4j response file for JIRA Software
+#install4j response file for Jira Software
 #Sun Oct 25 18:22:06 UTC 2015
 rmiPort$Long=8005
 app.install.service$Boolean=false
