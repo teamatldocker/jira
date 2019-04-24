@@ -15,14 +15,14 @@ readonly PUSH_SERVICE_DESK_VERSION=$JIRA_SERVICE_DESK_VERSION
 function retagImage() {
   local tagname=$1
   local repository=$2
-  docker tag -f atldocker/jira:$tagname $repository/atldocker/jira:$tagname
+  docker tag -f teamatldocker/jira:$tagname $repository/teamatldocker/jira:$tagname
 }
 
 function pushImage() {
   local tagname=$1
   local repository=$2
 
-  docker push atldocker/jira:$tagname
+  docker push teamatldocker/jira:$tagname
 }
 
 pushImage latest $PUSH_REPOSITORY

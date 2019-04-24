@@ -135,11 +135,11 @@ RUN export GLIBC_VERSION=2.29-r0                        \
     && rm -rf /var/cache/apk/* /tmp/* /var/log/*
 
 # Image Metadata
-LABEL maintainer="Jonathan Hult <atldocker@JonathanHult.com>"                                  \
-    org.opencontainers.image.authors="Jonathan Hult <atldocker@JonathanHult.com>"              \
+LABEL maintainer="Jonathan Hult <teamatldocker@JonathanHult.com>"                                  \
+    org.opencontainers.image.authors="Jonathan Hult <teamatldocker@JonathanHult.com>"              \
     org.opencontainers.image.title=$JIRA_PRODUCT                                               \
     org.opencontainers.image.description="$JIRA_PRODUCT $JIRA_VERSION running on Alpine Linux" \
-    org.opencontainers.image.source="https://github.com/atldocker/jira/"                       \
+    org.opencontainers.image.source="https://github.com/teamatldocker/jira/"                       \
     org.opencontainers.image.created=$BUILD_DATE                                               \
     org.opencontainers.image.version=$JIRA_VERSION
 

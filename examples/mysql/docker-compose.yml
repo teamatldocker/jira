@@ -1,5 +1,5 @@
 jira:
-  image: atldocker/jira
+  image: teamatldocker/jira
   container_name: jira
   ports:
     - '80:8080'

@@ -1,8 +1,8 @@
-# Contributing to atldocker/jira
+# Contributing to teamatldocker/jira
 
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
 
-The following is a set of guidelines for contributing to atldocker/jira These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
+The following is a set of guidelines for contributing to teamatldocker/jira These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 ## I don't want to read this whole thing I just have a question!!!
 
@@ -33,5 +33,5 @@ Before Submitting A Bug Report:
 Build the image:
 
 ~~~~
-$ docker build -t atldocker/jira .
+$ docker build -t teamatldocker/jira .
 ~~~~

@@ -9,18 +9,18 @@ Run Jira Core, Jira Software, or Jira Service Desk in a Docker container.
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Jira Software | 8.1.0 | 8.1.0, latest, latest.de | [Dockerfile](https://github.com/atldocker/jira/blob/master/Dockerfile) |
-| Jira Service Desk | 4.1.0 | servicedesk, servicedesk.4.1.0, servicedesk.de, servicedesk.4.1.0.de | [Dockerfile](https://github.com/atldocker/jira/blob/master/Dockerfile) |
-| Jira Core | 8.1.0 | core, core.8.1.0, core.de, core.8.1.0.de | [Dockerfile](https://github.com/atldocker/jira/blob/master/Dockerfile) |
+| Jira Software | 8.1.0 | 8.1.0, latest, latest.de | [Dockerfile](https://github.com/teamatldocker/jira/blob/master/Dockerfile) |
+| Jira Service Desk | 4.1.0 | servicedesk, servicedesk.4.1.0, servicedesk.de, servicedesk.4.1.0.de | [Dockerfile](https://github.com/teamatldocker/jira/blob/master/Dockerfile) |
+| Jira Core | 8.1.0 | core, core.8.1.0, core.de, core.8.1.0.de | [Dockerfile](https://github.com/teamatldocker/jira/blob/master/Dockerfile) |
 
 > On every release, the oldest and the newest tags are rebuild.
 
 ## You may also like
 
-* [atldocker/confluence](https://github.com/atldocker/confluence): Create, organize, and discuss work with your team
-* [atldocker/bitbucket](https://github.com/atldocker/bitbucket): Code, Manage, Collaborate
-* [atldocker/crowd](https://github.com/atldocker/crowd): Identity management for web apps
-* [development - running this image for development including a debugger](https://github.com/atldocker/jira/tree/master/examples/debug)
+* [teamatldocker/confluence](https://github.com/teamatldocker/confluence): Create, organize, and discuss work with your team
+* [teamatldocker/bitbucket](https://github.com/teamatldocker/bitbucket): Code, Manage, Collaborate
+* [teamatldocker/crowd](https://github.com/teamatldocker/crowd): Identity management for web apps
+* [development - running this image for development including a debugger](https://github.com/teamatldocker/jira/tree/master/examples/debug)
 
 ## Setup
 
@@ -28,7 +28,7 @@ Run Jira Core, Jira Software, or Jira Service Desk in a Docker container.
 > Jira will be available at http://yourdockerhost
 
 ~~~~
-$ curl -O https://raw.githubusercontent.com/atldocker/jira/master/docker-compose.yml
+$ curl -O https://raw.githubusercontent.com/teamatldocker/jira/master/docker-compose.yml
 $ docker-compose up -d
 ~~~~
 
@@ -37,7 +37,7 @@ $ docker-compose up -d
 > Data will be persisted inside docker volume `jiravolume`.
 
 ~~~~
-docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira atldocker/jira
+docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira teamatldocker/jira
 ~~~~
 
 ### Docker run
@@ -66,7 +66,7 @@ docker run -d --name jira \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  -p 80:8080 atldocker/jira
+	  -p 80:8080 teamatldocker/jira
 ~~~~
 
 ## Proxy Configuration
@@ -88,7 +88,7 @@ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=myhost.example.com" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
-    atldocker/jira
+    teamatldocker/jira
 ~~~~
 
 ## Database Setup for Official Database Images
@@ -134,7 +134,7 @@ docker run -d --name jira \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish" \
-	  -p 80:8080 atldocker/jira
+	  -p 80:8080 teamatldocker/jira
 ~~~~
 
 ## Demo Database Setup
@@ -183,7 +183,7 @@ $ docker run -d --name jira \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jiradb@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish" \
-	  -p 80:8080 atldocker/jira
+	  -p 80:8080 teamatldocker/jira
 ~~~~
 
 ### MySQL
@@ -212,12 +212,12 @@ $ docker run -d --name jira \
     -e "JIRA_DATABASE_URL=mysql://jiradb@mysql/jiradb" \
     -e "JIRA_DB_PASSWORD=jellyfish"  \
     -p 80:8080 \
-    atldocker/jira
+    teamatldocker/jira
 ~~~~
 
 ### SQL Server
 
-Starting with version 7.8.0 of Jira, Atlassian no longer provides/uses the jTDS JDBC driver and instead bundles the Microsoft JDBC driver.  This proves to be a bit of a headache because while the jTDS driver used the conventional JDBC URL scheme, Microsoft's driver uses a non-standard JDBC URL scheme that departs wildly from the usual (see [Issue #72](https://github.com/atldocker/jira/issues/72) for details).  As a result of this deviation from the standard, users wishing to connect to a SQL Server database *MUST* encode their host/port/database information in the `JIRA_DATABASE_URL` and cannot leverage the individual `JIRA_DB_*` variables. Note that any additional driver properties needed can be appended in much the same was as `databaseName` is handled in the example below.
+Starting with version 7.8.0 of Jira, Atlassian no longer provides/uses the jTDS JDBC driver and instead bundles the Microsoft JDBC driver.  This proves to be a bit of a headache because while the jTDS driver used the conventional JDBC URL scheme, Microsoft's driver uses a non-standard JDBC URL scheme that departs wildly from the usual (see [Issue #72](https://github.com/teamatldocker/jira/issues/72) for details).  As a result of this deviation from the standard, users wishing to connect to a SQL Server database *MUST* encode their host/port/database information in the `JIRA_DATABASE_URL` and cannot leverage the individual `JIRA_DB_*` variables. Note that any additional driver properties needed can be appended in much the same was as `databaseName` is handled in the example below.
 
 ~~~~
 docker run \
@@ -229,7 +229,7 @@ docker run \
     -e "JIRA_DB_USER=jira-app" \
     -e "JIRA_DB_PASSWORD=***" \
     -p 8080:8080 \
-    atldocker/jira
+    teamatldocker/jira
 ~~~~
 
 ## Database Wait Feature
@@ -256,7 +256,7 @@ docker run --name jira \
     -e "DOCKER_WAIT_PORT=5432" \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  -p 80:8080 atldocker/jira
+	  -p 80:8080 teamatldocker/jira
 ~~~~
 
 > Waits at most 60 seconds for the database.
@@ -300,7 +300,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=myhost.example.com" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
-    atldocker/jira
+    teamatldocker/jira
 ~~~~
 
 > Will set the values inside the server.xml in /opt/jira/conf/server.xml
@@ -319,7 +319,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=80" \
     -e "JIRA_PROXY_SCHEME=http" \
-    atldocker/jira
+    teamatldocker/jira
 ~~~~
 
 > Example with dockertools
@@ -333,7 +333,7 @@ $ docker run -d \
     --name nginx \
     -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
     -e "SERVER1REVERSE_PROXY_PASS1=http://jira:8080" \
-    atldocker/nginx
+    teamatldocker/nginx
 ~~~~
 
 > Jira will be available at http://192.168.99.100.
@@ -342,7 +342,7 @@ $ docker run -d \
 
 This is an example on running Atlassian Jira behind NGINX-HTTPS with2 Docker commands!
 
-Note: This is a self-signed certificate! Trusted certificates by letsencrypt are supported. Documentation can be found here: [atldocker/nginx](https://github.com/atldocker/nginx)
+Note: This is a self-signed certificate! Trusted certificates by letsencrypt are supported. Documentation can be found here: [teamatldocker/nginx](https://github.com/teamatldocker/nginx)
 
 First start Jira:
 
@@ -354,7 +354,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
-    atldocker/jira
+    teamatldocker/jira
 ~~~~
 
 > Example with dockertools
@@ -371,7 +371,7 @@ $ docker run -d \
     -e "SERVER1CERTIFICATE_DNAME=/CN=CrustyClown/OU=SpringfieldEntertainment/O=crusty.springfield.com/L=Springfield/C=US" \
     -e "SERVER1HTTPS_ENABLED=true" \
     -e "SERVER1HTTP_ENABLED=false" \
-    atldocker/nginx
+    teamatldocker/nginx
 ~~~~
 
 > Jira will be available at https://192.168.99.100.
@@ -399,7 +399,7 @@ docker run -d -p 80:8080 --name jira \
     -v jiravolume:/var/atlassian/jira \
     -e "SETENV_JVM_MINIMUM_MEMORY=2048m" \
     -e "SETENV_JVM_MAXIMUM_MEMORY=8192m" \
-    atldocker/jira
+    teamatldocker/jira
 ~~~~
 
 ### Jira Startup Plugin Purge
@@ -421,7 +421,7 @@ Example:
 ~~~~
 $ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira \
     -e "JIRA_PURGE_PLUGINS_ONSTART=true" \
-    --name jira atldocker/jira
+    --name jira teamatldocker/jira
 ~~~~
 
 # Jira SSO With Crowd
@@ -443,7 +443,7 @@ Example:
 ~~~~
 $ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira \
     -e "JIRA_CROWD_SSO=true" \
-    --name jira atldocker/jira
+    --name jira teamatldocker/jira
 ~~~~
 
 > SSO will be activated, you will need Crowd in order to authenticate.
@@ -461,7 +461,7 @@ docker run -d --name jira \
     -p 80:8080 \
     -v jiravolume:/var/atlassian/jira \
     -v $(pwd)/server.xml:/opt/jira/conf/server.xml \
-    atldocker/jira
+    teamatldocker/jira
 ~~~~
 
 > Note: `server.xml` is located in the directory where the command is executed.
@@ -471,7 +471,7 @@ docker run -d --name jira \
 You can easily extend this image with your own tooling by following the example below:
 
 ~~~~
-FROM atldocker/jira
+FROM teamatldocker/jira
 
 USER root
 
@@ -505,8 +505,8 @@ Now make a `Backup` in order to be able to fallback:
 Now `Upgrade` your Jira container:
 
 1. Remove your stopped Jira container: `docker rm your_jira_container_name`
-2. Upgrade your local image: `docker pull atldocker/jira:new_version`
-3. Use the same start command as the last container but with the new image `atldocker/jira:new_version`
+2. Upgrade your local image: `docker pull teamatldocker/jira:new_version`
+3. Use the same start command as the last container but with the new image `teamatldocker/jira:new_version`
 4. Jira will start its upgrading routine on both the local files and database. Run `docker logs -f your_jira_container_name` and lookout for error messages.
 
 Now `Test` your Jira instance:
@@ -526,7 +526,7 @@ Rollback:
 1. Stop Jira and database instance.
 2. Play back your backup. E.g. delete volumes, create volumes and copy back old files. Both Jira and database! You can simplify things with blacklabelops/volumerize.
 3.  Remove your stopped Jira container: `docker rm your_jira_container_name`
-4. Use the same start command as the last container but with the old image `atldocker/jira:old_version`
+4. Use the same start command as the last container but with the old image `teamatldocker/jira:old_version`
 
 ## Example
 
@@ -549,7 +549,7 @@ $ docker run -d --name jira \
     --network jiranet \
     -v jiravolume:/var/atlassian/jira \
 	  ...
-	  -p 80:8080 atldocker/jira:7.6.2
+	  -p 80:8080 teamatldocker/jira:7.6.2
 ~~~~
 
 This means:
@@ -587,7 +587,7 @@ Now `Upgrade` Jira by switching the container to a new image:
 
 ~~~~
 $ docker rm jira
-$ docker pull atldocker/jira:7.7.1
+$ docker pull teamatldocker/jira:7.7.1
 ~~~~
 
 Start the database and Jira with the same parameters as before but with the new image tag `7.7.1`:
@@ -598,7 +598,7 @@ $ docker run -d --name jira \
     --network jiranet \
     -v jiravolume:/var/atlassian/jira \
 	  ...
-	  -p 80:8080 atldocker/jira:7.7.1
+	  -p 80:8080 teamatldocker/jira:7.7.1
 ~~~~
 
 Wait until Jira has ended the upgrade procedure and your instance is available again!
@@ -646,5 +646,5 @@ $ docker run -d --name jira \
     --network jiranet \
     -v jiravolume:/var/atlassian/jira \
 	  ...
-	  -p 80:8080 atldocker/jira:7.6.2
+	  -p 80:8080 teamatldocker/jira:7.6.2
 ~~~~
