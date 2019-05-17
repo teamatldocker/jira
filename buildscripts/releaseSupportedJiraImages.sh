@@ -22,7 +22,7 @@ function pushImage() {
   local tagname=$1
   local repository=$2
 
-  docker push teamatldocker/jira:$tagname
+  docker push $repository/jira:$tagname
 }
 
 pushImage latest $PUSH_REPOSITORY

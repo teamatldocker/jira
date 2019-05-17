@@ -24,35 +24,6 @@ jobs:
           command: |
               sh buildscripts/testDevelopmentImages.sh
 
-  build_development:
-    working_directory: /app
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --no-cache \
-              py-pip \
-              curl \
-              curl-dev
-      - run:
-          name: Build Development Images
-          command: |
-            set +o pipefail
-            sh buildscripts/buildDevelopmentImages.sh
-      - run:
-          name: Test Development Images
-          command: |
-              sh buildscripts/testDevelopmentImages.sh
-      - run:
-          name: Push Dockerhub Development Images
-          command: |
-              docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-              sh buildscripts/releaseDevelopmentImages.sh
-
   build_releases:
     working_directory: /app
     docker:
@@ -80,7 +51,8 @@ jobs:
           name: Push Dockerhub Release Images
           command: |
               docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-              sh buildscripts/releaseSupportedJiraImages.sh
+              sh buildscripts/retagSupportedImages.sh blacklabelops
+              sh buildscripts/releaseSupportedJiraImages.sh blacklabelops
 
 workflows:
   version: 2
@@ -90,15 +62,10 @@ workflows:
           filters:
             branches:
               only: master
-      - build_development:
-          filters:
-            branches:
-              only: dev
       - build_branch:
           filters:
             branches:
               ignore:
-                - dev
                 - master
   nightly:
     triggers:
