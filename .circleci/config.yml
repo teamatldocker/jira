@@ -10,10 +10,13 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            apk update
+            apk upgrade
             apk add --no-cache \
-              py-pip \
-              curl \
-              curl-dev
+              py-pip           \
+              curl             \
+              curl-dev         \
+              bash
       - run:
           name: Build Branch Images
           command: |
@@ -34,10 +37,13 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            apk update
+            apk upgrade
             apk add --no-cache \
-              py-pip \
-              curl \
-              curl-dev
+              py-pip           \
+              curl             \
+              curl-dev         \
+              bash
       - run:
           name: Build Docker Release Images
           command: |
