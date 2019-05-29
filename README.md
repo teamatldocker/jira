@@ -5,14 +5,13 @@ Run Jira Core, Jira Software, or Jira Service Desk in a Docker container.
 
 "The best software teams ship early and often - Not many tools, one tool. Jira Software is built for every member of your software team to plan, track, and release great software." - [[Source](https://www.atlassian.com/software/jira)]
 
-## Supported tags and respective Dockerfile links
+## Products, Versions, and Tags
 
-| Product |Version | Tags  | Dockerfile |
-|---------|--------|-------|------------|
-| Jira Software | 8.2.1 | 8.2.1, latest, latest.de | [Dockerfile](https://github.com/teamatldocker/jira/blob/master/Dockerfile) |
-| Jira Service Desk | 4.2.1 | servicedesk, servicedesk.4.2.1, servicedesk.de, servicedesk.4.2.1.de | [Dockerfile](https://github.com/teamatldocker/jira/blob/master/Dockerfile) |
-| Jira Core | 8.2.1 | core, core.8.2.1, core.de, core.8.2.1.de | [Dockerfile](https://github.com/teamatldocker/jira/blob/master/Dockerfile) |
-
+| Product | Version | Tags |
+|---------|---------|-------|
+| [Jira Software](https://www.atlassian.com/software/jira) | 8.2.1 | latest, 8.2.1, latest.de, 8.2.1.de |
+| [Jira Service Desk](https://www.atlassian.com/software/jira/service-desk) | 4.2.1 | servicedesk, servicedesk.4.2.1, servicedesk.de, servicedesk.4.2.1.de |
+| [Jira Core](https://www.atlassian.com/software/jira/core) | 8.2.1 | core, core.8.2.1, core.de, core.8.2.1.de |
 > On every release, the oldest and the newest tags are rebuild.
 
 ## You may also like

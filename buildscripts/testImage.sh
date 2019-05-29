@@ -6,7 +6,7 @@ testImage() {
   local tag="$1"
   local port="$2"
   local iteration=0
-  docker run -d --network jira_dockertestnet --name=jira."$tag" teamatldocker/jira:"$tag"
+  docker run -d -p "$port":8080 --network jira_dockertestnet --name=jira."$tag" teamatldocker/jira:"$tag"
   while ! docker run --rm --network jira_dockertestnet tutum/curl curl http://jira."$tag":8080; do
     {
       echo "Exit status of curl (${iteration}): $?"
