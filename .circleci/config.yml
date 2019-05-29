@@ -18,11 +18,11 @@ jobs:
           name: Build Branch Images
           command: |
             set +o pipefail
-            sh buildscripts/buildDevelopmentImages.sh
+            bash buildscripts/buildDevelopmentImages.sh
       - run:
           name: Test Branch Images
           command: |
-              sh buildscripts/testDevelopmentImages.sh
+            bash buildscripts/testDevelopmentImages.sh
 
   build_releases:
     working_directory: /app
@@ -42,16 +42,16 @@ jobs:
           name: Build Docker Release Images
           command: |
             set +o pipefail
-            sh buildscripts/buildSupportedJiraImages.sh
+            bash buildscripts/buildSupportedJiraImages.sh
       - run:
           name: Test Docker Release Images
           command: |
-            sh buildscripts/testSupportedJiraImages.sh
+            bash buildscripts/testSupportedJiraImages.sh
       - run:
           name: Push Dockerhub Release Images
           command: |
-              docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-              sh buildscripts/releaseSupportedJiraImages.sh
+            docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+            bash buildscripts/releaseSupportedJiraImages.sh
 
 workflows:
   version: 2
