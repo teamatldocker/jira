@@ -1,17 +1,15 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
 
-set -o errexit    # abort script at first error
+main() {
+  set -x
 
-# Setting environment variables
-readonly CUR_DIR=$(cd $(dirname ${BASH_SOURCE:-$0}); pwd)
+  local DIR
+  DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo "$0")")
+  . "$DIR/dockerFunctions.sh"
 
-printf '%b\n' ":: Reading release config...."
-source $CUR_DIR/release.sh
+  cleanContainer "jira.$VERSION_DEVELOPMENT-software"
+  cleanContainer "jira.$VERSION_DEVELOPMENT-core"
+  cleanContainer "jira.$VERSION_DEVELOPMENT-servicedesk"
+}
 
-readonly TEST_JENKINS_VERSION=$JIRA_VERSION
-readonly TEST_JIRA_STABLE_VERSION=$JIRA_SERVICE_DESK_VERSION
-readonly BUILD_DEVELOPMENT_TAG=$JIRA_DEVELOPMENT_TAG
-
-source $CUR_DIR/cleanContainer.sh jira.$BUILD_DEVELOPMENT_TAG-software
-source $CUR_DIR/cleanContainer.sh jira.$BUILD_DEVELOPMENT_TAG-core
-source $CUR_DIR/cleanContainer.sh jira.$BUILD_DEVELOPMENT_TAG-servicedesk
+[[ ${BASH_SOURCE[0]} == "$0" ]] && main "$@"

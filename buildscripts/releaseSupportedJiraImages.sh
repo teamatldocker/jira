@@ -1,39 +1,24 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
 
-set -o errexit    # abort script at first error
+main() {
+  set -x
 
-# Setting environment variables
-readonly CUR_DIR=$(cd $(dirname ${BASH_SOURCE:-$0}); pwd)
+  local DIR
+  DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo "$0")")
+  . "$DIR/dockerFunctions.sh"
 
-printf '%b\n' ":: Reading release config...."
-source $CUR_DIR/release.sh
-
-readonly PUSH_REPOSITORY=$1
-readonly PUSH_VERSION=$JIRA_VERSION
-readonly PUSH_SERVICE_DESK_VERSION=$JIRA_SERVICE_DESK_VERSION
-
-function retagImage() {
-  local tagname=$1
-  local repository=$2
-  docker tag -f teamatldocker/jira:$tagname $repository/teamatldocker/jira:$tagname
+  pushImage "latest"
+  pushImage "$VERSION_JIRA"
+  pushImage "latest.de"
+  pushImage "$VERSION_JIRA.de"
+  pushImage "core"
+  pushImage "core.$VERSION_JIRA"
+  pushImage "core.de"
+  pushImage "core.$VERSION_JIRA.de"
+  pushImage "servicedesk"
+  pushImage "servicedesk.$VERSION_SERVICE_DESK"
+  pushImage "servicedesk.de"
+  pushImage "servicedesk.$VERSION_SERVICE_DESK.de"
 }
 
-function pushImage() {
-  local tagname=$1
-  local repository=$2
-
-  docker push $repository/jira:$tagname
-}
-
-pushImage latest $PUSH_REPOSITORY
-pushImage $PUSH_VERSION $PUSH_REPOSITORY
-pushImage latest.de $PUSH_REPOSITORY
-pushImage $PUSH_VERSION.de $PUSH_REPOSITORY
-pushImage core $PUSH_REPOSITORY
-pushImage core.$PUSH_VERSION $PUSH_REPOSITORY
-pushImage core.de $PUSH_REPOSITORY
-pushImage core.$PUSH_VERSION.de $PUSH_REPOSITORY
-pushImage servicedesk $PUSH_REPOSITORY
-pushImage servicedesk.$PUSH_SERVICE_DESK_VERSION $PUSH_REPOSITORY
-pushImage servicedesk.de $PUSH_REPOSITORY
-pushImage servicedesk.$PUSH_SERVICE_DESK_VERSION.de $PUSH_REPOSITORY
+[[ ${BASH_SOURCE[0]} == "$0" ]] && main "$@"

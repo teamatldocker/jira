@@ -51,7 +51,7 @@ jobs:
           name: Push Dockerhub Release Images
           command: |
               docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-              sh buildscripts/releaseSupportedJiraImages.sh teamatldocker
+              sh buildscripts/releaseSupportedJiraImages.sh
 
 workflows:
   version: 2

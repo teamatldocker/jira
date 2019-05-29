@@ -1,25 +1,51 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
 
-set -o errexit    # abort script at first error
+main() {
+  set -x
 
-# Setting environment variables
-readonly CUR_DIR=$(cd $(dirname ${BASH_SOURCE:-$0}); pwd)
+  local DIR
+  DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo "$0")")
+  . "$DIR/dockerFunctions.sh"
 
-printf '%b\n' ":: Reading release config...."
-source $CUR_DIR/release.sh
+  buildSoftware
+  buildCore
+  buildServiceDesk
+}
 
-readonly BUILD_VERSION=$JIRA_VERSION
-readonly BUILD_VERSION_SERVICE_DESK=$JIRA_SERVICE_DESK_VERSION
+buildSoftware() {
+  local tag="latest"
+  local product="$PRODUCT_SOFTWARE"
+  local version="$VERSION_JIRA"
 
-source $CUR_DIR/buildImage.sh jira-software $BUILD_VERSION latest Dockerfile en US
-source $CUR_DIR/buildImage.sh jira-software $BUILD_VERSION $BUILD_VERSION Dockerfile en US
-source $CUR_DIR/buildImage.sh jira-software $BUILD_VERSION latest.de Dockerfile de DE
-source $CUR_DIR/buildImage.sh jira-software $BUILD_VERSION $BUILD_VERSION.de Dockerfile de DE
-source $CUR_DIR/buildImage.sh jira-core $BUILD_VERSION core Dockerfile en US
-source $CUR_DIR/buildImage.sh jira-core $BUILD_VERSION core.$BUILD_VERSION Dockerfile en US
-source $CUR_DIR/buildImage.sh jira-core $BUILD_VERSION core.de Dockerfile de DE
-source $CUR_DIR/buildImage.sh jira-core $BUILD_VERSION core.$BUILD_VERSION.de Dockerfile de DE
-source $CUR_DIR/buildImage.sh servicedesk $BUILD_VERSION_SERVICE_DESK servicedesk Dockerfile en US
-source $CUR_DIR/buildImage.sh servicedesk $BUILD_VERSION_SERVICE_DESK servicedesk.$BUILD_VERSION_SERVICE_DESK Dockerfile en US
-source $CUR_DIR/buildImage.sh servicedesk $BUILD_VERSION_SERVICE_DESK servicedesk.de Dockerfile de DE
-source $CUR_DIR/buildImage.sh servicedesk $BUILD_VERSION_SERVICE_DESK servicedesk.$BUILD_VERSION_SERVICE_DESK.de Dockerfile de DE
+  buildImage "$product" "$version" "$tag"
+  tagImage "$tag" "$version"
+
+  buildImage "$product" "$version" "$tag.de" "de" "DE"
+  tagImage "$tag.de" "$version.de"
+}
+
+buildCore() {
+  local tag="core"
+  local product="$PRODUCT_CORE"
+  local version="$VERSION_JIRA"
+
+  buildImage "$product" "$version" "$tag"
+  tagImage "$tag" "$tag.$version"
+
+  buildImage "$product" "$version" "$tag.de" "de" "DE"
+  tagImage "$tag.de" "$tag.$version.de"
+}
+
+buildServiceDesk() {
+  local tag="servicedesk"
+  local product="$PRODUCT_SERVICE_DESK"
+  local version="$VERSION_SERVICE_DESK"
+
+  buildImage "$product" "$version" "$tag"
+  tagImage "$tag" "$tag.$version"
+
+  buildImage "$product" "$version" "$tag.de" "de" "DE"
+  tagImage "$tag.de" "$tag.$version.de"
+}
+
+[[ ${BASH_SOURCE[0]} == "$0" ]] && main "$@"

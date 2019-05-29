@@ -1,15 +1,11 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
 
-set -o errexit    # abort script at first error
+main() {
+  local DIR
+  DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo "$0")")
+  . "$DIR/dockerFunctions.sh"
 
-function buildImage() {
-  local release=$1
-  local version=$2
-  local tagname=$3
-  local dockerfile=$4
-  local language=$5
-  local country=$6
-  docker build --no-cache -t teamatldocker/jira:$tagname --build-arg JIRA_PRODUCT=$release --build-arg JIRA_VERSION=$version --build-arg LANG_LANGUAGE=$language --build-arg LANG_COUNTRY=$country --build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") -f $dockerfile .
+  buildImage "$1" "$2" "$3" "$4" "$5" "$6"
 }
 
-buildImage $1 $2 $3 $4 $5 $6
+[[ ${BASH_SOURCE[0]} == "$0" ]] && main "$@"

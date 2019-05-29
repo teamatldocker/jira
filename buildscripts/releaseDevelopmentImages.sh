@@ -1,31 +1,15 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
 
-set -o errexit    # abort script at first error
+main() {
+  set -x
 
-# Setting environment variables
-readonly CUR_DIR=$(cd $(dirname ${BASH_SOURCE:-$0}); pwd)
+  local DIR
+  DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo "$0")")
+  . "$DIR/dockerFunctions.sh"
 
-printf '%b\n' ":: Reading release config...."
-source $CUR_DIR/release.sh
-
-readonly PUSH_REPOSITORY=$1
-readonly PUSH_VERSION=$JIRA_VERSION
-readonly PUSH_SERVICE_DESK_VERSION=$JIRA_SERVICE_DESK_VERSION
-readonly PUSH_DEVELOPMENT_TAG=$JIRA_DEVELOPMENT_TAG
-
-function retagImage() {
-  local tagname=$1
-  local repository=$2
-  docker tag -f teamatldocker/jira:$tagname $repository/teamatldocker/jira:$tagname
+  pushImage "$VERSION_DEVELOPMENT-software"
+  pushImage "$VERSION_DEVELOPMENT-core"
+  pushImage "$VERSION_DEVELOPMENT-servicedesk"
 }
 
-function pushImage() {
-  local tagname=$1
-  local repository=$2
-
-  docker push teamatldocker/jira:$tagname
-}
-
-pushImage $PUSH_DEVELOPMENT_TAG-software $PUSH_REPOSITORY
-pushImage $PUSH_DEVELOPMENT_TAG-core $PUSH_REPOSITORY
-pushImage $PUSH_DEVELOPMENT_TAG-servicedesk $PUSH_REPOSITORY
+[[ ${BASH_SOURCE[0]} == "$0" ]] && main "$@"

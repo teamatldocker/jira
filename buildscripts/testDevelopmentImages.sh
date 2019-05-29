@@ -1,19 +1,18 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
 
-set -o errexit    # abort script at first error
+main() {
+  set -x
 
-# Setting environment variables
-readonly CUR_DIR=$(cd $(dirname ${BASH_SOURCE:-$0}); pwd)
+  local DIR
+  DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo "$0")")
+  . "$DIR/dockerFunctions.sh"
+  . "$DIR/testImage.sh"
 
-printf '%b\n' ":: Reading release config...."
-source $CUR_DIR/release.sh
+  docker network create jira_dockertestnet
 
-readonly TEST_VERSION=$JIRA_VERSION
-readonly TEST_SERVICE_DESK_VERSION=$JIRA_SERVICE_DESK_VERSION
-readonly BUILD_DEVELOPMENT_TAG=$JIRA_DEVELOPMENT_TAG
+  testImage "$VERSION_DEVELOPMENT-software" "8220"
+  testImage "$VERSION_DEVELOPMENT-core" "8260"
+  testImage "$VERSION_DEVELOPMENT-servicedesk" "8300"
+}
 
-docker network create jira_dockertestnet
-
-source $CUR_DIR/testImage.sh $BUILD_DEVELOPMENT_TAG-software 8220
-source $CUR_DIR/testImage.sh $BUILD_DEVELOPMENT_TAG-core 8260
-source $CUR_DIR/testImage.sh $BUILD_DEVELOPMENT_TAG-servicedesk 8300
+[[ ${BASH_SOURCE[0]} == "$0" ]] && main "$@"

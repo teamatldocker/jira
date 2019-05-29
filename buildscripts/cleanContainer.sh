@@ -1,8 +1,11 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
 
-function cleanContainer() {
-  local container=$1
-  docker rm -f -v $container || true
+main() {
+  local DIR
+  DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo "$0")")
+  . "$DIR/dockerFunctions.sh"
+
+  cleanContainer "$1"
 }
 
-cleanContainer $1
+[[ ${BASH_SOURCE[0]} == "$0" ]] && main "$@"

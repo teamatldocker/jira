@@ -1,27 +1,27 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
 
-set -o errexit    # abort script at first error
+main() {
+  set -x
 
-# Setting environment variables
-readonly CUR_DIR=$(cd $(dirname ${BASH_SOURCE:-$0}); pwd)
+  local DIR
+  DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo "$0")")
+  . "$DIR/dockerFunctions.sh"
+  . "$DIR/testImage.sh"
 
-printf '%b\n' ":: Reading release config...."
-source $CUR_DIR/release.sh
+  docker network create jira_dockertestnet
 
-readonly TEST_VERSION=$JIRA_VERSION
-readonly TEST_SERVICE_DESK_VERSION=$JIRA_SERVICE_DESK_VERSION
+  testImage "latest" "8220"
+  testImage "$VERSION_JIRA" "8230"
+  testImage "latest.de" "8240"
+  testImage "$VERSION_JIRA.de" "8250"
+  testImage "core" "8260"
+  testImage "core.$VERSION_JIRA" "8270"
+  testImage "core.de" "8280"
+  testImage "core.$VERSION_JIRA.de" "8290"
+  testImage "servicedesk" "8300"
+  testImage "servicedesk.$VERSION_SERVICE_DESK" "8310"
+  testImage "servicedesk.de" "8320"
+  testImage "servicedesk.$VERSION_SERVICE_DESK.de" "8330"
+}
 
-docker network create jira_dockertestnet
-
-source $CUR_DIR/testImage.sh latest 8220
-source $CUR_DIR/testImage.sh $TEST_VERSION 8230
-source $CUR_DIR/testImage.sh latest.de 8240
-source $CUR_DIR/testImage.sh $TEST_VERSION.de 8250
-source $CUR_DIR/testImage.sh core 8260
-source $CUR_DIR/testImage.sh core.$TEST_VERSION 8270
-source $CUR_DIR/testImage.sh core.de 8280
-source $CUR_DIR/testImage.sh core.$TEST_VERSION.de 8290
-source $CUR_DIR/testImage.sh servicedesk 8300
-source $CUR_DIR/testImage.sh servicedesk.$TEST_SERVICE_DESK_VERSION 8310
-source $CUR_DIR/testImage.sh servicedesk.de 8320
-source $CUR_DIR/testImage.sh servicedesk.$TEST_SERVICE_DESK_VERSION.de 8330
+[[ ${BASH_SOURCE[0]} == "$0" ]] && main "$@"

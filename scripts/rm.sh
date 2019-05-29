@@ -10,9 +10,6 @@ set -o nounset    # treat unset variables and parameters as an error
 # Setting environment variables
 readonly CUR_DIR=$(cd $(dirname ${BASH_SOURCE:-$0}); pwd)
 
-printf '%b\n' ":: Reading scripts config...."
-source $CUR_DIR/scripts.cfg
-
 printf '%b\n' ":: Reading container config...."
 source $CUR_DIR/container.cfg
 
