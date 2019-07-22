@@ -5,21 +5,29 @@ testImage() {
 
   local tag="$1"
   local port="$2"
+  local containerName="jira.$tag"
+  local networkName="jira_dockertestnet"
+  docker run --rm -d -p "$port":8080 --network $networkName --name="$containerName" teamatldocker/jira:"$tag"
+
   local iteration=0
-  docker run -d -p "$port":8080 --network jira_dockertestnet --name=jira."$tag" teamatldocker/jira:"$tag"
-  while ! docker run --rm --network jira_dockertestnet tutum/curl curl http://jira."$tag":8080; do
-    {
-      echo "Exit status of curl (${iteration}): $?"
-      echo "Retrying ..."
-    } 1>&2
-    if [ "$iteration" = '30' ]; then
+  while true; do
+    local response
+    set +e
+    response=$(docker run --rm --network $networkName byrnedo/alpine-curl -s -o /dev/null -I -w '%{http_code}' http://172.26.0.1:"$port")
+    set -e
+    if [[ $response == 2* ]] || [[ $response == 3* ]]; then
+      break
+    elif [[ $iteration == 10 ]]; then
       exit 1
     else
-      ((iteration = iteration + 1))
+      ((iteration++))
+      echo "HTTP status of iteration $iteration: $response"
+      echo "Will wait and retry ..."
     fi
     sleep 10
   done
-  docker stop "jira.$tag"
+  docker stop "$containerName"
+
 }
 
 main() {
