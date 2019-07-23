@@ -4,16 +4,16 @@ testImage() {
   set -o errexit
 
   local tag="$1"
-  local port="$2"
   local containerName="jira.$tag"
   local networkName="jira_dockertestnet"
-  docker run --rm -d -p "$port":8080 --network $networkName --name="$containerName" teamatldocker/jira:"$tag"
+  docker run --rm -d --network $networkName --name="$containerName" teamatldocker/jira:"$tag"
 
   local iteration=0
   while true; do
     local response
     set +e
-    response=$(docker run --rm --network $networkName byrnedo/alpine-curl -s -o /dev/null -I -w '%{http_code}' http://172.26.0.1:"$port")
+    # CircleCI does not (easily) allow exposing Docker ports so we always use port 8080
+    response=$(docker run --rm --network $networkName byrnedo/alpine-curl -s -o /dev/null -I -w '%{http_code}' http://"$containerName":8080)
     set -e
     if [[ $response == 2* ]] || [[ $response == 3* ]]; then
       break
