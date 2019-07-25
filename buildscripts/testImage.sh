@@ -13,7 +13,7 @@ testImage() {
 
   local response
   set +e
-  response=$(docker run --rm --network $networkName byrnedo/alpine-curl -s -o /dev/null -I -w '%{http_code}' --retry-connrefuse --max-time 10 --retry 5 --retry-delay 20 --retry-max-time 180 http://"$containerName":"$port")
+  response=$(docker run --rm --network $networkName byrnedo/alpine-curl -s -o /dev/null -I -w '%{http_code}' --retry-connrefuse --max-time 10 --retry 40 --retry-delay 20 --retry-max-time 600 http://"$containerName":"$port")
   set -e
   if [[ $response != 2* ]] && [[ $response != 3* ]]; then
     exit 1
