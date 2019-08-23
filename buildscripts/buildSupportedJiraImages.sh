@@ -7,9 +7,25 @@ main() {
   DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo "$0")")
   . "$DIR/dockerFunctions.sh"
 
-  buildSoftware
-  buildCore
-  buildServiceDesk
+  case "$1" in
+
+    "$PRODUCT_SOFTWARE")
+      buildSoftware
+      ;;
+
+    "$PRODUCT_CORE")
+      buildCore
+      ;;
+
+    "$PRODUCT_SERVICE_DESK")
+      buildServiceDesk
+      ;;
+    *)
+      buildSoftware
+      buildCore
+      buildServiceDesk
+      ;;
+  esac
 }
 
 buildSoftware() {
