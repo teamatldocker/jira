@@ -2,7 +2,7 @@
 
 set -o errexit
 
-. ${JIRA_SCRIPTS}/common.sh
+. "${JIRA_SCRIPTS}"/common.sh
 
 rm -f /opt/atlassian-home/.jira-home.lock
 

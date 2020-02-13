@@ -33,7 +33,7 @@ function setAllSetEnvs() {
   for env_variable in $env_vars
   do
     local propertyName=${env_variable#"SETENV_"}
-    updateSetEnv $propertyName ${!env_variable}
+    updateSetEnv "$propertyName" "${!env_variable}"
   done
 }
 
@@ -46,7 +46,7 @@ function waitForDB() {
   local waitTimeout=${DOCKER_WAIT_TIMEOUT:-60}
   local waitIntervalTime=${DOCKER_WAIT_INTERVAL:-5}
   if [ -n "${waitHost}" ] && [ -n "${waitPort}" ]; then
-    dockerize -timeout ${waitTimeout}s -wait-retry-interval ${waitIntervalTime}s -wait tcp://${waitHost}:${waitPort}
+    dockerize -timeout "${waitTimeout}"s -wait-retry-interval "${waitIntervalTime}"s -wait tcp://"${waitHost}":"${waitPort}"
   fi
 }
 
@@ -86,11 +86,11 @@ function controlCrowdSSO() {
 }
 
 if [ -n "${JIRA_DELAYED_START}" ]; then
-  sleep ${JIRA_DELAYED_START}
+  sleep "${JIRA_DELAYED_START}"
 fi
 
 if [ -n "${JIRA_ENV_FILE}" ]; then
-  source ${JIRA_ENV_FILE}
+  source "${JIRA_ENV_FILE}"
 fi
 
 if [ -n "${JIRA_PROXY_NAME}" ]; then
@@ -112,11 +112,11 @@ if [ -n "${JIRA_LOGFILE_LOCATION}" ]; then
 fi
 
 if [ -n "${JIRA_CROWD_SSO}" ]; then
-  controlCrowdSSO ${JIRA_CROWD_SSO}
+  controlCrowdSSO "${JIRA_CROWD_SSO}"
 fi
 
 if [ ! -d "${jira_logfile}" ]; then
-  mkdir -p ${jira_logfile}
+  mkdir -p "${jira_logfile}"
 fi
 
 TARGET_PROPERTY=1catalina.org.apache.juli.AsyncFileHandler.directory
@@ -140,7 +140,7 @@ setAllSetEnvs
 if [ "$1" = 'jira' ] || [ "${1:0:1}" = '-' ]; then
   waitForDB
   purgeJiraPlugins
-  /bin/bash ${JIRA_SCRIPTS}/launch.sh
+  /bin/bash "${JIRA_SCRIPTS}"/launch.sh
   if [ -n "${JIRA_PROXY_PATH}" ]; then
     xmlstarlet ed -P -S -L --update "//Context/@path" --value "${JIRA_PROXY_PATH}" ${JIRA_INSTALL}/conf/server.xml
   fi
