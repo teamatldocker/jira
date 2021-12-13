@@ -9,9 +9,9 @@ Run Jira Core, Jira Software, or Jira Service Desk in a Docker container.
 
 | Product | Version | Tags |
 |---------|---------|-------|
-| [Jira Software](https://www.atlassian.com/software/jira) | 8.20.2 | latest, 8.20.2, latest.de, 8.20.2.de |
-| [Jira Service Desk](https://www.atlassian.com/software/jira/service-desk) | 4.20.2 | servicedesk, servicedesk.4.20.2, servicedesk.de, servicedesk.4.20.2.de |
-| [Jira Core](https://www.atlassian.com/software/jira/core) | 8.20.2 | core, core.8.20.2, core.de, core.8.20.2.de |
+| [Jira Software](https://www.atlassian.com/software/jira) | 8.21.0 | latest, 8.21.0, latest.de, 8.21.0.de |
+| [Jira Service Desk](https://www.atlassian.com/software/jira/service-desk) | 4.21.0 | servicedesk, servicedesk.4.21.0, servicedesk.de, servicedesk.4.21.0.de |
+| [Jira Core](https://www.atlassian.com/software/jira/core) | 8.21.0 | core, core.8.21.0, core.de, core.8.21.0.de |
 > On every release, the oldest and the newest tags are rebuild.
 
 ## You may also like
