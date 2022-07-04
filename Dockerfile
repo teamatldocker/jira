@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11-openj9:x86_64-alpine-jre-11.0.10_9_openj9-0.24.0
+FROM adoptopenjdk/openjdk11-openj9:x86_64-alpine-jre-11.0.15_10_openj9-0.32.0
 # this image already contains glibc
 
 ENV JIRA_USER=jira                              \
