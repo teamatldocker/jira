@@ -4,6 +4,7 @@ jobs:
     working_directory: /app
     docker:
       - image: docker:19-git
+    resource_class: large
     steps:
       - checkout
       - setup_remote_docker
@@ -31,6 +32,7 @@ jobs:
     working_directory: /app
     docker:
       - image: docker:19-git
+    resource_class: large
     steps:
       - checkout
       - setup_remote_docker
@@ -63,6 +65,7 @@ jobs:
     working_directory: /app
     docker:
       - image: docker:19-git
+    resource_class: large
     steps:
       - checkout
       - setup_remote_docker
@@ -95,6 +98,7 @@ jobs:
     working_directory: /app
     docker:
       - image: docker:19-git
+    resource_class: large
     steps:
       - checkout
       - setup_remote_docker
