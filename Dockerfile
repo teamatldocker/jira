@@ -57,7 +57,7 @@ RUN export GLIBC_VERSION=2.29-r0                               \
     && export MYSQL_FILE_TAR=$MYSQL_FILE_BASE.tar.gz           \
     && export MYSQL_FILE_BIN=$MYSQL_FILE_BASE-bin.jar          \
     && export MYSQL_DOWNLOAD_URL=https://dev.mysql.com/get/Downloads/Connector-J/$MYSQL_FILE_TAR \
-    && export POSTGRESQL_DRIVER_VERSION=42.2.5                 \
+    && export POSTGRESQL_DRIVER_VERSION=42.4.0                 \
     && export POSTGRESQL_FILE=postgresql-$POSTGRESQL_DRIVER_VERSION.jar \
     && export POSTGRESQL_DOWNLOAD_URL=https://jdbc.postgresql.org/download/$POSTGRESQL_FILE \
     && rm -f $JIRA_LIB/mysql-connector-java*.jar               \
