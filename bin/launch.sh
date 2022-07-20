@@ -24,6 +24,10 @@ if [ -n "$JIRA_DATABASE_URL" ]; then
   if [ "$JIRA_DB_TYPE" == "mssql" ]; then
     SCHEMA='<schema-name>dbo</schema-name>'
   fi
+  case $JIRA_DB_TYPE in postgres*)
+    # see https://confluence.atlassian.com/jirakb/connection-problems-to-postgresql-result-in-stuck-threads-in-jira-1047534091.html
+    PG_CONN_PROPERTIES="<connection-properties>tcpKeepAlive=true;socketTimeout=240</connection-properties>"
+  esac
 
   cat <<END > ${JIRA_HOME}/dbconfig.xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -49,6 +53,7 @@ if [ -n "$JIRA_DATABASE_URL" ]; then
     <time-between-eviction-runs-millis>300000</time-between-eviction-runs-millis>
     <pool-test-on-borrow>false</pool-test-on-borrow>
     <pool-test-while-idle>true</pool-test-while-idle>
+    $PG_CONN_PROPERTIES
   </jdbc-datasource>
 </jira-database-config>
 END
